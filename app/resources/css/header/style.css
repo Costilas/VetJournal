@@ -1,0 +1,24 @@
+header {
+    color: #fff;
+    width: 100%;
+    background-color: black;
+    padding: 20px;
+}
+
+.header_content {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(auto, 1fr));
+}
+
+.header-item {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    justify-content: start;
+}
+
+.menu {
+    justify-content: end;
+}

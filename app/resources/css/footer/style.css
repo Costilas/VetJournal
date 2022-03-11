@@ -1,0 +1,14 @@
+footer {
+    color: #fff;
+    width: 100%;
+    background-color: #6f42c1;
+    padding: 30px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.footer_content {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(auto, 1fr));
+}
