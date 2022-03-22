@@ -5,7 +5,6 @@
 }
 
 header {
-    color: #fff;
     width: 100%;
     background-color: black;
     padding: 20px;
@@ -19,20 +18,40 @@ header {
 .header-item {
     display: flex;
     align-items: center;
+    color: #fff;
 }
 
 .logo {
     justify-content: start;
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+}
+
+.logo-img {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+       object-fit: cover;
 }
 
 .menu {
     justify-content: end;
 }
 
+.menu li {
+    margin-left: 20px;
+    cursor: pointer;
+}
+.menu li:hover {
+    color: peachpuff;
+}
+
+
 footer {
     color: #fff;
     width: 100%;
-    background-color: #6f42c1;
+    background-color: black;
     padding: 30px;
     position: fixed;
     bottom: 0;
@@ -45,8 +64,46 @@ footer {
 }
 
 
+.new_card_block, .search_block {
+    padding: 20px;
+    margin: 15px 0;
+}
+
+.new_card_block{
+
+}
+
+.search_block {
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 30px;
+}
+
+.pagination {
+    justify-content: center;
+}
+
+.search_row td, .search_row th{
+    vertical-align: middle;
+    text-align: center;
+}
 
 
+
+
+
+/*General styles*/
+
+/*Header styles*/
+
+/*Footer styles*/
+
+/*Card list and single card styles*/
+
+/*Visit styles*/
+
+
+/*Main page styles*/
 
 @charset "UTF-8";
 /*!

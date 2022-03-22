@@ -34,3 +34,8 @@ services:
       - MYSQL_USER=sergey
       - MYSQL_PASSWORD=12345
       - MYSQL_DATABASE=journal
+
+  adminer:
+    image: adminer
+    ports:
+      - "8095:8080"

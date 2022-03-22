@@ -1,5 +1,20 @@
+/*General styles*/
 @import url('general/style.css');
+
+/*Header styles*/
 @import url('header/style.css');
+
+/*Footer styles*/
 @import url('footer/style.css');
-@import url('dashboard/style.css');
+
+/*Card list and single card styles*/
+@import url('card/single.css');
+@import url('card/search.css');
+@import url('card/create.css');
+
+/*Visit styles*/
 @import url('visit/style.css');
+
+
+/*Main page styles*/
+@import url('home/style.css');
