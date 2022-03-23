@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Owner extends Model
 {
+    protected $fillable = ['name', 'patronymic', 'last_name', 'address', 'phone'];
+
     use HasFactory;
 
     public function pets() {

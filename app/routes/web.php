@@ -6,15 +6,18 @@ Route::get('/', function () {
     return view('home.index');
 })->name('home');
 
-//Search
-Route::get('/search', 'App\Http\Controllers\SearchController@index')->name('search');
-Route::get('/search/patient', 'App\Http\Controllers\SearchController@searchPatient')->name('search.patient');
+//Card.Search
+Route::get('/search', 'App\Http\Controllers\CardController@index')->name('search');
+//Card.Create
+Route::post('/card/create', 'App\Http\Controllers\CardController@create')->name('card.create');
 
-//Owner
+
+//Pet.show - Single
+Route::get('/pet/{id}/show', 'App\Http\Controllers\PetController@show')->name('pet.show');
+//Owner.show - Single
 Route::get('/owner/{id}/show', 'App\Http\Controllers\OwnerController@show')->name('owner.show');
 
-//Cards
-Route::get('/card/{id}/show', 'App\Http\Controllers\CardController@show')->name('card.show');
+
 
 
 /*//Visits

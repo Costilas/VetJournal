@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('owners', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('patronymic');
-            $table->string('last_name');
-            $table->string('phone');
+            $table->string('name')->index();
+            $table->string('patronymic')->index();
+            $table->string('last_name')->index();
+            $table->string('phone')->index();
             $table->string('address');
             $table->timestamps();
         });

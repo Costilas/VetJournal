@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('pets', function (Blueprint $table) {
             $table->id();
-            $table->string('pet_name');
+            $table->string('pet_name')->index();
             $table->integer('owner_id')->unsigned();
             $table->integer('kind_id')->unsigned();
             $table->integer('gender_id')->unsigned();

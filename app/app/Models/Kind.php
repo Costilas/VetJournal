@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Kind extends Model
 {
     use HasFactory;
+
+    public function pets(){
+        return $this->hasMany(Pet::class);
+    }
 }
