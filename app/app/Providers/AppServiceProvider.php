@@ -39,6 +39,5 @@ class AppServiceProvider extends ServiceProvider
             $view->with('ownerCount', DB::table('owners')->count());
             $view->with('visitCount', DB::table('visits')->count());
         });
-
     }
 }

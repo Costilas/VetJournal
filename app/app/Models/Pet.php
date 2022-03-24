@@ -11,23 +11,28 @@ class Pet extends Model
 
     protected $fillable = ['pet_name', 'owner_id', 'kind_id', 'gender_id', 'birth'];
 
-    public function owner() {
+    public function owner()
+    {
         return $this->belongsTo(Owner::class);
     }
 
-    public function kind() {
+    public function kind()
+    {
         return $this->belongsTo(Kind::class);
     }
 
-    public function gender() {
+    public function gender()
+    {
         return $this->belongsTo(Gender::class);
     }
 
-    public function visits() {
+    public function visits()
+    {
         return $this->hasMany(Visit::class);
     }
 
-    public function countYears() {
-        return round(((((time()-strtotime($this->birth))/60)/60)/24)/365, 1);
+    public function countYears()
+    {
+        return round(((((time() - strtotime($this->birth)) / 60) / 60) / 24) / 365, 1);
     }
 }

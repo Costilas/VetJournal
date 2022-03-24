@@ -9,7 +9,8 @@ class Kind extends Model
 {
     use HasFactory;
 
-    public function pets(){
+    public function pets()
+    {
         return $this->hasMany(Pet::class);
     }
 }

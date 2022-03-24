@@ -1,0 +1,10 @@
+.pet_badge_block {
+    padding: 5px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    margin: 20px;
+}
+
+.pet_badge {
+    padding: 20px;
+}

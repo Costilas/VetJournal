@@ -20,12 +20,12 @@ class OwnerFactory extends Factory
     public function definition()
     {
         return [
-            'name'=> $this->faker->firstName('female'),
-            'patronymic'=>$this->faker->middleName('female'),
-            'last_name'=>$this->faker->lastName(),
-            'phone'=> $this->faker->isbn10(),
+            'name' => $this->faker->firstName('female'),
+            'patronymic' => $this->faker->middleName('female'),
+            'last_name' => $this->faker->lastName(),
+            'phone' => $this->faker->isbn10(),
             'address' => $this->faker->city(),
-            'created_at'=> $this->faker->dateTime(),
+            'created_at' => $this->faker->dateTime(),
             'updated_at' => $this->faker->dateTime(),
         ];
     }

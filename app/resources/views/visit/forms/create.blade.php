@@ -34,7 +34,6 @@
                 <textarea class="form-control" name="visit_info" style=" height: 500px;">{{old('pre_diagnosis')}}</textarea>
             </div>
         </div>
-
     </div>
     <input type="hidden" name="pet_id" value="{{$pet->id}}">
     <button type="submit" class="btn btn-primary m-3"><i class="bi bi-plus-lg"></i> Создать</button>

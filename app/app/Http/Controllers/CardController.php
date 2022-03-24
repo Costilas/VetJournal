@@ -14,8 +14,7 @@ class CardController extends Controller
         // Сделать валидацию
         // Вынести функционал проверки в отдельную функцию или контроллер
 
-        if($request->has('search')||$request->has('page'))
-        {
+        if ($request->has('search') || $request->has('page')) {
             $query = Owner::with(['pets', 'pets.kind'])->select(['*', 'owners.id as id']);
 
             if ($request->pet_name) {
@@ -44,24 +43,23 @@ class CardController extends Controller
     }
 
 
-
     public function create(Request $request)
     {
         //Сделать валидацию
-        $newOwner= Owner::create([
-            'name'=>$request->name,
-            'patronymic'=>$request->patronymic,
-            'last_name'=>$request->last_name,
-            'address'=>$request->address,
-            'phone'=>$request->phone,
+        $newOwner = Owner::create([
+            'name' => $request->name,
+            'patronymic' => $request->patronymic,
+            'last_name' => $request->last_name,
+            'address' => $request->address,
+            'phone' => $request->phone,
         ]);
 
         $newPet = Pet::create([
-            'pet_name'=>$request->pet_name,
-            'owner_id'=>$newOwner->id,
-            'kind_id'=>$request->kind,
-            'gender_id'=>$request->gender,
-            'birth'=>$request->birth
+            'pet_name' => $request->pet_name,
+            'owner_id' => $newOwner->id,
+            'kind_id' => $request->kind,
+            'gender_id' => $request->gender,
+            'birth' => $request->birth
         ]);
 
         //Сделать проверку на успешное дополнение

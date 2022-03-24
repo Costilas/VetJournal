@@ -1,7 +1,7 @@
 <div class="card card-body">
     <form action="{{route('card.create')}}" method="POST">
         @csrf
-        <h4 class="text-center">Владелец:</h4>
+        <h4 class="text-center"><i class="bi bi-person-plus"></i> Владелец:</h4>
         <div class="row mb-3 mt-3">
             <div class="col">
                 <label for="last_name">Фамилия владельца:</label>
@@ -49,7 +49,7 @@
             <div class="col">
                 <label for="birth">Дата рождения питомца:</label>
                 <input type="date" class="form-control "
-                       name="birth"  aria-label="birth"
+                       name="birth" aria-label="birth"
                        value="{{old('birth')}}">
             </div>
         </div>
@@ -67,7 +67,8 @@
             <div class="col">
                 <label for="gender">Пол питомца:</label>
                 @foreach($genders as $gender)
-                    <br><input type="radio" name="gender" value="{{$gender->id}}"> <i class="bi bi-gender-{{$gender->icon}}"></i>  {{$gender->gender}}
+                    <br><input type="radio" name="gender" value="{{$gender->id}}"> <i
+                        class="bi bi-gender-{{$gender->icon}}"></i>  {{$gender->gender}}
                 @endforeach
             </div>
         </div>

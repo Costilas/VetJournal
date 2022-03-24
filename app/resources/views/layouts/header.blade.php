@@ -6,10 +6,13 @@
             </div>
 
             <ul class="nav header-item menu">
-                <a href="{{route('home')}}"><li class="nav-item">Главная</li></a>
-                <a href="{{route('search')}}"><li class="nav-item">Картотека</li></a>
-               {{-- <a href="{{route('notes')}}"><li class="nav-item">Заметки</li></a>--}}
-
+                <a href="{{route('home')}}">
+                    <li class="nav-item">Главная</li>
+                </a>
+                <a href="{{route('search')}}">
+                    <li class="nav-item">Картотека</li>
+                </a>
+                {{-- <a href="{{route('notes')}}"><li class="nav-item">Заметки</li></a>--}}
             </ul>
         </div>
     </div>

@@ -3,9 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 //Main page
-Route::get('/', function () {
-    return view('home.index');
-})->name('home');
+Route::get('/', function () { return view('home.index'); })->name('home');
 
 //Card.Search
 Route::get('/search', 'App\Http\Controllers\CardController@index')->name('search');

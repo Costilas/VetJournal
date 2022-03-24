@@ -3,10 +3,6 @@
     margin: 15px 0;
 }
 
-.new_card_block{
-
-}
-
 .search_block {
     padding: 20px;
     border: 1px solid black;
@@ -17,7 +13,7 @@
     justify-content: center;
 }
 
-.search_row td, .search_row th{
+.search_row td, .search_row th {
     vertical-align: middle;
     text-align: center;
 }

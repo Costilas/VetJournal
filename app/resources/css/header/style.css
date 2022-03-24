@@ -36,6 +36,7 @@ header {
     margin-left: 20px;
     cursor: pointer;
 }
+
 .menu li:hover {
     color: peachpuff;
 }
