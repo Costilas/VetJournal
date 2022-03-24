@@ -13,6 +13,9 @@
     <div class="collapse" id="oldVisit{{$visit->id}}">
         <div class="card card-body">
             {{$visit->visit_info}}
+            <div class="visit_card_actions">
+                <a class="btn btn-info" href="{{route('visit.edit', ['id'=>$visit->id])}}">Редактировать</a>
+            </div>
         </div>
     </div>
 </div>
