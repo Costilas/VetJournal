@@ -1,5 +1,6 @@
 @extends('layouts.layout')
 
+@section('title') Владелец::{{$owner->name}} @endsection
 
 @section('content')
 

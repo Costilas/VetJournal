@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Owner;
 use App\Models\Pet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CardController extends Controller
 {
     public function index(Request $request)
     {
-        if($request->has('search'))
+        // Сделать валидацию
+        // Вынести функционал проверки в отдельную функцию или контроллер
+
+        if($request->has('search')||$request->has('page'))
         {
             $query = Owner::with(['pets', 'pets.kind'])->select(['*', 'owners.id as id']);
 
@@ -43,7 +47,7 @@ class CardController extends Controller
 
     public function create(Request $request)
     {
-
+        //Сделать валидацию
         $newOwner= Owner::create([
             'name'=>$request->name,
             'patronymic'=>$request->patronymic,
@@ -60,5 +64,8 @@ class CardController extends Controller
             'birth'=>$request->birth
         ]);
 
+        //Сделать проверку на успешное дополнение
+
+        return redirect(route('owner.show', ['id' => $newOwner->id]));
     }
 }

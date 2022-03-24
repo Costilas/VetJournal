@@ -3,14 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pet;
+use App\Models\Visit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class PetController extends Controller
 {
     public function show($id)
     {
-        $card = Pet::with('visits', 'owner', 'gender', 'kind')->findOrFail($id);
+        $pet = Pet::with('owner', 'gender', 'kind', 'owner.pets')->findOrFail($id);
 
-        return view('pet.show', compact('card'));
+        $visits = Visit::where('pet_id', '=', $id)->orderBy('visit_date', 'DESC')->paginate(10);
+
+        return view('pet.show', compact('pet', 'visits'));
     }
 }

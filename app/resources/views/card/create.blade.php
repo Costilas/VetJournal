@@ -47,9 +47,9 @@
         </div>
         <div class="row mb-3 mt-3">
             <div class="col">
-                <label for="last_name">Кличка питомца:</label>
+                <label for="birth">Дата рождения питомца:</label>
                 <input type="date" class="form-control "
-                       name="birth"  aria-label="Pet name"
+                       name="birth"  aria-label="birth"
                        value="{{old('birth')}}">
             </div>
         </div>

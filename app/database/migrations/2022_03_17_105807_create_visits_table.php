@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('pet_id')->unsigned();
             $table->date('visit_date');
             $table->integer('weight')->unsigned();
+            $table->integer('temperature')->unsigned();
             $table->string('pre_diagnosis');
             $table->text('visit_info');
             $table->timestamps();

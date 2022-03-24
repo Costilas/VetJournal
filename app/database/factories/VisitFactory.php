@@ -20,6 +20,7 @@ class VisitFactory extends Factory
             'pet_id' => $this->faker->numberBetween(1, 30),
             'visit_date' => $this->faker->date(),
             'weight' => $this->faker->numberBetween(1, 30),
+            'temperature' => $this->faker->numberBetween(20, 45),
             'pre_diagnosis' => $this->faker->text(100),
             'visit_info' => $this->faker->text(1000),
             'created_at' => $this->faker->dateTime(),

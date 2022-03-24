@@ -26,4 +26,8 @@ class Pet extends Model
     public function visits() {
         return $this->hasMany(Visit::class);
     }
+
+    public function countYears() {
+        return round(((((time()-strtotime($this->birth))/60)/60)/24)/365, 1);
+    }
 }

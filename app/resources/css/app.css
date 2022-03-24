@@ -12,9 +12,10 @@
 @import url('card/search.css');
 @import url('card/create.css');
 
+/*Owner page styles*/
+
 /*Visit styles*/
 @import url('visit/style.css');
-
 
 /*Main page styles*/
 @import url('home/style.css');
