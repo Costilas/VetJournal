@@ -12,10 +12,10 @@
     </p>
     <div class="collapse" id="oldVisit{{$visit->id}}">
         <div class="card card-body">
-            {{$visit->visit_info}}
-            <div class="visit_card_actions">
-                <a class="btn btn-info" href="{{route('visit.edit', ['id'=>$visit->id])}}">Редактировать</a>
+            <div class="visit_card_actions d-flex justify-content-end">
+                <a class="btn btn-light" href="{{route('visit.edit', ['id'=>$visit->id])}}"><i class="bi bi-pencil-fill"></i></a>
             </div>
+            {{$visit->visit_info}}
         </div>
     </div>
 </div>

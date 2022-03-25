@@ -13,6 +13,7 @@ class CardController extends Controller
     {
         // Сделать валидацию
         // Вынести функционал проверки в отдельную функцию или контроллер
+        // Отключить поиск если ни одного поля не закончено
 
         if ($request->has('search') || $request->has('page')) {
             $query = Owner::with(['pets', 'pets.kind'])->select(['*', 'owners.id as id']);

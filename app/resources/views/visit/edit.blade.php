@@ -4,31 +4,31 @@
 @section('content')
     <h3 class="text-center m-3">Редактирование приема от {{$visit->visit_date}} животного {{$visit->pet->pet_name}}(ID:{{$visit->pet->id}})</h3>
     <div>
-        <form action="{{route('visit.update')}}" method="POST">
+        <form class="w-50 m-auto" action="{{route('visit.update')}}" method="POST">
             @csrf
             <div class="row mb-3 mt-3">
-                <div class="col">
-                    <input class="form-control" type="date" name="visit_date" value="{{$visit->visit_date}}">
+                <div class="col ">
+                    <input class="form-control w-50 m-auto" type="date" name="visit_date" value="{{$visit->visit_date}}">
                 </div>
             </div>
             <div class="row mb-3 mt-3">
                 <div class="col">
-                    <input class="form-control" type="number" name="weight" value="{{$visit->weight}}">
+                    <input class="form-control w-50 m-auto" type="number" name="weight" value="{{$visit->weight}}">
                 </div>
             </div>
             <div class="row mb-3 mt-3">
                 <div class="col">
-                    <input class="form-control" type="number" name="temperature" value="{{$visit->temperature}}">
+                    <input class="form-control w-50 m-auto" type="number" name="temperature" value="{{$visit->temperature}}">
                 </div>
             </div>
             <div class="row mb-3 mt-3">
                 <div class="col">
-                    <input class="form-control" type="text" name="pre_diagnosis" value="{{$visit->pre_diagnosis}}">
+                    <input class="form-control w-50 m-auto" type="text" name="pre_diagnosis" value="{{$visit->pre_diagnosis}}">
                 </div>
             </div>
             <div class="row mb-3 mt-3">
                 <div class="col">
-                    <textarea class="form-control" name="visit_info">{{$visit->pre_diagnosis}}</textarea>
+                    <textarea class="form-control" style="height: 500px" name="visit_info">{{$visit->pre_diagnosis}}</textarea>
                 </div>
             </div>
 
