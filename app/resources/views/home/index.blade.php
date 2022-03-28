@@ -13,7 +13,7 @@
             <a href="{{route('visits')}}"><h3>Приемы</h3></a>
         </div>
         <div class="ways-item notes">
-            <a href="/notes"><h3>Заметки</h3></a>
+            <a href="{{route('notes')}}"><h3>Заметки</h3></a>
         </div>
     </div>
 @endsection

@@ -12,10 +12,12 @@
                 <a href="{{route('card.search')}}">
                     <li class="nav-item">Картотека</li>
                 </a>
-                {{--<a href="{{route('visit.search')}}">
+                <a href="{{route('visits')}}">
                     <li class="nav-item">Приемы</li>
-                </a>--}}
-                {{-- <a href="{{route('notes')}}"><li class="nav-item">Заметки</li></a>--}}
+                </a>
+                <a href="{{route('notes')}}">
+                    <li class="nav-item">Заметки</li>
+                </a>
             </ul>
         </div>
     </div>

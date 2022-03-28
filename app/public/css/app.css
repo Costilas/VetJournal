@@ -104,6 +104,75 @@ footer {
     padding: 20px;
 }
 
+.note_wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto;
+
+}
+
+.note {
+    display: block;
+    margin: 15px;
+    width: 300px;
+    height: 420px;
+    text-align: center;
+    border: 1px solid gray;
+    border-radius: 10px;
+    box-shadow: 5px 5px 20px rgba(0,0,0,0.8);;
+}
+
+.note textarea {
+    resize: none;
+    width: 90%;
+    height: 200px;
+    padding: 5px;
+}
+
+.note form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+}
+
+.note form * {
+    margin: 15px auto;
+}
+
+.low_status{
+    background-color: #adb5bd;
+}
+
+.medium_status{
+    background-color: #ffcd39;
+}
+
+.high_status{
+    background-color: coral;
+}
+
+.critical_status{
+    background-color: crimson;
+}
+
+.note_item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+.note_item :where(.date, .theme, .body){
+    padding: 10px;
+}
+
+.note_icon {
+    font-size: 20px;
+}
+
 /*General styles*/
 
 /*Header styles*/
@@ -115,6 +184,8 @@ footer {
 /*Visit styles*/
 
 /*Pet*/
+
+/*Notes*/
 
 /*Main page styles*/
 

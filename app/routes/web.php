@@ -20,3 +20,9 @@ Route::get('/visits', [\App\Http\Controllers\VisitController::class, 'index'])->
 Route::post('/visit/create', [\App\Http\Controllers\VisitController::class, 'create'])->name('visit.create');
 Route::get('/visit/{id}/edit', [\App\Http\Controllers\VisitController::class, 'edit'])->name('visit.edit');
 Route::post('/visit/update', [\App\Http\Controllers\VisitController::class, 'update'])->name('visit.update');
+
+//Notes
+Route::get('/notes', [\App\Http\Controllers\NoteController::class, 'index'])->name('notes');
+Route::post('/note/create', [\App\Http\Controllers\NoteController::class, 'create'])->name('note.create');
+Route::get('/note/{id}/delete', [\App\Http\Controllers\NoteController::class, 'delete'])->name('note.delete');
+
