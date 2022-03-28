@@ -8,7 +8,7 @@
                    name="visit_date_start"
                    max="{{date('Y-m-d')}}"
                    aria-label="visit_date_start"
-                   value="{{date('Y-m-d')}}">
+                   value="{{date('Y-m-d', strtotime("-1 day"))}}">
         </div>
         <div class="col text-center">
             <label for="visit_date_end">По:</label>
@@ -19,6 +19,6 @@
                    value="{{date('Y-m-d')}}">
         </div>
     </div>
-    <input type="hidden" name="visit_search" value="search">
+    <input type="hidden" name="petVisitSearch" value="search">
     <button type="submit" class="btn btn-primary m-3"><i class="bi bi-plus-lg"></i> Искать</button>
 </form>

@@ -14,7 +14,7 @@
 
     <div class="search_block">
         <h2 class="text-center">Поиск по существующим:</h2>
-        <form class="search_form w-50 m-auto text-center" method="GET" action="{{ route('search') }}">
+        <form class="search_form w-50 m-auto text-center" method="GET" action="{{ route('card.search') }}">
             @csrf
             <div class="row mb-3 mt-3">
                 <div class="col">

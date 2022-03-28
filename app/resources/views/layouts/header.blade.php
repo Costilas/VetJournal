@@ -9,9 +9,12 @@
                 <a href="{{route('home')}}">
                     <li class="nav-item">Главная</li>
                 </a>
-                <a href="{{route('search')}}">
+                <a href="{{route('card.search')}}">
                     <li class="nav-item">Картотека</li>
                 </a>
+                {{--<a href="{{route('visit.search')}}">
+                    <li class="nav-item">Приемы</li>
+                </a>--}}
                 {{-- <a href="{{route('notes')}}"><li class="nav-item">Заметки</li></a>--}}
             </ul>
         </div>

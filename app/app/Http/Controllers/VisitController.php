@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class VisitController extends Controller
 {
+    public function index(Request $request) {
+
+       $visits = self::searchVisits($request);
+
+        return view('visit.index', compact('visits'));
+    }
+
     public function create(Request $request)
     {
         //Сделать валидацию
@@ -47,5 +54,40 @@ class VisitController extends Controller
         $visit->save();
 
         return redirect(route('visit.edit', ['id'=>$request->visit_id]));
+    }
+
+    public static function searchPetVisits(Request $request, int $petId) {
+        $query = Visit::where('pet_id', '=', $petId);
+
+        if ($request->has('petVisitSearch')) {
+                $query->whereBetween('visit_date', [$request->visit_date_start, $request->visit_date_end]);
+            }
+        $petVisits = $query->orderBy('visit_date', 'DESC')
+                ->paginate(5)
+                ->withQueryString();
+
+        return $petVisits;
+    }
+
+    private static function searchVisits(Request $request) {
+        $query = Visit::with('pet');
+        if($request->has('visitSearch')&&!$request->has('visitSearchByDate')) {
+            if($request->has('yesterday'))
+            {
+                $query->where('visit_date','=', date('Y-m-d', strtotime('-1 day')));
+            }
+            if ($request->has('today'))
+            {
+                $query->where('visit_date', '=', date('Y-m-d'));
+            }
+        }
+        else {
+            $query->whereBetween('visit_date', [$request->visit_date_start, $request->visit_date_end]);
+        }
+        $visits = $query->orderBy('visit_date', 'DESC')
+            ->paginate(25)
+            ->withQueryString();
+
+        return $visits;
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () { return view('home.index'); })->name('home');
 
 //Card
-Route::get('/search', [\App\Http\Controllers\CardController::class, 'index'])->name('search');
+Route::get('/card/search', [\App\Http\Controllers\CardController::class, 'index'])->name('card.search');
 Route::post('/card/create', [\App\Http\Controllers\CardController::class, 'create'])->name('card.create');
 
 //Pet
@@ -16,6 +16,7 @@ Route::post('/pet/add', [\App\Http\Controllers\PetController::class, 'add'])->na
 Route::get('/owner/{id}/show', [\App\Http\Controllers\OwnerController::class, 'show'])->name('owner.show');
 
 //Visit
+Route::get('/visits', [\App\Http\Controllers\VisitController::class, 'index'])->name('visits');
 Route::post('/visit/create', [\App\Http\Controllers\VisitController::class, 'create'])->name('visit.create');
 Route::get('/visit/{id}/edit', [\App\Http\Controllers\VisitController::class, 'edit'])->name('visit.edit');
 Route::post('/visit/update', [\App\Http\Controllers\VisitController::class, 'update'])->name('visit.update');
