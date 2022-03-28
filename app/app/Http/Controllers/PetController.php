@@ -29,4 +29,19 @@ class PetController extends Controller
 
         return view('pet.show', compact('pet', 'visits'));
     }
+
+
+    public function add(Request $request)
+    {
+        //Валидация
+        $newPet = Pet::create([
+            'pet_name' => $request->pet_name,
+            'owner_id' => $request->owner_id,
+            'kind_id' => $request->kind,
+            'gender_id' => $request->gender,
+            'birth' => $request->birth
+        ]);
+
+        return redirect(route('owner.show', ['id'=>$request->owner_id]));
+    }
 }

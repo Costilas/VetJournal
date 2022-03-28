@@ -167,6 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
+        \morphos\MorphosBladeProvider::class,
 
         /*
          * Application Service Providers...

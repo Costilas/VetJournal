@@ -14,28 +14,28 @@
 
     <div class="search_block">
         <h2 class="text-center">Поиск по существующим:</h2>
-        <form class="search_form w-50 m-auto text-center" method="GET" action="{{route('search')}}">
+        <form class="search_form w-50 m-auto text-center" method="GET" action="{{ route('search') }}">
             @csrf
             <div class="row mb-3 mt-3">
                 <div class="col">
                     <input type="text" class="form-control @error('last_name') is-invalid @enderror"
                            name="last_name" placeholder="Фамилия" aria-label="Last name"
-                           value="{{old('last_name')}}">
+                           value="{{ old('last_name') }}">
                 </div>
                 <div class="col">
                     <input type="text" class="form-control @error('name') is-invalid @enderror"
                            name="name" placeholder="Имя" aria-label="First name"
-                           value="{{old('name')}}">
+                           value="{{ old('name') }}">
                 </div>
                 <div class="col">
                     <input type="text" class="form-control @error('patronymic') is-invalid @enderror"
                            name="patronymic" placeholder="Отчество" aria-label="Patronymic"
-                           value="{{old('patronymic')}}">
+                           value="{{ old('patronymic') }}">
                 </div>
                 <div class="col">
                     <input type="text" class="form-control @error('phone') is-invalid @enderror"
                            name="phone" placeholder="Телефон" aria-label="Phone"
-                           value="{{old('phone')}}">
+                           value="{{ old('phone') }}">
                 </div>
             </div>
             <div class="row">

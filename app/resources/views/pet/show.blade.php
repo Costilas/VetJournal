@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 
-@section('title') Пациент::{{$pet->pet_name}} @endsection
+@section('title') Пациент::{{$pet->pet_name}} ({{$pet->owner->last_name}}) @endsection
 
 @section('content')
     <h2 class="text-center m-5">Карточка питомца: {{$pet->pet_name}}(ID:{{$pet->id}})</h2>
@@ -10,9 +10,9 @@
                 <div class="card-body">
                     <h5 class="card-title text-center">Кличка: <strong>{{$pet->pet_name}}</strong></h5>
                     <p class="card-text">ID: <strong>{{$pet->id}}</strong></p>
-                    <p class="card-text">Пол: <strong>{{$pet->gender->gender}}</strong></p>
                     <p class="card-text">Вид: <strong>{{$pet->kind->kind}}</strong></p>
-                    <p class="card-text">Дата рождения <strong>{{date('d-m-Y', strtotime($pet->birth))}}</strong>
+                    <p class="card-text">Пол: <strong>{{$pet->gender->gender}}</strong></p>
+                    <p class="card-text">Дата рождения <strong>{{$pet->birthDateFormat()}}</strong>
                         (<i>{{$pet->countYears()}} лет</i>)</p>
                     <p class="card-text"></p>
                 </div>

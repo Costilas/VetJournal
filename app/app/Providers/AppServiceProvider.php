@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
 
-        view()->composer(['card.create', 'pet.add'], function ($view) {
+        view()->composer(['card.create', 'owner.pet.add'], function ($view) {
             $view->with('genders', Gender::all());
             $view->with('kinds', Kind::all());
         });

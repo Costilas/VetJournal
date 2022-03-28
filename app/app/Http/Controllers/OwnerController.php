@@ -11,6 +11,7 @@ class OwnerController extends Controller
     {
         $owner = Owner::with('pets', 'pets.kind', 'pets.gender')->findOrFail($id);
 
+
         return view('owner.show', compact('owner'));
     }
 }

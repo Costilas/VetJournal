@@ -31,6 +31,11 @@ class Pet extends Model
         return $this->hasMany(Visit::class);
     }
 
+    public function birthDateFormat()
+    {
+        return date('d-m-Y', strtotime($this->birth));
+    }
+
     public function countYears()
     {
         return round(((((time() - strtotime($this->birth)) / 60) / 60) / 24) / 365, 1);

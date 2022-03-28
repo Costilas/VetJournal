@@ -3,6 +3,7 @@
     <td>{{$owner->address}}</td>
     <td>{{$owner->phone}}</td>
     <td>
+
         @foreach($owner->pets as $pet)
             <a class="d-block" href="{{route('pet.show', ['id'=>$pet->id])}}" target="_blank">
                 {{$pet->pet_name}} ({{$pet->kind->kind}})

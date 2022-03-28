@@ -11,7 +11,8 @@
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^3.4",
-        "twbs/bootstrap": "^5.1"
+        "twbs/bootstrap": "^5.1",
+        "wapmorgan/morphos-blade": "^1.6"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
