@@ -39,6 +39,6 @@
         </div>
     </div>
     <div class="visit_block">
-        @include('visit.list')
+        @include('pet.visit.list')
     </div>
 @endsection

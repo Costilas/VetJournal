@@ -7,7 +7,7 @@
     </p>
     <div class="collapse" id="searchVisit">
         <div class="card card-body">
-            @include('visit.forms.search')
+            @include('pet.visit.forms.search')
         </div>
     </div>
 </div>

@@ -18,6 +18,6 @@ class Visit extends Model
 
     public function dateFormat()
     {
-        return date('d-m-Y', strtotime($this->visit_date));
+        return date('H:i / d-m-Y', strtotime($this->visit_date));
     }
 }

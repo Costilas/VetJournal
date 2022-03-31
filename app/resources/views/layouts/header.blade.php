@@ -9,7 +9,7 @@
                 <a href="{{route('home')}}">
                     <li class="nav-item">Главная</li>
                 </a>
-                <a href="{{route('card.search')}}">
+                <a href="{{route('cards')}}">
                     <li class="nav-item">Картотека</li>
                 </a>
                 <a href="{{route('visits')}}">

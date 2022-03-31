@@ -7,7 +7,8 @@
     </p>
     <div class="collapse" id="newVisit">
         <div class="card card-body">
-            @include('visit.forms.create')
+            @include('pet.visit.forms.create')
         </div>
     </div>
 </div>
+<hr>

@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('visits', function (Blueprint $table) {
             $table->id();
             $table->integer('pet_id')->unsigned();
-            $table->date('visit_date');
+            $table->dateTime('visit_date');
             $table->integer('weight')->unsigned();
             $table->integer('temperature')->unsigned();
-            $table->string('pre_diagnosis');
+            $table->string('pre_diagnosis', 60);
             $table->text('visit_info');
             $table->timestamps();
         });

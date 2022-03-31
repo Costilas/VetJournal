@@ -6,8 +6,17 @@
         <th>Питомцы:</th>
         <th>Действие:</th>
     </tr>
-    @foreach($owners->unique('id') as $owner)
-        {{view('search.row', compact('owner'))}}
-    @endforeach
+    @if(!empty($owners->items()))
+        @foreach($owners->unique('id') as $owner)
+            {{view('search.row', compact('owner'))}}
+        @endforeach
+    @else
+        <tr class="text-center">
+            <td colspan="5">
+                <p> Результатов по введенным данным нет. <br> Проверьте правильность заполнения полей. </p>
+            </td>
+        </tr>
+    @endif
+
 </table>
 {{$owners->links()}}
