@@ -2,46 +2,48 @@
 
 namespace App\Http\Controllers;
 
-use App\Filters\PetVisitFilter;
-use App\Http\Requests\AddPetRequest;
-use App\Http\Requests\SearchPetVisitsRequest;
+use App\Http\Requests\Pet\AddPetRequest;
+use App\Http\Requests\Visit\SearchPetVisitsRequest;
 use App\Models\Owner;
 use App\Models\Pet;
 use App\Models\Visit;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 
 
 class PetController extends Controller
 {
-    public function show($id)
+    public function show($id, Request $request)
     {
-        $pet = Pet::with('owner', 'gender', 'kind', 'owner.pets')->findOrFail($id);
-        $visits = $pet->visits()->paginate(1);
-
-        return view('pet.show', compact('pet', 'visits'));
-    }
-
-    public function searchPetVisits(SearchPetVisitsRequest $request, $id)
-    {
-        $validatedSearchData = $request->validated();
-
-        $pet = Pet::with('owner', 'gender', 'kind', 'owner.pets')
-            ->findOrFail($id);
-
-        if(!$pet->id||$pet->id!=$validatedSearchData['visit']['pet_id'])
+        $pet = Pet::with('owner.pets', 'gender', 'kind')->findOrFail($id);
+        if(!empty($request)&&$request->has('visits'))
         {
-            return redirect()->back()
-                ->withErrors('Скорее всего, вы пытались поменять идентификатор питомца вручную.');
+            $validated = $request->validate([
+                "visits" => [
+                    'required',
+                    'array',
+                    'min:2',
+                    'max:2'
+                ],
+                "visits.from" => [
+                    'required',
+                    'before_or_equal:'. now()->format('Y-m-d'),
+                ],
+                "visits.to" => [
+                    'required',
+                    'before_or_equal:'. now()->format('Y-m-d'),
+                ],
+            ]);
+            $validated['pet_id'] = $id;
+            $visits =  Visit::filter($validated)->paginate(1)->withQueryString();
+
+        } else {
+            $visits = $pet->visits()->paginate(1)->withQueryString();
         }
 
-        $filter = new PetVisitFilter(Visit::class, $validatedSearchData);
-        $visitIds = $filter->runFiltering();
-        $visits = Visit::query()->whereKey($visitIds)->paginate(1)->withQueryString();
-
         return view('pet.show', compact('pet', 'visits'));
     }
-
 
     public function add(AddPetRequest $request)
     {

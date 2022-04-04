@@ -2,29 +2,62 @@
 
 namespace App\Http\Controllers;
 
-use App\Filters\CardFilter;
 use App\Http\Requests\Card\CreateCardRequest;
 use App\Http\Requests\Card\SearchCardRequest;
 use App\Models\Owner;
+use Illuminate\Http\Request;
 
 
 class CardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('card.index');
+
+        $owners = '';
+        if(!empty($request)&&$request->has('search'))
+        {
+            $validated = $request->validate([
+                'name'=>[
+                    'alpha',
+                    'max:25',
+                    'nullable',
+                    'required_without_all:patronymic,last_name,phone,pets'
+                ],
+                'patronymic'=>[
+                    'alpha',
+                    'max:25',
+                    'nullable',
+                    'required_without_all:name,last_name,phone,pets'
+                ],
+                'last_name'=>[
+                    'alpha',
+                    'max:25',
+                    'nullable',
+                    'required_without_all:name,patronymic,phone,pets'
+                ],
+                'phone'=>[
+                    'starts_with:8',
+                    'digits_between:1,11',
+                    'nullable',
+                    'required_without_all:name,patronymic,last_name,pets'
+                ],
+
+                'pets'=>[
+                    'alpha',
+                    'max:25',
+                    'nullable',
+                    'required_without_all:name,patronymic,last_name,phone'
+                ]
+            ]);
+            $owners = Owner::filter($validated)->with('pets.kind')->paginate(2);
+        }
+
+        return view('card.index', compact('owners'));
     }
 
-    public function search(SearchCardRequest $request)
+    public function search(Request $request)
     {
-        $requestData = $request->validated();
-        $filter = new CardFilter(Owner::class, $requestData);
-        $ownerIds = $filter->runFiltering();
-
-        $owners = Owner::with('pets.kind')
-            ->whereKey($ownerIds)
-            ->paginate(10)
-            ->withQueryString();
+        $owners = Owner::filter($request->all())->with('pets.kind')->paginate(2);
 
         return view('card.index', compact('owners'));
     }
@@ -36,7 +69,6 @@ class CardController extends Controller
 
         $newOwner = Owner::create($validatedData['owner']);
         $newPet= $newOwner->pets()->create($validatedData['pet']);
-
 
         if(!$newOwner->id && !$newPet->id)
         {

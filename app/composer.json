@@ -12,6 +12,7 @@
         "laravel/tinker": "^2.7",
         "laravel/ui": "^3.4",
         "symfony/translation": "^6.0",
+        "tucker-eric/eloquentfilter": "^3.1",
         "twbs/bootstrap": "^5.1",
         "wapmorgan/morphos-blade": "^1.6"
     },

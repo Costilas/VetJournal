@@ -168,6 +168,7 @@ return [
          * Package Service Providers...
          */
         \morphos\MorphosBladeProvider::class,
+        EloquentFilter\ServiceProvider::class,
 
         /*
          * Application Service Providers...

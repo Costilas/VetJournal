@@ -6,7 +6,6 @@ use App\Http\Requests\Visit\AddVisitRequest;
 use App\Http\Requests\Visit\EditVisitRequest;
 use App\Http\Requests\Visit\SearchVisitsRequest;
 use App\Models\Visit;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class VisitController extends Controller
@@ -14,6 +13,29 @@ class VisitController extends Controller
     public function index()
     {
         return view('visit.index');
+    }
+
+    public function search(SearchVisitsRequest $request) {
+
+        $query = Visit::with('pet');
+        if($request->has('visitSearch')&&!$request->has('visitSearchByDate')) {
+            if($request->has('yesterday'))
+            {
+                $query->where('visit_date','=', date('Y-m-d', strtotime('-1 day')));
+            }
+            if ($request->has('today'))
+            {
+                $query->where('visit_date', '=', date('Y-m-d'));
+            }
+        }
+        else {
+            $query->whereBetween('visit_date', [$request->visit_date_start, $request->visit_date_end]);
+        }
+        $visits = $query->orderBy('visit_date', 'DESC')
+            ->paginate(25)
+            ->withQueryString();
+
+        return view('visit.index', compact('visits'));
     }
 
     public function create(AddVisitRequest $request)
@@ -58,30 +80,5 @@ class VisitController extends Controller
         }
 
         return redirect(route('visit.edit', ['id'=>$visitId]));
-    }
-
-    public function searchVisits(SearchVisitsRequest $request) {
-
-        dd($request);
-
-        $query = Visit::with('pet');
-        if($request->has('visitSearch')&&!$request->has('visitSearchByDate')) {
-            if($request->has('yesterday'))
-            {
-                $query->where('visit_date','=', date('Y-m-d', strtotime('-1 day')));
-            }
-            if ($request->has('today'))
-            {
-                $query->where('visit_date', '=', date('Y-m-d'));
-            }
-        }
-        else {
-            $query->whereBetween('visit_date', [$request->visit_date_start, $request->visit_date_end]);
-        }
-        $visits = $query->orderBy('visit_date', 'DESC')
-            ->paginate(25)
-            ->withQueryString();
-
-        return view('visit.index', compact('visits'));
     }
 }

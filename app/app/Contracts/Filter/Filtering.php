@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 
 interface Filtering
 {
-    function runFiltering():Collection;
+    function runFiltering();
 
     function filterAdd(string $model, string $fillable, mixed $value, string $operator): void;
 }

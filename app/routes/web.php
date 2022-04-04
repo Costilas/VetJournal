@@ -7,12 +7,12 @@ Route::get('/', function () { return view('home.index'); })->name('home');
 
 //Card
 Route::get('/cards', [App\Http\Controllers\CardController::class, 'index'])->name('cards');
-Route::get('/card/search', [App\Http\Controllers\CardController::class, 'search'])->name('card.search');
+//Route::get('/card/search', [App\Http\Controllers\CardController::class, 'search'])->name('card.search');
 Route::post('/card/create', [App\Http\Controllers\CardController::class, 'create'])->name('card.create');
 
 //Pet
 Route::get('/pet/{id}/show', [App\Http\Controllers\PetController::class, 'show'])->name('pet.show')->where('id', '[0-9]+');
-Route::get('/pet/{id}/visits', [App\Http\Controllers\PetController::class, 'searchPetVisits'])->name('pet.visit.search')->where('id', '[0-9]+');
+Route::get('/pet/{id}/visits', [App\Http\Controllers\PetController::class, 'visits'])->name('pet.visits')->where('id', '[0-9]+');
 Route::post('/pet/add', [App\Http\Controllers\PetController::class, 'add'])->name('pet.add');
 
 //Owner

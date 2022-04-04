@@ -24,23 +24,19 @@ class SearchPetVisitsRequest extends FormRequest
     public function rules()
     {
         return [
-            "visit" => [
+            "visits" => [
                 'required',
                 'array',
-                'min:3',
-                'max:3'
+                'min:2',
+                'max:2'
             ],
-            "visit.date_start" => [
+            "visits.from" => [
                 'required',
                 'before_or_equal:'. now()->format('Y-m-d'),
             ],
-            "visit.date_end" => [
+            "visits.to" => [
                 'required',
                 'before_or_equal:'. now()->format('Y-m-d'),
-            ],
-            "visit.pet_id" => [
-                'required',
-                'numeric'
             ],
         ];
     }
@@ -54,19 +50,16 @@ class SearchPetVisitsRequest extends FormRequest
     public function messages()
     {
         return [
-            'visit.min' => 'Все поля данных поиска приема должны быть заполнены.',
-            'visit.array' => 'Проверьте заполненность всех полей поиска приема.',
-            'visit.required' => 'Все поля формы поиска приема должны быть заполнены.',
-            'visit.max'=>' Обнаружены лишние поля.',
+            'visits.min' => 'Все поля данных поиска приема должны быть заполнены.',
+            'visits.array' => 'Проверьте заполненность всех полей поиска приема.',
+            'visits.required' => 'Все поля формы поиска приема должны быть заполнены.',
+            'visits.max'=>' Обнаружены лишние поля.',
 
-            'visit.start_date.required'=>'Необходимо заполнить поле "С:".',
-            'visit.start_date.before_or_equals'=>'Неверный формат даты в поле "С:".',
+            'visits.from.required'=>'Необходимо заполнить поле "С:".',
+            'visits.from.before_or_equals'=>'Неверный формат даты в поле "С:".',
 
-            'visit.end_date.required'=>'Необходимо заполнить поле "По:".',
-            'visit.end_date.before_or_equals:'=>'Неверный формат даты в поле "По:".',
-
-            'visit.pet_id.required'=>'Нет необходимости редактировать в ручную скрытые поля(Required).',
-            'visit.pet_id.numeric'=>'Нет необходимости редактировать в ручную скрытые поля(Numeric).',
+            'visits.to.required'=>'Необходимо заполнить поле "По:".',
+            'visits.to.before_or_equals:'=>'Неверный формат даты в поле "По:".',
         ];
     }
 }

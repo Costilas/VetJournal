@@ -12,9 +12,9 @@ class SearchCardRequest extends FormRequest
      * @return bool
      */
     public function authorize()
-    {
-        return true;
-    }
+{
+    return true;
+}
 
     /**
      * Get the validation rules that apply to the request.
@@ -24,58 +24,67 @@ class SearchCardRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'string|max:25|nullable|required_without_all:patronymic,last_name,phone,pet_name',
-            'patronymic'=>'string|max:25|nullable|required_without_all:name,last_name,phone,pet_name',
-            'last_name'=>'string|max:25|nullable|required_without_all:name, patronymic,phone,pet_name',
-            'phone'=>'starts_with:8|digits_between:1,11|nullable|required_without_all:name,patronymic,last_name,pet_name',
-            'pet_name'=>'string|max:25|nullable|required_without_all:name,patronymic,last_name,phone',
+            'name'=>[
+                'alpha',
+                'max:25',
+                'nullable',
+                'required_without_all:patronymic,last_name,phone,pets'
+            ],
+            'patronymic'=>[
+                'alpha',
+                'max:25',
+                'nullable',
+                'required_without_all:name,last_name,phone,pets'
+            ],
+            'last_name'=>[
+                'alpha',
+                'max:25',
+                'nullable',
+                'required_without_all:name,patronymic,phone,pets'
+            ],
+            'phone'=>[
+                'starts_with:8',
+                'digits_between:1,11',
+                'nullable',
+                'required_without_all:name,patronymic,last_name,pets'
+            ],
+
+            'pets'=>[
+                'alpha',
+                'max:25',
+                'nullable',
+                'required_without_all:name,patronymic,last_name,phone'
+            ]
         ];
     }
 
     public function messages()
     {
         return [
-            'owner.min' => 'Все поля данных владельца должны быть заполнены.',
-            'owner.array' => 'Проверьте заполненность всех полей владельца',
 
-            'pet.min' => 'Все поля данных питомца должны быть заполнены.',
-            'pet.array' => 'Проверьте заполненность всех полей питомца',
+            'name.required_without_all' => 'Необходио заполнить поле "Имя владельца".',
+            'name.alpha' => 'Поле "Имя владельца" не должно содержать числа и специальные символы.',
+            'name.max' => 'Привышен лимит символов в поле "Имя владельца"(20).',
 
-            'owner.name.required' => 'Необходио заполнить поле "Имя владельца".',
-            'owner.name.alpha' => 'Поле "Имя владельца" не должно содержать числа и специальные символы.',
-            'owner.name.max' => 'Привышен лимит символов в поле "Имя владельца"(20).',
+            'patronymic.required_without_all' => 'Необходио заполнить поле "Отчество владельца".',
+            'patronymic.alpha' => 'Поле "Отчество владельца" не должно содержать числа и специальные символы.',
+            'patronymic.max' => 'Привышен лимит символов в поле "Отчество владельца"(20).',
 
-            'owner.patronymic.required' => 'Необходио заполнить поле "Отчество владельца".',
-            'owner.patronymic.alpha' => 'Поле "Отчество владельца" не должно содержать числа и специальные символы.',
-            'owner.patronymic.max' => 'Привышен лимит символов в поле "Отчество владельца"(20).',
+            'last_name.required_without_all' => 'Необходио заполнить поле "Фамилия владельца".',
+            'last_name.alpha' => 'Поле "Фамилия владельца" не должно содержать числа и специальные символы.',
+            'last_name.max' => 'Привышен лимит символов в поле "Фамилия владельца"(20).',
 
-            'owner.last_name.required' => 'Необходио заполнить поле "Фамилия владельца".',
-            'owner.last_name.alpha' => 'Поле "Фамилия владельца" не должно содержать числа и специальные символы.',
-            'owner.last_name.max' => 'Привышен лимит символов в поле "Фамилия владельца"(20).',
-
-            'owner.phone.required' => 'Необходио заполнить поле "Телефон владельца".',
-            'owner.phone.digits' => 'Поле "Телефон владельца" должно содержать только числа (Без пробелов и специальных символов).',
-            'owner.phone.max' => 'Привышен лимит символов в поле "Телефон владельца"(11).',
-            'owner.phone.unique' => "  Данные введенные в поле 'Телефон владельца' уже найдены в списке зарегистрированных пользователей.
+            'phone.required_without_all' => 'Необходио заполнить поле "Телефон владельца".',
+            'phone.digits' => 'Поле "Телефон владельца" должно содержать только числа (Без пробелов и специальных символов).',
+            'phone.max' => 'Привышен лимит символов в поле "Телефон владельца"(11).',
+            'phone.unique' => "  Данные введенные в поле 'Телефон владельца' уже найдены в списке зарегистрированных пользователей.
                                        Проверьте правильность заполнения поля или проерьте телефон в поиске по существующим.",
-            'owner.phone.starts_with' => 'Телефон должен начинаться с "8".',
+            'phone.starts_with' => 'Телефон должен начинаться с "8".',
 
-            'owner.address.required' => 'Необходио заполнить поле "Адрес владельца".',
-            'owner.address.string' => 'Поле "Адрес владельца" не должно содержать числа и специальные символы.',
-            'owner.address.max' => 'Привышен лимит символов в поле "Фамилия владельца"(60)',
+            'pets.required_without_all'=>'Необходимо заполнить поле "Кличка питомца".',
+            'pets.alpha'=>'Поле "Кличка питомца" не должно содержать числа и специальные символы.',
+            'pets.max'=>'Привышен лимит символов в поле "Кличка питомца"(20).',
 
-            'pet.pet_name.required'=>'Необходимо заполнить поле "Кличка питомца".',
-            'pet.pet_name.alpha'=>'Поле "Кличка питомца" не должно содержать числа и специальные символы.',
-            'pet.pet_name.max'=>'Привышен лимит символов в поле "Кличка питомца"(20).',
-
-            'pet.kind_id.required'=>'Необходимо заполнить поле "Вид питомца".',
-            'pet.kind_id.digit'=>'Неверные данные в поле "Вид питомца".',
-
-            'pet.gender_id.required'=>'Необходимо заполнить поле "Пол питомца".',
-            'pet.gender_id.digit'=>'Неверные данные в поле "Пол питомца".',
-
-            'pet.birth.required'=>'Необходимо заполнить поле "Дата рождения питомца".',
-            'pet.birth.date'=>'Неверный формат поля "Дата рождения питомца".',
         ];
     }
 

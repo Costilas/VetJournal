@@ -2,14 +2,7 @@
 
 
 @section('content')
-    @if($errors->any())
-        @dump($errors->all())
-        <div class="alert alert-danger text-center">
-            @foreach($errors->all() as $error)
-                <li>{{$error}}</li>
-            @endforeach
-        </div>
-    @endif
+    @include('layouts.notify')
     <div class="new_card_block">
         <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
            aria-controls="collapseExample">
@@ -21,13 +14,13 @@
     </div>
     <div class="search_block">
         <h2 class="text-center">Поиск по существующим:</h2>
-        <form class="search_form w-50 m-auto text-center" method="GET" action="{{route('card.search')}}">
+        <form class="search_form w-50 m-auto text-center" method="GET" action="{{route('cards')}}">
             @csrf
             <div class="row mb-3 mt-3">
                 <div class="col">
                     <input type="text" class="form-control @error('last_name') is-invalid @enderror"
                            name="last_name" placeholder="Фамилия" aria-label="Last name"
-                           value="{{ session()->getOldInput('last_name')}}">
+                           value="{{ request()->input('last_name')}}">
 
                 </div>
                 <div class="col">
@@ -48,15 +41,14 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <input type="text" class="form-control @error('pet_name') is-invalid @enderror"
-                           name="pets[name]" placeholder="Кличка питомца" aria-label="First name"
-                           value="{{request()->input('pet_name')}}">
+                    <input type="text" class="form-control @error('pets') is-invalid @enderror"
+                           name="pets" placeholder="Кличка питомца" aria-label="pets"
+                           value="{{request()->input('pets')}}">
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary m-3"><i class="bi bi-search"></i> Поиск</button>
+            <button type="submit" name="search" class="btn btn-primary m-3"><i class="bi bi-search"></i> Поиск</button>
 
-            <input type="hidden" name="search">
         </form>
         @if(!empty($owners))
             {{view('search.list', compact('owners'))}}
