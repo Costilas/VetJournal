@@ -3,17 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Card\CreateCardRequest;
-use App\Http\Requests\Card\SearchCardRequest;
 use App\Models\Owner;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Session;
 
 class CardController extends Controller
 {
     public function index(Request $request)
     {
-
-        $owners = '';
+        $owners = null;
         if(!empty($request)&&$request->has('search'))
         {
             $validated = $request->validate([
@@ -55,14 +53,6 @@ class CardController extends Controller
         return view('card.index', compact('owners'));
     }
 
-    public function search(Request $request)
-    {
-        $owners = Owner::filter($request->all())->with('pets.kind')->paginate(2);
-
-        return view('card.index', compact('owners'));
-    }
-
-
     public function create(CreateCardRequest $request)
     {
         $validatedData = $request->validated();
@@ -75,9 +65,10 @@ class CardController extends Controller
             return redirect()->back()
                 ->withInput()
                 ->withErrors('При добавлении что-то пошло не так');
+        } else {
+            Session::flash('success', "Питомец $newPet->name успешно добавлен");
         }
 
-        return redirect()->route('owner.show', ['id' => $newOwner->id])
-            ->with('success', 'Пользователь и питомец успешно добавлены');
+        return redirect()->route('owner.show', ['id' => $newOwner->id]);
     }
 }

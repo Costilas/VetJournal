@@ -1,8 +1,8 @@
 @extends('layouts.layout')
 
+@section('title') VetJournal::Поиск карт @endsection
 
 @section('content')
-    @include('layouts.notify')
     <div class="new_card_block">
         <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
            aria-controls="collapseExample">
@@ -51,10 +51,7 @@
 
         </form>
         @if(!empty($owners))
-            {{view('search.list', compact('owners'))}}
+            {{view('card.list', compact('owners'))}}
         @endif
-
     </div>
-
-
 @endsection

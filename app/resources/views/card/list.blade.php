@@ -8,7 +8,7 @@
     </tr>
     @if(!empty($owners->items()))
         @foreach($owners->unique('id') as $owner)
-            {{view('search.row', compact('owner'))}}
+            {{view('card.row', compact('owner'))}}
         @endforeach
     @else
         <tr class="text-center">

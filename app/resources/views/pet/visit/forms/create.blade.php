@@ -2,7 +2,7 @@
     @csrf
     <div class="row mb-3 mt-3">
         <div class="col text-center">
-           <p>Время/Дата приема: {{date('d-m-Y / H:i')}}</p>
+            <p>Время/Дата приема: {{date('d-m-Y / H:i')}}</p>
         </div>
     </div>
     <div class="new_visit_info">

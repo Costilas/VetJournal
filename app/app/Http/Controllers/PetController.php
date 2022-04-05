@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Pet\AddPetRequest;
-use App\Http\Requests\Visit\SearchPetVisitsRequest;
 use App\Models\Owner;
 use App\Models\Pet;
 use App\Models\Visit;

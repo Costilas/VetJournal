@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Note;
 use App\Models\Status;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class NoteController extends Controller
 {
@@ -24,13 +25,20 @@ class NoteController extends Controller
             'status_id' => $request->status_id,
         ]);
 
+        if ($newNote->id) {
+            Session::flash('success', "Прием успешно изменен!");
+        }
+
         return redirect(route('notes'));
     }
 
-
     public function delete($id)
     {
-        Note::query()->find($id)->delete();
+        $deleting = Note::query()->find($id)->delete();
+
+        if ($deleting) {
+            Session::flash('success', "Заметка успешно удалена!");
+        }
 
         return redirect(route('notes'));
     }

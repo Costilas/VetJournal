@@ -1,9 +1,10 @@
 @extends('layouts.layout')
 
+@section('title') Редактировать прием:({{$visit->pet->pet_name}}) @endsection
 
 @section('content')
-    <h3 class="text-center m-3">Редактирование приема от {{$visit->visit_date}} животного {{$visit->pet->pet_name}}(ID:{{$visit->pet->id}})</h3>
-    @include('layouts.notify')
+    <h3 class="text-center m-3">Редактирование приема от {{$visit->dateFormat()}} животного {{$visit->pet->pet_name}}
+        (ID:{{$visit->pet->id}})</h3>
     <div>
         <form class="w-50 m-auto" action="{{route('visit.update')}}" method="POST">
             @csrf

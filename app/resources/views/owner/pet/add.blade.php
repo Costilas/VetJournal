@@ -40,5 +40,3 @@
 
     <input name="pet[owner_id]" type="hidden" value="{{$owner->id}}">
 </form>
-
-

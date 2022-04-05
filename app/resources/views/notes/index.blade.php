@@ -1,5 +1,6 @@
 @extends('layouts.layout')
 
+@section('title') VetJournal::Заметки @endsection
 
 @section('content')
     <div class="note_wrapper">

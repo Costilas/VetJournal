@@ -1,5 +1,6 @@
 @extends('layouts.layout')
 
+@section('title') VetJournal::Главная @endsection
 
 @section('content')
     <p> Всего владельцев: {{$ownerCount}}</p>
