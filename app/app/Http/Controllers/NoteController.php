@@ -26,7 +26,7 @@ class NoteController extends Controller
         ]);
 
         if ($newNote->id) {
-            Session::flash('success', "Прием успешно изменен!");
+            Session::flash('success', "Заметка успешно добавлена!");
         }
 
         return redirect(route('notes'));

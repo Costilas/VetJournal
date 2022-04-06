@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Visit\AddVisitRequest;
 use App\Http\Requests\Visit\EditVisitRequest;
-use App\Http\Requests\Visit\SearchVisitsRequest;
 use App\Models\Visit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -42,9 +41,9 @@ class VisitController extends Controller
                 ]
             ]);
 
-            $visits = Visit::filter($validated)->with('pet')->paginate(25);
+            $visits = Visit::filter($validated)->with('pet')->orderBy('id', 'DESC')->paginate(20)->withQueryString();
         } else {
-            $visits = Visit::filter(['search'=>'today'])->with('pet')->paginate(25);
+            $visits = Visit::filter(['search'=>'today'])->with('pet')->orderBy('id', 'DESC')->paginate(20)->withQueryString();
         }
 
         return view('visit.index', compact('visits'));
@@ -53,6 +52,8 @@ class VisitController extends Controller
     public function create(AddVisitRequest $request)
     {
         $validatedVisitData = $request->validated();
+        $validatedVisitData['visit']['weight'] = Visit::weightNormalize($validatedVisitData['visit']['weight']);
+        $validatedVisitData['visit']['temperature'] = Visit::temperatureNormalize($validatedVisitData['visit']['temperature']);
         $newVisit = Visit::create($validatedVisitData['visit']);
 
         if($newVisit->id)
@@ -78,9 +79,8 @@ class VisitController extends Controller
         $updateData = array_diff_assoc($validatedUpdateData['visit'], ['visit_id'=>$visitId]);
 
         $visit = Visit::find($visitId);
-
-        $visit->weight = $updateData['weight'];
-        $visit->temperature = $updateData['temperature'];
+        $visit->weight = Visit::weightNormalize($updateData['weight']);
+        $visit->temperature = Visit::temperatureNormalize($updateData['temperature']);
         $visit->pre_diagnosis = $updateData['pre_diagnosis'];
         $visit->visit_info = $updateData['visit_info'];
 

@@ -18,16 +18,6 @@
                     <i class="bi bi-journal-plus"></i> Добавить питомца
                 </a>
             </p>
-            @if(\Illuminate\Support\Facades\Session::has('success'))
-                {{\Illuminate\Support\Facades\Session::get('success')}}
-            @endif
-            @if($errors->any())
-                <div class="alert alert-danger text-center">
-                    @foreach($errors->all() as $error)
-                        <li>{{$error}}</li>
-                    @endforeach
-                </div>
-            @endif
             <div class="collapse" id="newPet">
                 <div class="card card-body">
                     @include('owner.pet.add')

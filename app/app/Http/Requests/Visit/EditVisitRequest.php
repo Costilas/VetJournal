@@ -36,11 +36,13 @@ class EditVisitRequest extends FormRequest
             ],
             "visit.weight" => [
                 'required',
-                'digitsBetween:1,3',
+                'not_regex:/^0{1,2}[\.\,]0+$/i',
+                'regex:/^(\d{1,2}[\.\,]\d{1,3})$|^(\d{1,2})$/i',
             ],
             "visit.temperature" => [
                 'required',
-                'digitsBetween:1,2',
+                'not_regex:/^0\d{1}[\.\,]0+$|^\d{1,2}[\,\.]0+$/i',
+                'regex:/^(\d{1,2}[\.\,]\d{1})$|^(\d{1,2})$/i',
             ],
             "visit.pre_diagnosis" => [
                 'required',
@@ -72,9 +74,13 @@ class EditVisitRequest extends FormRequest
 
             'visit.weight.required'=>'Необходимо заполнить поле "Вес".',
             'visit.weight.digitsBetween'=>'Поле "Вес" должно содержать только от одного до трех чисел.',
+            'visit.weight.not_regex'=>'Формат поля "Вес" имеет неверный формат (Пример: 1,075; 10,5; 1,5; 1.075; 10.5; 1.5 разделитель либо точка, либо запятая)',
+            'visit.weight.regex'=>'Формат поля "Вес" имеет неверный формат (Пример: 1,075; 10,5; 1,5; 1.075; 10.5; 1.5 разделитель либо точка, либо запятая)',
 
-            'visit.temperature.required'=>'Необходимо заполнить поле "Вид питомца".',
+            'visit.temperature.required'=>'Необходимо заполнить поле "Температура".',
             'visit.temperature.digit'=>'Поле "Температура" должно содержать только от одного до двух чисел.',
+            'visit.temperature.not_regex'=>'Формат поля "Температура" имеет неверный формат (Пример: 10,5; 1,5; 10.5; 1.5 разделитель либо точка, либо запятая)',
+            'visit.temperature.regex'=>'Формат поля "Температура" имеет неверный формат (Пример: 10,5; 1,5; 36.5; 1.5 разделитель либо точка, либо запятая)',
 
             'visit.pre_diagnosis.required'=>'Необходимо заполнить поле "Предварительный диагноз".',
             'visit.pre_diagnosis.string'=>'Неверные данные в поле "Предварительный диагноз".',

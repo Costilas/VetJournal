@@ -2,10 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 
-//Main page
-Route::get('/', function () {
-    return view('home.index');
-})->name('home');
+//Notes
+Route::get('/', [App\Http\Controllers\NoteController::class, 'index'])->name('notes');
+Route::post('/note/create', [App\Http\Controllers\NoteController::class, 'create'])->name('note.create');
+Route::get('/note/{id}/delete', [App\Http\Controllers\NoteController::class, 'delete'])->name('note.delete')->where(
+    'id',
+    '[0-9]+'
+);
 
 //Card
 Route::get('/cards', [App\Http\Controllers\CardController::class, 'index'])->name('cards');
@@ -33,11 +36,5 @@ Route::get('/visit/{id}/edit', [App\Http\Controllers\VisitController::class, 'ed
 );
 Route::post('/visit/update', [App\Http\Controllers\VisitController::class, 'update'])->name('visit.update');
 
-//Notes
-Route::get('/notes', [App\Http\Controllers\NoteController::class, 'index'])->name('notes');
-Route::post('/note/create', [App\Http\Controllers\NoteController::class, 'create'])->name('note.create');
-Route::get('/note/{id}/delete', [App\Http\Controllers\NoteController::class, 'delete'])->name('note.delete')->where(
-    'id',
-    '[0-9]+'
-);
+
 

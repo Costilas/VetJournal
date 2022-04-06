@@ -36,7 +36,7 @@ class Pet extends Model
 
     public function birthDateFormat()
     {
-        return date('d-m-Y', strtotime($this->birth));
+        return date('d.m.Y', strtotime($this->birth));
     }
 
     public function countYears()

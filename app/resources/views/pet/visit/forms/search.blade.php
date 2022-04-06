@@ -4,7 +4,7 @@
         <h3>Искать приемы:</h3>
         <div class="col text-center">
             <label for="visits[from]">С:</label>
-            <input type="date" class="form-control w-50 m-auto"
+            <input type="date" class="form-control w-50 m-auto @error('visits.from') is-invalid @enderror"
                    name="visits[from]"
                    max="{{date('Y-m-d')}}"
                    aria-label="visits[from]"
@@ -12,7 +12,7 @@
         </div>
         <div class="col text-center">
             <label for="visits[to]">По:</label>
-            <input type="date" class="form-control w-50 m-auto"
+            <input type="date" class="form-control w-50 m-auto @error('visits.to') is-invalid @enderror"
                    name="visits[to]"
                    max="{{date('Y-m-d')}}"
                    aria-label="visits[to]"

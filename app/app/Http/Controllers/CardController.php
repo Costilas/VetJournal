@@ -11,8 +11,8 @@ class CardController extends Controller
 {
     public function index(Request $request)
     {
-        $owners = null;
-        if(!empty($request)&&$request->has('search'))
+        $owners = '';
+        if(!empty($request->query()))
         {
             $validated = $request->validate([
                 'name'=>[
@@ -39,7 +39,6 @@ class CardController extends Controller
                     'nullable',
                     'required_without_all:name,patronymic,last_name,pets'
                 ],
-
                 'pets'=>[
                     'alpha',
                     'max:25',
@@ -47,7 +46,7 @@ class CardController extends Controller
                     'required_without_all:name,patronymic,last_name,phone'
                 ]
             ]);
-            $owners = Owner::filter($validated)->with('pets.kind')->paginate(2);
+            $owners = Owner::filter($validated)->with('pets.kind')->paginate(10)->withQueryString();
         }
 
         return view('card.index', compact('owners'));
@@ -66,7 +65,7 @@ class CardController extends Controller
                 ->withInput()
                 ->withErrors('При добавлении что-то пошло не так');
         } else {
-            Session::flash('success', "Питомец $newPet->name успешно добавлен");
+            Session::flash('success', "Новая карточка успешно создана!");
         }
 
         return redirect()->route('owner.show', ['id' => $newOwner->id]);

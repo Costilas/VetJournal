@@ -35,10 +35,9 @@ class PetController extends Controller
                 ],
             ]);
             $validated['pet_id'] = $id;
-            $visits =  Visit::filter($validated)->paginate(1)->withQueryString();
-
+            $visits =  Visit::filter($validated)->orderBy('visit_date', 'DESC')->paginate(5)->withQueryString();
         } else {
-            $visits = $pet->visits()->paginate(1)->withQueryString();
+            $visits = $pet->visits()->orderBy('visit_date', 'DESC')->paginate(5)->withQueryString();
         }
 
         return view('pet.show', compact('pet', 'visits'));

@@ -47,7 +47,7 @@
                 </div>
             </div>
 
-            <button type="submit" name="search" class="btn btn-primary m-3"><i class="bi bi-search"></i> Поиск</button>
+            <button type="submit" class="btn btn-primary m-3"><i class="bi bi-search"></i> Поиск</button>
 
         </form>
         @if(!empty($owners))
