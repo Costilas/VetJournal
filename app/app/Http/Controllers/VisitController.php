@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Visit\AddVisitRequest;
-use App\Http\Requests\Visit\EditVisitRequest;
+use App\Http\Requests\Visit\AddRequest;
+use App\Http\Requests\Visit\EditRequest;
 use App\Models\Visit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -49,7 +49,7 @@ class VisitController extends Controller
         return view('visit.index', compact('visits'));
     }
 
-    public function create(AddVisitRequest $request)
+    public function create(AddRequest $request)
     {
         $validatedVisitData = $request->validated();
         $validatedVisitData['visit']['weight'] = Visit::weightNormalize($validatedVisitData['visit']['weight']);
@@ -71,7 +71,7 @@ class VisitController extends Controller
         return view('visit.edit', compact('visit'));
     }
 
-    public function update(EditVisitRequest $request)
+    public function update(EditRequest $request)
     {
         $validatedUpdateData = $request->validated();
 

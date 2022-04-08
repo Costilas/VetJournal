@@ -4,7 +4,7 @@ namespace App\Http\Requests\Visit;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddVisitRequest extends FormRequest
+class EditRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class AddVisitRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -27,18 +27,20 @@ class AddVisitRequest extends FormRequest
             "visit" => [
                 'required',
                 'array',
-                'min:6',
-                'max:6'
+                'min:5',
+                'max:5'
+            ],
+            "visit.visit_id" => [
+                'required',
+                'numeric',
             ],
             "visit.weight" => [
                 'required',
-                'string',
                 'not_regex:/^0{1,2}[\.\,]0+$/i',
                 'regex:/^(\d{1,2}[\.\,]\d{1,3})$|^(\d{1,2})$/i',
             ],
             "visit.temperature" => [
                 'required',
-                'string',
                 'not_regex:/^0\d{1}[\.\,]0+$|^\d{1,2}[\,\.]0+$/i',
                 'regex:/^(\d{1,2}[\.\,]\d{1})$|^(\d{1,2})$/i',
             ],
@@ -53,16 +55,9 @@ class AddVisitRequest extends FormRequest
                 'max:1000'
 
             ],
-            "visit.visit_date" => [
-                'required',
-                'before_or_equal:'. now()->format('Y-m-d H:i:s'),
-            ],
-            "visit.pet_id" => [
-                'required',
-                'numeric'
-            ]
         ];
     }
+
 
     /**
      * Get the error messages for the defined validation rules.
@@ -95,11 +90,9 @@ class AddVisitRequest extends FormRequest
             'visit.visit_info.string'=>'Неверный формат поля "Информация приема".',
             'visit.visit_info.max'=>'Превышен лимит символов в поле "Информация приема"(1000).',
 
-            'visit.visit_date.required' => 'Информация о дате приема заполняется автоматически, но что-то пошло не так.',
-            'visit.visit_date.before_or_equal' => 'Неверный формат даты приема.',
+            'visit.visit_id.required' => '(id)Ручное изменение автоматического заполнения(Required)',
+            'visit.visit_id.numeric' => '(id)Ручное изменение автоматического заполнения(Numeric)',
 
-            'visit.pet_id.required' => 'Если вы играетесь с этим полем, то не стоит, верните как было (Required) :)',
-            'visit.pet_id.numeric' => 'Если вы играетесь с этим полем, то не стоит, верните как было (Numbers) :)'
         ];
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\User\AddUserRequest;
-use App\Http\Requests\User\UpdateUserRequest;
-use App\Http\Requests\User\UserChangePasswordRequest;
-use App\Http\Requests\User\UserLoginRequest;
+use App\Http\Requests\User\AddRequest;
+use App\Http\Requests\User\UpdateRequest;
+use App\Http\Requests\User\ChangePasswordRequest;
+use App\Http\Requests\User\LoginRequest;
 use App\Models\User;
 use App\Services\PasswordService;
 use Illuminate\Http\Request;
@@ -33,7 +33,7 @@ class UserController extends Controller
         return view('admin.users.add');
     }
 
-    public function store(AddUserRequest $request)
+    public function store(AddRequest $request)
     {
         //метод для засолки пароля
         $saltedHashedPassword = Hash::make(PasswordService::salting($request['user']['password']));
@@ -60,7 +60,7 @@ class UserController extends Controller
         return view('admin.users.edit', compact('user'));
     }
 
-    public function update(UpdateUserRequest $request)
+    public function update(UpdateRequest $request)
     {
         return view('admin.users.edit');
     }
@@ -93,7 +93,7 @@ class UserController extends Controller
         return redirect()->route('admin.users');
     }
 
-    public function passwordChange(UserChangePasswordRequest $request, $id)
+    public function passwordChange(ChangePasswordRequest $request, $id)
     {
         $user = User::query()->findOrFail($id);
         $old = $user->password;
@@ -111,7 +111,7 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function auth(UserLoginRequest $request)
+    public function auth(LoginRequest $request)
     {
         if(Auth::attempt(
             [

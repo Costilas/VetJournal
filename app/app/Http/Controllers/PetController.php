@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Pet\AddPetRequest;
+use App\Http\Requests\Pet\AddRequest;
 use App\Models\Owner;
 use App\Models\Pet;
 use App\Models\Visit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-
-
 
 class PetController extends Controller
 {
@@ -43,7 +41,7 @@ class PetController extends Controller
         return view('pet.show', compact('pet', 'visits'));
     }
 
-    public function add(AddPetRequest $request)
+    public function add(AddRequest $request)
     {
         $validatedData = $request->validated();
 

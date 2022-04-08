@@ -4,7 +4,7 @@ namespace App\Http\Requests\Card;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SearchCardRequest extends FormRequest
+class SearchRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -12,9 +12,9 @@ class SearchCardRequest extends FormRequest
      * @return bool
      */
     public function authorize()
-{
-    return false;
-}
+    {
+        return true;
+    }
 
     /**
      * Get the validation rules that apply to the request.

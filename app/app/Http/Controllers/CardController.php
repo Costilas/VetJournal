@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Card\CreateCardRequest;
+use App\Http\Requests\Card\CreateRequest;
 use App\Models\Owner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -52,10 +52,9 @@ class CardController extends Controller
         return view('card.index', compact('owners'));
     }
 
-    public function create(CreateCardRequest $request)
+    public function create(CreateRequest $request)
     {
         $validatedData = $request->validated();
-
         $newOwner = Owner::create($validatedData['owner']);
         $newPet= $newOwner->pets()->create($validatedData['pet']);
 

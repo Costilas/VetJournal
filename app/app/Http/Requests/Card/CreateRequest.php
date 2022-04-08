@@ -4,7 +4,7 @@ namespace App\Http\Requests\Card;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateCardRequest extends FormRequest
+class CreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class CreateCardRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**

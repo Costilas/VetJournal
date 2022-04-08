@@ -4,7 +4,7 @@ namespace App\Http\Requests\Pet;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddPetRequest extends FormRequest
+class AddRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class AddPetRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
