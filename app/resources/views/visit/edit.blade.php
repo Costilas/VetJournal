@@ -42,8 +42,19 @@
                         <textarea class="form-control @error('visit.visit_info') is-invalid @enderror"
                                   name="visit[visit_info]"
                                   style=" height: 500px;">
-                    {{session()->getOldInput('visit.visit_info')??$visit->visit_info}}
-                </textarea>
+                        {{session()->getOldInput('visit.visit_info')??$visit->visit_info}}
+                        </textarea>
+                    </div>
+                </div>
+                <div class="row mb-3 mt-3">
+                    <div class="col">
+                        <label for="visit[doctor_id]">Кем проведен прием:</label>
+                        <select class="w-25 m-auto form-control @error('visit.doctor_id') is-invalid @enderror"
+                                name="visit[doctor_id]">
+                            @foreach($doctors as $doctor)
+                                <option value="{{$doctor->id}}" @if($doctor->id==$visit->user_id) selected @endif>{{$doctor->doctorName()}}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
             </div>

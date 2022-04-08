@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('owners', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->index();
-            $table->string('patronymic')->index();
-            $table->string('last_name')->index();
-            $table->string('phone')->index();
-            $table->string('address');
+            $table->string('name', 50)->index();
+            $table->string('patronymic', 50)->index();
+            $table->string('last_name', 50)->index();
+            $table->string('phone', 15)->index();
+            $table->string('address', 100);
             $table->timestamps();
         });
     }

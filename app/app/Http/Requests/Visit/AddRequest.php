@@ -60,7 +60,11 @@ class AddRequest extends FormRequest
             "visit.pet_id" => [
                 'required',
                 'numeric'
-            ]
+            ],
+            "visit.doctor_id" => [
+                'required',
+                'numeric',
+            ],
         ];
     }
 
@@ -99,7 +103,10 @@ class AddRequest extends FormRequest
             'visit.visit_date.before_or_equal' => 'Неверный формат даты приема.',
 
             'visit.pet_id.required' => 'Если вы играетесь с этим полем, то не стоит, верните как было (Required) :)',
-            'visit.pet_id.numeric' => 'Если вы играетесь с этим полем, то не стоит, верните как было (Numbers) :)'
+            'visit.pet_id.numeric' => 'Если вы играетесь с этим полем, то не стоит, верните как было (Numbers) :)',
+
+            'visit.doctor_id.required' => 'Поле "Кем был проведен прием" является обязательным к заполнению.',
+            'visit.doctor_id.numeric' => 'Поле "Кем был проведен прием" должно содержать только числовое значение.',
         ];
     }
 }

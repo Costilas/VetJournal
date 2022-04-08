@@ -41,10 +41,11 @@ class VisitController extends Controller
                 ]
             ]);
 
-            $visits = Visit::filter($validated)->with('pet')->orderBy('id', 'DESC')->paginate(20)->withQueryString();
+            $query = Visit::filter($validated);;
         } else {
-            $visits = Visit::filter(['search'=>'today'])->with('pet')->orderBy('id', 'DESC')->paginate(20)->withQueryString();
+            $query = Visit::filter(['search'=>'today']);;
         }
+        $visits = $query->with('pet', 'user')->orderBy('id', 'DESC')->paginate(20)->withQueryString();
 
         return view('visit.index', compact('visits'));
     }
@@ -83,6 +84,7 @@ class VisitController extends Controller
         $visit->temperature = Visit::temperatureNormalize($updateData['temperature']);
         $visit->pre_diagnosis = $updateData['pre_diagnosis'];
         $visit->visit_info = $updateData['visit_info'];
+        $visit->user_id = $updateData['doctor_id'];
 
         $save = $visit->save();
 

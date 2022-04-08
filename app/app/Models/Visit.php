@@ -11,17 +11,23 @@ class Visit extends Model
     use HasFactory;
     use Filterable;
 
-    protected $fillable = ['pet_id', 'visit_date', 'weight', 'temperature', 'pre_diagnosis', 'visit_info'];
+    protected $fillable = ['pet_id', 'visit_date', 'weight', 'temperature', 'pre_diagnosis', 'visit_info', 'user_id'];
 
     public function pet()
     {
         return $this->belongsTo(Pet::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function dateFormat()
     {
         return date('d.m.Y / H:i', strtotime($this->visit_date));
     }
+
 
     public function temperatureFormat():float
     {

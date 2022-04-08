@@ -47,4 +47,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function visits()
+    {
+        return $this->hasMany(Visit::class);
+    }
+
+    public function doctorName()
+    {
+        $doctorName = $this->last_name . ' ' . $this->name;
+
+        return $doctorName;
+    }
 }

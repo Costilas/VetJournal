@@ -4,6 +4,7 @@
         <br> Вес: {{$visit->weightFormat()}} кг.
         <br> Температура: {{$visit->temperatureFormat()}} &#176;
         <br> Предварительный диагноз: {{$visit->pre_diagnosis}}
+        <br> Врач: {{$visit->user->doctorName()}}
         <a class="btn btn-primary m-auto more_info_button" data-bs-toggle="collapse" href="#oldVisit{{$visit->id}}"
            role="button"
            aria-expanded="false" aria-controls="oldVisit{{$visit->id}}">

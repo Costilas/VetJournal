@@ -42,9 +42,11 @@
 
     @if(!empty($visits))
         @foreach($visits as $visit)
-            <div> {{$visit->dateFormat()}} {{$visit->pre_diagnosis}} {{$visit->pet->pet_name}} <a
-                    href="{{route('pet.show', ['id'=>$visit->pet->id])}}">К питомцу </a> <a
-                    href="{{route('visit.edit', ['id'=>$visit->id])}}">Редактировать</a></div>
+            <div> {{$visit->dateFormat()}} {{$visit->pre_diagnosis}} {{$visit->pet->pet_name}} {{$visit->user->doctorName()}}
+
+                <a href="{{route('pet.show', ['id'=>$visit->pet->id])}}">К питомцу </a>
+                <a href="{{route('visit.edit', ['id'=>$visit->id])}}">Редактировать</a>
+            </div>
         @endforeach
         {{$visits->links()}}
     @endif

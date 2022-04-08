@@ -43,6 +43,17 @@
                 </textarea>
             </div>
         </div>
+        <div class="row mb-3 mt-3">
+            <div class="col">
+                <label for="visit[doctor_id]">Кем проведен прием:</label>
+                <select class="w-25 m-auto form-control @error('visit.doctor_id') is-invalid @enderror"
+                          name="visit[doctor_id]">
+                    @foreach($doctors as $doctor)
+                        <option value="{{$doctor->id}}" @if($doctor->id==auth()->user()->id) selected @endif>{{$doctor->doctorName()}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
     </div>
 
     <button type="submit" class="btn btn-primary m-3"><i class="bi bi-plus-lg"></i> Создать</button>

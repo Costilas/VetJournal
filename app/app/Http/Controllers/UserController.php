@@ -69,9 +69,9 @@ class UserController extends Controller
     {
         $user = User::query()->findOrFail($id);
         $user->is_active = 0;
-        $user->save();
+        $result = $user->save();
 
-        if(!$user->is_active)
+        if($result)
         {
             Session::flash('success', "Профиль сотрудника $user->last_name $user->name успешно дективирован.");
         }
@@ -83,9 +83,9 @@ class UserController extends Controller
     {
         $user = User::query()->findOrFail($id);
         $user->is_active = 1;
-        $user->save();
+        $result = $user->save();
 
-        if($user->is_active)
+        if($result)
         {
             Session::flash('success', "Профиль сотрудника $user->last_name $user->name успешно активирован.");
         }

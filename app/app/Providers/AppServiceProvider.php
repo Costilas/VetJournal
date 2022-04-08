@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Gender;
 use App\Models\Kind;
+use App\Models\User;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
@@ -34,10 +35,8 @@ class AppServiceProvider extends ServiceProvider
             $view->with('kinds', Kind::all());
         });
 
-        view()->composer('home.index', function ($view) {
-            $view->with('petCount', DB::table('pets')->count());
-            $view->with('ownerCount', DB::table('owners')->count());
-            $view->with('visitCount', DB::table('visits')->count());
+        view()->composer(['pet.visit.forms.create', 'visit.edit'], function ($view) {
+            $view->with('doctors', User::where('is_active', '=', 1)->where('is_dev','!=', 1)->get());
         });
     }
 }
