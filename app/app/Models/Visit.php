@@ -12,9 +12,6 @@ class Visit extends Model
     use Filterable;
 
     protected $fillable = ['pet_id', 'visit_date', 'weight', 'temperature', 'pre_diagnosis', 'visit_info'];
-    protected $casts = [
-        'weight' => 'integer',
-    ];
 
     public function pet()
     {
