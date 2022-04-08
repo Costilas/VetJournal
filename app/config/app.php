@@ -169,6 +169,10 @@ return [
          */
         \morphos\MorphosBladeProvider::class,
         EloquentFilter\ServiceProvider::class,
+        /*
+         * Custom service providers
+         * */
+        \App\Providers\FacadeServiceProvider::class,
 
         /*
          * Application Service Providers...

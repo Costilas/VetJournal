@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Visit;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SearchVisitsRequest extends FormRequest
+class UserLoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class SearchVisitsRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,14 @@ class SearchVisitsRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "user.password" => [
+                'required',
+                'string',
+            ],
+            "user.email" => [
+                'required',
+                'email',
+            ],
         ];
     }
 }

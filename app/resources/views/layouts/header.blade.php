@@ -14,6 +14,17 @@
                 <a href="{{route('visits')}}">
                     <li class="nav-item">Приемы</li>
                 </a>
+                @if(!empty(auth()->user()->is_admin))
+                    <a href="{{route('admin')}}">
+                        <li class="nav-item">Управление приложением</li>
+                    </a>
+                @endif
+                @if(auth()->check())
+                    <a href="{{route('logout')}}">
+                        <li class="nav-item">Выход</li>
+                    </a>
+                @endif
+                <li>Status: {{auth()->check()?'auth('.auth()->user()->name.')':'out'}}</li>
             </ul>
         </div>
     </div>

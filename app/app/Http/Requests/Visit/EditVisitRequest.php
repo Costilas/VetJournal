@@ -13,7 +13,7 @@ class EditVisitRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
