@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Note\AddRequest;
 use App\Models\Note;
 use App\Models\Status;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class NoteController extends Controller
@@ -17,13 +17,10 @@ class NoteController extends Controller
         return view('notes.index', compact('notes', 'statuses'));
     }
 
-    public function create(Request $request)
+    public function create(AddRequest $request)
     {
-        $newNote = Note::create([
-            'theme' => $request->theme,
-            'body' => $request->body,
-            'status_id' => $request->status_id,
-        ]);
+        $validatedRequest = $request->validated();
+        $newNote = Note::create($validatedRequest);
 
         if ($newNote->id) {
             Session::flash('success', "Заметка успешно добавлена!");
@@ -35,9 +32,8 @@ class NoteController extends Controller
     public function delete($id)
     {
         $deleting = Note::query()->find($id)->delete();
-
         if ($deleting) {
-            Session::flash('success', "Заметка успешно удалена!");
+            Session::flash('success', "Заметка удалена!");
         }
 
         return redirect(route('notes'));

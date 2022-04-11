@@ -60,7 +60,7 @@ class CardController extends Controller
         if (!$newOwner->id && !$newPet->id) {
             return redirect()->back()
                 ->withInput()
-                ->withErrors('При добавлении что-то пошло не так');
+                ->withErrors('При добавлении что-то пошло не так. Перезагрузите страницу и попробуйте снова.');
         } else {
             Session::flash('success', "Новая карточка успешно создана!");
         }

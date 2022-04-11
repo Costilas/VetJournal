@@ -19,6 +19,6 @@
                    value="{{ request()->input('visits.to')??date('Y-m-d')}}">
         </div>
     </div>
-
     <button type="submit" class="btn btn-primary m-3"><i class="bi bi-plus-lg"></i> Искать</button>
 </form>
+<a href="{{route('pet.show', ['id'=>$pet->id])}}">Сброс</a>
