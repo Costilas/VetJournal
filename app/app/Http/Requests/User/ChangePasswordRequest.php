@@ -31,4 +31,13 @@ class ChangePasswordRequest extends FormRequest
             ],
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'visit.password.required' => 'Поле "Пароль" является обязательным.',
+            'visit.password.string' => 'Поле "Пароль" имеет неверный формат.',
+            'visit.password.confirmed' => 'Поле "Пароль" не совпадает с введенным в поле "Подтвердите пароль".',
+        ];
+    }
 }

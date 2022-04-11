@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\User\LoginRequest;
+use App\Http\Requests\Login\LoginRequest;
 use App\Services\PasswordService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -19,7 +19,7 @@ class LoginController extends Controller
                 'is_active' => 1
             ]
         )) {
-            Session::flash('success', "Добро пожаловать, " . auth()->user()->name . ". Вход успешно выполнен!");
+            Session::flash('success', "Добро пожаловать, " . Auth::user()->name . ". Вход успешно выполнен!");
             return redirect()->route('notes');
         }
 

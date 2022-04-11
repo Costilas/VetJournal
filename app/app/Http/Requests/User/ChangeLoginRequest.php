@@ -30,4 +30,12 @@ class ChangeLoginRequest extends FormRequest
             ],
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'visit.login.required' => 'Поле "Логин" является обязательным.',
+            'visit.login.email' => 'Поле "Email" должно соответствовать формату email@example.com.',
+        ];
+    }
 }

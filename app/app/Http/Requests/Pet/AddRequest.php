@@ -79,8 +79,8 @@ class AddRequest extends FormRequest
             'pet.birth.required'=>'Необходимо заполнить поле "Дата рождения питомца".',
             'pet.birth.date'=>'Неверный формат поля "Дата рождения питомца".',
 
-            'pet.owner_id.required' => '(id)Ручное изменение автоматического заполнения(Required)',
-            'pet.owner_id.numeric' => '(id)Ручное изменение автоматического заполнения(Numeric)'
+            'pet.owner_id.required' => 'Ошибка запроса. Обновите странице и попробуйте снова.',
+            'pet.owner_id.numeric' => 'Ошибка запроса. Обновите странице и попробуйте снова.'
         ];
     }
 }

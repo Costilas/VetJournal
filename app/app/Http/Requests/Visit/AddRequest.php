@@ -51,7 +51,6 @@ class AddRequest extends FormRequest
                 'required',
                 'string',
                 'max:1000'
-
             ],
             "visit.visit_date" => [
                 'required',

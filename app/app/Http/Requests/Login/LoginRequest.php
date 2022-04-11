@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\Login;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -26,12 +26,23 @@ class LoginRequest extends FormRequest
         return [
             "user.password" => [
                 'required',
-                'string',
+                'alpha_num',
             ],
             "user.email" => [
                 'required',
                 'email',
             ],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'user.password.required' => 'Поле "Пароль" обязательно должно быть заполнено.',
+            'user.password.alpha_num' => 'Поле "Пароль" не должно содержать специальных символов.',
+
+            'user.email.required' => 'Поле "Email"',
+            'user.email.email' => 'Поле "Email" должно соответствовать формату email@example.com',
         ];
     }
 }

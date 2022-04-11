@@ -27,6 +27,10 @@ class UserController extends Controller
                     'alpha',
                     Rule::in(['all', 'active', 'inactive']),
                 ]
+            ], [
+                'search.required' => 'Ошибка фильтрации. Обновите страницу и попробуйте снова.',
+                'search.alpha' => 'Ошибка фильтрации. Обновите страницу и попробуйте снова.',
+                'search.in' => 'Ошибка фильтрации. Обновите страницу и попробуйте снова.',
             ]);
 
             $query = User::filter($validated);
