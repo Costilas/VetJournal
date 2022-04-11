@@ -47,7 +47,7 @@
             <div class="col">
                 <label for="visit[doctor_id]">Кем проведен прием:</label>
                 <select class="w-25 m-auto form-control @error('visit.doctor_id') is-invalid @enderror"
-                          name="visit[doctor_id]">
+                          name="visit[user_id]">
                     @foreach($doctors as $doctor)
                         <option value="{{$doctor->id}}" @if($doctor->id==auth()->user()->id) selected @endif>{{$doctor->doctorName()}}</option>
                     @endforeach

@@ -15,7 +15,7 @@ class VisitController extends Controller
     {
         if($request->has('visits')||$request->has('search'))
         {
-            $validated = $request->validate([
+            $validatedRequest = $request->validate([
                 "visits" => [
                     'sometimes',
                     'required',
@@ -41,7 +41,7 @@ class VisitController extends Controller
                 ]
             ]);
 
-            $query = Visit::filter($validated);;
+            $query = Visit::filter($validatedRequest);;
         } else {
             $query = Visit::filter(['search'=>'today']);;
         }
@@ -52,17 +52,17 @@ class VisitController extends Controller
 
     public function create(AddRequest $request)
     {
-        $validatedVisitData = $request->validated();
-        $validatedVisitData['visit']['weight'] = Visit::weightNormalize($validatedVisitData['visit']['weight']);
-        $validatedVisitData['visit']['temperature'] = Visit::temperatureNormalize($validatedVisitData['visit']['temperature']);
-        $newVisit = Visit::create($validatedVisitData['visit']);
+        $validatedRequest = $request->validated();
+        $validatedRequest['visit']['weight'] = Visit::weightNormalize($validatedRequest['visit']['weight']);
+        $validatedRequest['visit']['temperature'] = Visit::temperatureNormalize($validatedRequest['visit']['temperature']);
+        $newVisit = Visit::create($validatedRequest['visit']);
 
         if($newVisit->id)
         {
             Session::flash('success', "Прием успешно добавлен!");
         }
 
-        return redirect()->route('pet.show', ['id' => $validatedVisitData['visit']['pet_id']]);
+        return redirect()->route('pet.show', ['id' => $validatedRequest['visit']['pet_id']]);
     }
 
     public function edit($id)
@@ -72,27 +72,23 @@ class VisitController extends Controller
         return view('visit.edit', compact('visit'));
     }
 
-    public function update(EditRequest $request)
+    public function update(EditRequest $request, $id)
     {
-        $validatedUpdateData = $request->validated();
+        $validatedRequest = $request->validated();
 
-        $visitId = $validatedUpdateData['visit']['visit_id'];
-        $updateData = array_diff_assoc($validatedUpdateData['visit'], ['visit_id'=>$visitId]);
-
-        $visit = Visit::find($visitId);
-        $visit->weight = Visit::weightNormalize($updateData['weight']);
-        $visit->temperature = Visit::temperatureNormalize($updateData['temperature']);
-        $visit->pre_diagnosis = $updateData['pre_diagnosis'];
-        $visit->visit_info = $updateData['visit_info'];
-        $visit->user_id = $updateData['doctor_id'];
+        $visit = Visit::find($id);
+        $visit->weight = Visit::weightNormalize($validatedRequest['visit']['weight']);
+        $visit->temperature = Visit::temperatureNormalize($validatedRequest['visit']['temperature']);
+        $visit->pre_diagnosis = $validatedRequest['visit']['pre_diagnosis'];
+        $visit->visit_info = $validatedRequest['visit']['visit_info'];
+        $visit->user_id = $validatedRequest['visit']['doctor_id'];
 
         $save = $visit->save();
-
         if($save)
         {
             Session::flash('success', "Прием успешно изменен!");
         }
 
-        return redirect(route('visit.edit', ['id'=>$visitId]));
+        return redirect(route('visit.edit', ['id'=>$id]));
     }
 }

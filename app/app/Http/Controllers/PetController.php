@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Pet\AddRequest;
-use App\Models\Owner;
 use App\Models\Pet;
 use App\Models\Visit;
 use Illuminate\Http\Request;
@@ -14,9 +13,8 @@ class PetController extends Controller
     public function show($id, Request $request)
     {
         $pet = Pet::with('owner.pets', 'gender', 'kind')->findOrFail($id);
-        if(!empty($request)&&$request->has('visits'))
-        {
-            $validated = $request->validate([
+        if (!empty($request) && $request->has('visits')) {
+            $validatedRequest = $request->validate([
                 "visits" => [
                     'required',
                     'array',
@@ -25,38 +23,31 @@ class PetController extends Controller
                 ],
                 "visits.from" => [
                     'required',
-                    'before_or_equal:'. now()->format('Y-m-d'),
+                    'before_or_equal:' . now()->format('Y-m-d'),
                 ],
                 "visits.to" => [
                     'required',
-                    'before_or_equal:'. now()->format('Y-m-d'),
+                    'before_or_equal:' . now()->format('Y-m-d'),
                 ],
             ]);
-            $validated['pet_id'] = $id;
-            $visits =  Visit::filter($validated)->with('user')->orderBy('visit_date', 'DESC')->paginate(5)->withQueryString();
+            $validatedRequest['pet_id'] = $id;
+            $query = Visit::filter($validatedRequest);
         } else {
-            $visits = Visit::query()->where('pet_id', '=', $id)->with('user')->orderBy('visit_date', 'DESC')->paginate(5)->withQueryString();
+            $query = Visit::query()->where('pet_id', '=', $id);
         }
+            $visits = $query->with('user')->orderBy('visit_date', 'DESC')->paginate(5)->withQueryString();
 
         return view('pet.show', compact('pet', 'visits'));
     }
 
     public function add(AddRequest $request)
     {
-        $validatedData = $request->validated();
+        $validatedRequest = $request->validated();
+        $newPet = Pet::create($validatedRequest['pet']);
 
-        if(!Owner::query()->find($validatedData['pet']['owner_id']))
-        {
-            return redirect()->back()
-                ->withErrors('Скорее всего, вы пытались поменять идентификатор пользователя вручную.');
+        if ($newPet->id) {
+            Session::flash('success', "Питомец $newPet->name успешно добавлен.");
         }
-
-        $newPet = Pet::create($validatedData['pet']);
-
-        if($newPet->id)
-        {
-            Session::flash('success', "Питомец $newPet->name успешно добавлен");
-        }
-        return redirect()->route('owner.show', ['id'=>$validatedData['pet']['owner_id']]);
+        return redirect()->route('owner.show', ['id' => $validatedRequest['pet']['owner_id']]);
     }
 }

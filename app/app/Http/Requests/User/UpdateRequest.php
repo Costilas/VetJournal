@@ -27,8 +27,8 @@ class UpdateRequest extends FormRequest
             "user" => [
                 'required',
                 'array',
-                'min:6',
-                'max:7',
+                'min:3',
+                'max:3',
             ],
             "user.name" => [
                 'required',
@@ -44,15 +44,6 @@ class UpdateRequest extends FormRequest
                 'required',
                 'alpha',
                 'max:25',
-            ],
-            "user.email" => [
-                'required',
-                'email',
-                'unique:users,email',
-            ],
-            "user.is_admin" => [
-                'sometimes',
-                'digits:1',
             ],
         ];
     }

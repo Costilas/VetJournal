@@ -27,8 +27,8 @@ class AddRequest extends FormRequest
             "visit" => [
                 'required',
                 'array',
-                'min:6',
-                'max:6'
+                'min:7',
+                'max:7'
             ],
             "visit.weight" => [
                 'required',
@@ -61,7 +61,7 @@ class AddRequest extends FormRequest
                 'required',
                 'numeric'
             ],
-            "visit.doctor_id" => [
+            "visit.user_id" => [
                 'required',
                 'numeric',
             ],

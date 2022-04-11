@@ -3,29 +3,40 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\User\AddRequest;
+use App\Http\Requests\User\ChangeLoginRequest;
 use App\Http\Requests\User\UpdateRequest;
 use App\Http\Requests\User\ChangePasswordRequest;
-use App\Http\Requests\User\LoginRequest;
 use App\Models\User;
 use App\Services\PasswordService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
     public function index(Request $request)
     {
-        if($request->has('all'))
+        if($request->has('search'))
         {
-            $users = User::query()->paginate(5);
-        } else {
-            //$users = User::query()->where('is_active', '=', '1')->paginate(5);
-            $users = User::query()->paginate(5);
-        }
+            $validated = $request->validate([
+                "search" => [
+                    'sometimes',
+                    'required',
+                    'alpha',
+                    Rule::in(['all', 'active', 'inactive']),
+                ]
+            ]);
 
-        return view('admin.users.index', compact('users'));
+            $query = User::filter($validated);
+        } else {
+            $query = User::filter(['search'=>'all']);
+        }
+        $users = $query->paginate(5)->withQueryString();
+        $currentUserId = Auth::user()->id;
+
+        return view('admin.users.index', compact('users', 'currentUserId'));
     }
 
     public function create()
@@ -35,7 +46,7 @@ class UserController extends Controller
 
     public function store(AddRequest $request)
     {
-        //метод для засолки пароля
+        $request = $request->validated();
         $saltedHashedPassword = Hash::make(PasswordService::salting($request['user']['password']));
         $user = User::create([
             'email'=>$request['user']['email'],
@@ -60,17 +71,30 @@ class UserController extends Controller
         return view('admin.users.edit', compact('user'));
     }
 
-    public function update(UpdateRequest $request)
+    public function update(UpdateRequest $request, $id)
     {
-        return view('admin.users.edit');
+        $request = $request->validated();
+
+        $user = User::query()->findOrFail($id);
+        $user->name = $request['user']['name'];
+        $user->patronymic = $request['user']['patronymic'];
+        $user->last_name = $request['user']['last_name'];
+
+        $result = $user->save();
+        if($result)
+        {
+            Session::flash('success', "Данные сотрудника успешно изменены.");
+        }
+
+        return redirect()->route('admin.user.edit', ['id'=>$user->id]);
     }
 
     public function deactivate($id)
     {
         $user = User::query()->findOrFail($id);
         $user->is_active = 0;
-        $result = $user->save();
 
+        $result = $user->save();
         if($result)
         {
             Session::flash('success', "Профиль сотрудника $user->last_name $user->name успешно дективирован.");
@@ -83,8 +107,8 @@ class UserController extends Controller
     {
         $user = User::query()->findOrFail($id);
         $user->is_active = 1;
-        $result = $user->save();
 
+        $result = $user->save();
         if($result)
         {
             Session::flash('success', "Профиль сотрудника $user->last_name $user->name успешно активирован.");
@@ -95,12 +119,12 @@ class UserController extends Controller
 
     public function passwordChange(ChangePasswordRequest $request, $id)
     {
+        $request = $request->validated();
         $user = User::query()->findOrFail($id);
-        $old = $user->password;
         $user->password = Hash::make(PasswordService::salting($request['user']['password']));
-        $user->save();
 
-        if($user->password !== $old)
+        $result = $user->save();
+        if($result)
         {
             Session::flash('success', "Пароль сотрудника $user->last_name $user->name успешно изменен.");
         }
@@ -111,35 +135,21 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function auth(LoginRequest $request)
+    public function loginChange(ChangeLoginRequest $request, $id)
     {
-        if(Auth::attempt(
-            [
-            'email'=>$request['user']['email'],
-            'password'=>PasswordService::salting($request['user']['password']),
-            'is_active'=>1
-            ]))
+        $request = $request->validated();
+        $user = User::query()->findOrFail($id);
+        $user->email = $request['user']['email'];
+
+        $result = $user->save();
+        if($result)
         {
-            Session::flash('success', "Добро пожаловать, ". auth()->user()->name . ". Вход успешно выполнен!");
-            return redirect()->route('notes');
+            Session::flash('success', "Логин сотрудника $user->last_name $user->name успешно изменен.");
+        }
+        else {
+            Session::flash('error', "Логин сотрудника $user->last_name $user->name не был изменен.");
         }
 
-        return redirect()->back()->withErrors('Данные неверны или ваш профиль заблокирован');
+        return redirect()->back();
     }
-
-    public function login()
-    {
-        return view('login.index');
-    }
-
-    public function logout()
-    {
-        Auth::logout();
-        if(!Auth::check()){
-            Session::flash('success', "Выход выполнен!");
-        }
-        return redirect()->route('login');
-    }
-
-
 }

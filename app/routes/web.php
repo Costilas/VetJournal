@@ -2,13 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
-
-//Unauthorized user
 //Login
-Route::get('/login', [App\Http\Controllers\UserController::class, 'login'])->name('login');
-Route::post('/login', [App\Http\Controllers\UserController::class, 'auth'])->name('auth');
+Route::get('/login', [App\Http\Controllers\LoginController::class, 'login'])->name('login');
+Route::post('/login', [App\Http\Controllers\LoginController::class, 'auth'])->name('auth');
 
-//Authorized user
+//Authorized
 Route::group(['middleware'=>'auth'], function (){
 //Notes
     Route::get('/', [App\Http\Controllers\NoteController::class, 'index'])->name('notes');
@@ -26,9 +24,9 @@ Route::group(['middleware'=>'auth'], function (){
     Route::get('/visits', [App\Http\Controllers\VisitController::class, 'index'])->name('visits');
     Route::post('/visit/create', [App\Http\Controllers\VisitController::class, 'create'])->name('visit.create');
     Route::get('/visit/{id}/edit', [App\Http\Controllers\VisitController::class, 'edit'])->name('visit.edit')->where('id', '[0-9]+');
-    Route::post('/visit/update', [App\Http\Controllers\VisitController::class, 'update'])->name('visit.update');
+    Route::post('/visit/{id}/update', [App\Http\Controllers\VisitController::class, 'update'])->name('visit.update');
 //Logout
-    Route::get('/logout', [App\Http\Controllers\UserController::class, 'logout'])->name('logout');
+    Route::get('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
 });
 
 //Authorized and Admin access
@@ -39,11 +37,11 @@ Route::group(['prefix'=>'admin', 'middleware'=>'admin'], function (){
     Route::get('/user/register', [App\Http\Controllers\UserController::class, 'create'])->name('admin.user.register');
     Route::post('/user/register', [App\Http\Controllers\UserController::class, 'store'])->name('admin.user.store');
     Route::get('/user/{id}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('admin.user.edit')->where('id', '[0-9]+');
-    Route::get('/user/update', [App\Http\Controllers\UserController::class, 'update'])->name('admin.user.update');
+    Route::post('/user/{id}/update', [App\Http\Controllers\UserController::class, 'update'])->name('admin.user.update');
     Route::get('/user/{id}/deactivate', [App\Http\Controllers\UserController::class, 'deactivate'])->name('admin.user.deactivate')->where('id', '[0-9]+');
     Route::get('/user/{id}/restore', [App\Http\Controllers\UserController::class, 'restore'])->name('admin.user.restore')->where('id', '[0-9]+');
-    Route::post('/user/{id}/password', [App\Http\Controllers\UserController::class, 'passwordChange'])->name('admin.user.password')->where('id', '[0-9]+');
-    Route::post('/user/{id}/login', [App\Http\Controllers\UserController::class, 'loginChange'])->name('admin.user.login')->where('id', '[0-9]+');
+    Route::post('/user/{id}/password/change', [App\Http\Controllers\UserController::class, 'passwordChange'])->name('admin.user.password')->where('id', '[0-9]+');
+    Route::post('/user/{id}/login/change', [App\Http\Controllers\UserController::class, 'loginChange'])->name('admin.user.login')->where('id', '[0-9]+');
 });
 
 

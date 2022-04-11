@@ -24,7 +24,10 @@ class ChangeLoginRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "user.login" => [
+                'required',
+                'email',
+            ],
         ];
     }
 }

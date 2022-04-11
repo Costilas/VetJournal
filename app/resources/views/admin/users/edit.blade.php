@@ -1,10 +1,10 @@
 @extends('admin.layouts.layout')
 
 
-@section('content')
 
+@section('content')
     <h2>Редактировать профиль сотрудника:</h2>
-    <form method="POST" action="{{route('admin.user.update')}}">
+    <form method="POST" action="{{route('admin.user.update',['id'=>$user->id])}}">
         @csrf
         <label for="name">Введите отчество:</label><br>
         <input type="text" name="user[name]" id="name" value="{{session()->getOldInput('user.patronymic')??$user->name}}">
@@ -15,13 +15,12 @@
         <label for="last_name">Введите фамилию:</label><br>
         <input type="text" name="user[last_name]" id="last_name" value="{{session()->getOldInput('user.last_name')??$user->last_name}}">
         <br>
-
         <button type="submit"> Редактировать </button>
     </form>
 
     <h3>Изменить данные для входа:</h3>
     <h5>Логин:</h5>
-    <form method="POST" action="{{route('admin.user.password', ['id'=>$user->id])}}">
+    <form method="POST" action="{{route('admin.user.login', ['id'=>$user->id])}}">
         @csrf
         <label for="email">Введите новую почту сотрудника:</label><br>
         <input type="email" name="user[email]" id="email" value="">

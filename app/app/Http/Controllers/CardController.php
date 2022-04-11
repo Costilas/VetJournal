@@ -12,34 +12,33 @@ class CardController extends Controller
     public function index(Request $request)
     {
         $owners = '';
-        if(!empty($request->query()))
-        {
+        if (!empty($request->query())) {
             $validated = $request->validate([
-                'name'=>[
+                'name' => [
                     'alpha',
                     'max:25',
                     'nullable',
                     'required_without_all:patronymic,last_name,phone,pets'
                 ],
-                'patronymic'=>[
+                'patronymic' => [
                     'alpha',
                     'max:25',
                     'nullable',
                     'required_without_all:name,last_name,phone,pets'
                 ],
-                'last_name'=>[
+                'last_name' => [
                     'alpha',
                     'max:25',
                     'nullable',
                     'required_without_all:name,patronymic,phone,pets'
                 ],
-                'phone'=>[
+                'phone' => [
                     'starts_with:8',
                     'digits_between:1,11',
                     'nullable',
                     'required_without_all:name,patronymic,last_name,pets'
                 ],
-                'pets'=>[
+                'pets' => [
                     'alpha',
                     'max:25',
                     'nullable',
@@ -56,10 +55,9 @@ class CardController extends Controller
     {
         $validatedData = $request->validated();
         $newOwner = Owner::create($validatedData['owner']);
-        $newPet= $newOwner->pets()->create($validatedData['pet']);
+        $newPet = $newOwner->pets()->create($validatedData['pet']);
 
-        if(!$newOwner->id && !$newPet->id)
-        {
+        if (!$newOwner->id && !$newPet->id) {
             return redirect()->back()
                 ->withInput()
                 ->withErrors('При добавлении что-то пошло не так');
