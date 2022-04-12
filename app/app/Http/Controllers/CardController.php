@@ -11,7 +11,6 @@ class CardController extends Controller
 {
     public function index(Request $request)
     {
-        $owners = '';
         if (!empty($request->query())) {
             $validated = $request->validate([
                 'name' => [
@@ -26,7 +25,7 @@ class CardController extends Controller
                     'nullable',
                     'required_without_all:name,last_name,phone,pets'
                 ],
-                'last_name' => [
+                'lastName' => [
                     'alpha',
                     'max:25',
                     'nullable',
@@ -53,9 +52,9 @@ class CardController extends Controller
                 'patronymic.alpha' => 'Поле "Отчество владельца" не должно содержать числа и специальные символы.',
                 'patronymic.max' => 'Привышен лимит символов в поле "Отчество владельца"(25).',
 
-                'last_name.required_without_all' => 'Необходио заполнить поле "Фамилия владельца".',
-                'last_name.alpha' => 'Поле "Фамилия владельца" не должно содержать числа и специальные символы.',
-                'last_name.max' => 'Привышен лимит символов в поле "Фамилия владельца"(25).',
+                'lastName.required_without_all' => 'Необходио заполнить поле "Фамилия владельца".',
+                'lastName.alpha' => 'Поле "Фамилия владельца" не должно содержать числа и специальные символы.',
+                'lastName.max' => 'Привышен лимит символов в поле "Фамилия владельца"(25).',
 
                 'phone.required_without_all' => 'Необходио заполнить поле "Телефон владельца".',
                 'phone.digits_between' => 'Поле "Телефон владельца" должно содержать только числа (Без пробелов и специальных символов), длина от 1 до 11.',
@@ -66,6 +65,8 @@ class CardController extends Controller
                 'pets.max'=>'Привышен лимит символов в поле "Кличка питомца"(25).',
             ]);
             $owners = Owner::filter($validated)->with('pets.kind')->paginate(10)->withQueryString();
+        } else {
+            $owners = '';
         }
 
         return view('card.index', compact('owners'));

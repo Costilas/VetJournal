@@ -18,25 +18,24 @@
             @csrf
             <div class="row mb-3 mt-3">
                 <div class="col">
-                    <input type="text" class="form-control @error('last_name') is-invalid @enderror"
-                           name="last_name" placeholder="Фамилия" aria-label="Last name"
-                           value="{{ request()->input('last_name')}}">
-
+                    <input type="text" class="form-control @error('lastName') is-invalid @enderror"
+                           name="lastName" placeholder="Фамилия" aria-label="lastName"
+                           value="{{request()->input('lastName')}}">
                 </div>
                 <div class="col">
                     <input type="text" class="form-control @error('name') is-invalid @enderror"
                            name="name" placeholder="Имя" aria-label="First name"
-                           value="{{ request()->input('name') }}">
+                           value="{{request()->input('name') }}">
                 </div>
                 <div class="col">
                     <input type="text" class="form-control @error('patronymic') is-invalid @enderror"
                            name="patronymic" placeholder="Отчество" aria-label="Patronymic"
-                           value="{{ request()->input('patronymic') }}">
+                           value="{{request()->input('patronymic') }}">
                 </div>
                 <div class="col">
                     <input type="text" class="form-control @error('phone') is-invalid @enderror"
                            name="phone" placeholder="Телефон" aria-label="Phone"
-                           value="{{ request()->input('phone') }}">
+                           value="{{request()->input('phone') }}">
                 </div>
             </div>
             <div class="row">

@@ -29,6 +29,5 @@ class UserFilter extends ModelFilter
             default:
                 return $this;
         }
-
     }
 }

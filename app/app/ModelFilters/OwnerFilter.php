@@ -12,23 +12,21 @@ class OwnerFilter extends ModelFilter
     *
     * @var array
     */
-    public $relations = [
-        'pets'=> 'pet_name'
-    ];
+    public $relations = [];
 
     public function name($name)
     {
-        return $this->whereLike('name', 'LIKE', "$name%");
+        return $this->where('name', 'LIKE', "$name%");
+    }
+
+    public function lastName($lastName)
+    {
+        return $this->where('last_name','LIKE', "$lastName%");
     }
 
     public function patronymic($patronymic)
     {
         return $this->where('patronymic','LIKE', "$patronymic%");
-    }
-
-    public function last_name($last_name)
-    {
-        return $this->where('patronymic','LIKE', "$last_name%");
     }
 
     public function phone($phone)
