@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('layouts.body.app.layout')
 
 @section('title') Пациент::{{$pet->pet_name}} ({{$pet->owner->last_name}}) @endsection
 

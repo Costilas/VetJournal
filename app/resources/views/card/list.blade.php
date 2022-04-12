@@ -17,6 +17,5 @@
             </td>
         </tr>
     @endif
-
 </table>
 {{$owners->links()}}

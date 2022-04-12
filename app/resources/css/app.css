@@ -19,4 +19,5 @@
 /*Notes*/
 @import url('notes/style.css');
 
-/*Main page styles*/
+/* Login page */
+@import url('login/style.css');

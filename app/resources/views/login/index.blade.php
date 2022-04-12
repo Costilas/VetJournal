@@ -1,17 +1,41 @@
-@extends('layouts.loginBackground')
+@extends('layouts.body.login.layout')
 
 @section('title') VetJournal::Вход @endsection
 
 @section('content')
-    <h2>Вход:</h2>
-    <form method="POST" action="{{route('auth')}}">
-        @csrf
-        <label for="email">Введите e-mail:</label><br>
-        <input type="email" name="user[email]" id="email" value="{{session()->getOldInput('user.email')??''}}">
-        <br>
-        <label for="password">Введите пароль:</label><br>
-        <input type="password" name="user[password]" id="password" value="">
-        <br>
-        <button type="submit"> Войти </button>
-    </form>
+    <div class="row">
+        <div class="col col-xl-6 col-lg-6 col-md-10 col-sm-12 m-auto">
+            <div class="login_form_block m-auto text-center">
+                <div class="row row-cols-1 mb-3">
+                    <div class="col m-auto">
+                        <div class="logo m-auto mb-3">
+                            <img src="{{asset('img/logo.png')}}" class="logo-img" alt="Logo image with fox">
+                        </div>
+                        <div class="mb-3">
+                            <h2>Добро пожаловать в VetJournal!</h2>
+                        </div>
+                    </div>
+
+                </div>
+                <form method="POST" action="{{route('auth')}}">
+                    @csrf
+                    <div class="row row-cols-1 mb-3">
+                        <div class="col  col-lg-6 col-md-8 col-sm-9 m-auto">
+                            <label for="login" class="form-label">Логин:</label>
+                            <input type="text" name="user[email]" class="form-control login_input @error('user.email') is-invalid @enderror"
+                                   id="login" aria-describedby="emailHelp" value="{{request()->input('user.email')}}">
+                        </div>
+                    </div>
+                    <div class="row row-cols-1 mb-3">
+                        <div class="col col-lg-6 col-md-8 col-sm-9 m-auto">
+                            <label for="inputPassword" class="form-label">Пароль:</label>
+                            <input type="password" name="user[password]" class="form-control login_input  @error('user.password') is-invalid @enderror"
+                                   id="inputPassword">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary m-3">Войти</button>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection

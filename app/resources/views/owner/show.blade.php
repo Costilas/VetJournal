@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('layouts.body.app.layout')
 
 @section('title') Владелец::{{$owner->last_name}} @endsection
 

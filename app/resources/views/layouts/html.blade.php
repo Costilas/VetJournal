@@ -9,20 +9,6 @@
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <title>PetVetZooMed</title>
 </head>
-<body>
-<div class="wrapper">
-    @include('layouts.header')
-    <main>
-        @include('admin.layouts.menu')
-        <div class="container">
-            @include('layouts.notify')
-            @yield('content')
-        </div>
-    </main>
-    @include('layouts.footer')
-</div>
-<script src="/js/app.js"></script>
-</body>
+@yield('layout')
 </html>

@@ -24,7 +24,7 @@
                         <li class="nav-item">Выход</li>
                     </a>
                 @endif
-                <li>Status: {{auth()->check()?'auth('.auth()->user()->name.')':'out'}}</li>
+                <li>Вы вошли как: {{}}</li>
             </ul>
         </div>
     </div>
