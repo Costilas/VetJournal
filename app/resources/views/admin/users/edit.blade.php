@@ -6,13 +6,13 @@
     <h2>Редактировать профиль сотрудника:</h2>
     <form method="POST" action="{{route('admin.user.update',['id'=>$user->id])}}">
         @csrf
-        <label for="name">Введите отчество:</label><br>
+        <label for="name">Изменить имя:</label><br>
         <input type="text" name="user[name]" id="name" value="{{session()->getOldInput('user.patronymic')??$user->name}}">
         <br>
-        <label for="patronymic">Введите отчество:</label><br>
+        <label for="patronymic">Изменить отчество:</label><br>
         <input type="text" name="user[patronymic]" id="patronymic" value="{{session()->getOldInput('user.patronymic')??$user->patronymic}}">
         <br>
-        <label for="last_name">Введите фамилию:</label><br>
+        <label for="last_name">Изменить фамилию:</label><br>
         <input type="text" name="user[last_name]" id="last_name" value="{{session()->getOldInput('user.last_name')??$user->last_name}}">
         <br>
         <button type="submit"> Редактировать </button>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Card\CreateRequest;
 use App\Models\Owner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class CardController extends Controller
@@ -44,23 +45,23 @@ class CardController extends Controller
                     'required_without_all:name,patronymic,last_name,phone'
                 ]
             ], [
-                'name.required_without_all' => 'Необходио заполнить поле "Имя владельца".',
+                'name.required_without_all' => 'Хотя бы одно поле, должно быть заполнено.',
                 'name.alpha' => 'Поле "Имя владельца" не должно содержать числа и специальные символы.',
                 'name.max' => 'Привышен лимит символов в поле "Имя владельца"(25).',
 
-                'patronymic.required_without_all' => 'Необходио заполнить поле "Отчество владельца".',
+                'patronymic.required_without_all' => 'Хотя бы одно поле, должно быть заполнено.',
                 'patronymic.alpha' => 'Поле "Отчество владельца" не должно содержать числа и специальные символы.',
                 'patronymic.max' => 'Привышен лимит символов в поле "Отчество владельца"(25).',
 
-                'lastName.required_without_all' => 'Необходио заполнить поле "Фамилия владельца".',
+                'lastName.required_without_all' => 'Хотя бы одно поле, должно быть заполнено.',
                 'lastName.alpha' => 'Поле "Фамилия владельца" не должно содержать числа и специальные символы.',
                 'lastName.max' => 'Привышен лимит символов в поле "Фамилия владельца"(25).',
 
-                'phone.required_without_all' => 'Необходио заполнить поле "Телефон владельца".',
+                'phone.required_without_all' => 'Хотя бы одно поле, должно быть заполнено.',
                 'phone.digits_between' => 'Поле "Телефон владельца" должно содержать только числа (Без пробелов и специальных символов), длина от 1 до 11.',
                 'phone.starts_with' => 'Телефон должен начинаться с "8".',
 
-                'pets.required_without_all'=>'Необходимо заполнить поле "Кличка питомца".',
+                'pets.required_without_all'=>'Хотя бы одно поле, должно быть заполнено.',
                 'pets.alpha'=>'Поле "Кличка питомца" не должно содержать числа и специальные символы.',
                 'pets.max'=>'Привышен лимит символов в поле "Кличка питомца"(25).',
             ]);
@@ -75,15 +76,13 @@ class CardController extends Controller
     public function create(CreateRequest $request)
     {
         $validatedData = $request->validated();
-        $newOwner = Owner::create($validatedData['owner']);
-        $newPet = $newOwner->pets()->create($validatedData['pet']);
-
-        if (!$newOwner->id && !$newPet->id) {
-            return redirect()->back()
-                ->withInput()
-                ->withErrors('При добавлении что-то пошло не так. Перезагрузите страницу и попробуйте снова.');
-        } else {
+        try {
+            $newOwner = Owner::create($validatedData['owner']);
+            $newOwner->pets()->create($validatedData['pet']);
             Session::flash('success', "Новая карточка успешно создана!");
+        } catch (\Exception $e) {
+            Log::debug($e);
+            return redirect()->back()->withErrors('При создании карточки что-то пошло не так. Перезагрузите страницу и попробуйте снова.');
         }
 
         return redirect()->route('owner.show', ['id' => $newOwner->id]);

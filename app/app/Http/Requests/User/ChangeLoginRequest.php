@@ -24,7 +24,7 @@ class ChangeLoginRequest extends FormRequest
     public function rules()
     {
         return [
-            "user.login" => [
+            "user.email" => [
                 'required',
                 'email',
             ],
@@ -34,8 +34,8 @@ class ChangeLoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'visit.login.required' => 'Поле "Логин" является обязательным.',
-            'visit.login.email' => 'Поле "Email" должно соответствовать формату email@example.com.',
+            'visit.email.required' => 'Поле "Логин" является обязательным.',
+            'visit.email.email' => 'Поле "Email" должно соответствовать формату email@example.com.',
         ];
     }
 }

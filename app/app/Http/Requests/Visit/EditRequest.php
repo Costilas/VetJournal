@@ -50,7 +50,7 @@ class EditRequest extends FormRequest
                 'string',
                 'max:1000'
             ],
-            "visit.doctor_id" => [
+            "visit.user_id" => [
                 'required',
                 'numeric',
             ],
@@ -89,8 +89,8 @@ class EditRequest extends FormRequest
             'visit.visit_info.string'=>'Неверный формат поля "Информация приема".',
             'visit.visit_info.max'=>'Превышен лимит символов в поле "Информация приема"(1000).',
 
-            'visit.doctor_id.required' => 'Поле "Кем был проведен прием" является обязательным к заполнению.',
-            'visit.doctor_id.numeric' => 'Поле "Кем был проведен прием" должно содержать только числовое значение.',
+            'visit.user_id.required' => 'Поле "Кем был проведен прием" является обязательным к заполнению.',
+            'visit.user_id.numeric' => 'Поле "Кем был проведен прием" должно содержать только числовое значение.',
         ];
     }
 }

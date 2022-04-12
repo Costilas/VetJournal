@@ -11,6 +11,7 @@ use App\Services\PasswordService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 
@@ -51,18 +52,14 @@ class UserController extends Controller
     public function store(AddRequest $request)
     {
         $request = $request->validated();
-        $saltedHashedPassword = Hash::make(PasswordService::salting($request['user']['password']));
-        $user = User::create([
-            'email'=>$request['user']['email'],
-            'name'=>$request['user']['name'],
-            'patronymic'=>$request['user']['patronymic'],
-            'last_name'=>$request['user']['last_name'],
-            'password'=>$saltedHashedPassword,
-        ]);
+        $request['user']['password'] = Hash::make(PasswordService::salting($request['user']['password']));
+        $user = User::create($request['user']);
 
-        if($user->id)
-        {
+        try {
             Session::flash('success', "Сотрудник $user->last_name $user->name $user->patronymic успешно добавлен/добавлена.");
+        } catch (\Exception $e) {
+            return redirect()->route('admin.users')
+                ->withErrors('error', 'Сотрудник не был добавлен. Проверьте введенные данные.');
         }
 
         return redirect()->route('admin.users');
@@ -78,16 +75,15 @@ class UserController extends Controller
     public function update(UpdateRequest $request, $id)
     {
         $request = $request->validated();
-
-        $user = User::query()->findOrFail($id);
-        $user->name = $request['user']['name'];
-        $user->patronymic = $request['user']['patronymic'];
-        $user->last_name = $request['user']['last_name'];
-
-        $result = $user->save();
-        if($result)
-        {
-            Session::flash('success', "Данные сотрудника успешно изменены.");
+        try {
+            $user = User::query()->findOrFail($id);
+            $user->fill($request['user']);
+            $user->save()?
+                Session::flash('success', "Данные сотрудника успешно изменены."):
+                throw new \Exception('Редактирование не удалось. Проверьте введенные данные и попробуйте снова');
+        } catch (\Exception $e) {
+            Log::debug($e);
+            return redirect()->route('admin.user.edit', ['id'=>$user->id])->withErrors($e);
         }
 
         return redirect()->route('admin.user.edit', ['id'=>$user->id]);
@@ -95,13 +91,15 @@ class UserController extends Controller
 
     public function deactivate($id)
     {
-        $user = User::query()->findOrFail($id);
-        $user->is_active = 0;
-
-        $result = $user->save();
-        if($result)
-        {
-            Session::flash('success', "Профиль сотрудника $user->last_name $user->name успешно дективирован.");
+        try {
+            $user = User::query()->findOrFail($id);
+            $user->fill(['is_active'=>0]);
+            $user->save()?
+                Session::flash('success', "Профиль сотрудника $user->last_name $user->name успешно деактивирован."):
+                throw new \Exception('Деактивация не удалась. Перезагрузите страницу и попробуйте снова.');
+        } catch (\Exception $e) {
+            Log::debug($e);
+            return redirect()->route('admin.users')->withErrors($e);
         }
 
         return redirect()->route('admin.users');
@@ -109,13 +107,15 @@ class UserController extends Controller
 
     public function restore($id)
     {
-        $user = User::query()->findOrFail($id);
-        $user->is_active = 1;
-
-        $result = $user->save();
-        if($result)
-        {
-            Session::flash('success', "Профиль сотрудника $user->last_name $user->name успешно активирован.");
+        try {
+            $user = User::query()->findOrFail($id);
+            $user->fill(['is_active'=>1]);
+            $user->save()?
+                Session::flash('success', "Профиль сотрудника $user->last_name $user->name успешно активирован."):
+                throw new \Exception('Активация не удалась. Перезагрузите страницу и попробуйте снова.');
+        } catch (\Exception $e) {
+            Log::debug($e);
+            return redirect()->route('admin.users')->withErrors($e);
         }
 
         return redirect()->route('admin.users');
@@ -124,36 +124,34 @@ class UserController extends Controller
     public function passwordChange(ChangePasswordRequest $request, $id)
     {
         $request = $request->validated();
-        $user = User::query()->findOrFail($id);
-        $user->password = Hash::make(PasswordService::salting($request['user']['password']));
-
-        $result = $user->save();
-        if($result)
-        {
-            Session::flash('success', "Пароль сотрудника $user->last_name $user->name успешно изменен.");
+        try {
+            $user = User::query()->findOrFail($id);
+            $user->fill(['password'=>Hash::make(PasswordService::salting($request['user']['password']))]);
+            $user->save()?
+                Session::flash('success', "Пароль сотрудника $user->last_name $user->name успешно изменен."):
+                throw new \Exception('Изменение пароля не удалось. Перезагрузите страницу и попробуйте снова.');
+        } catch (\Exception $e) {
+            Log::debug($e);
+            return redirect()->route('admin.user.edit', ['id'=>$id])->withErrors($e);
         }
-        else {
-            Session::flash('error', "Пароль сотрудника $user->last_name $user->name не был изменен.");
-        }
 
-        return redirect()->back();
+        return redirect()->route('admin.user.edit', ['id'=>$id]);
     }
 
     public function loginChange(ChangeLoginRequest $request, $id)
     {
         $request = $request->validated();
-        $user = User::query()->findOrFail($id);
-        $user->email = $request['user']['email'];
-
-        $result = $user->save();
-        if($result)
-        {
-            Session::flash('success', "Логин сотрудника $user->last_name $user->name успешно изменен.");
+        try {
+            $user = User::query()->findOrFail($id);
+            $user->fill($request['user']);
+            $user->save()?
+                Session::flash('success', "Логин сотрудника $user->last_name $user->name успешно изменен."):
+                throw new \Exception("Логин сотрудника $user->last_name $user->name не был изменен. Перезагрузите страницу и попробуйте снова.");
+        } catch (\Exception $e) {
+            Log::debug($e);
+            return redirect()->route('admin.user.edit', ['id'=>$id])->withErrors($e);
         }
-        else {
-            Session::flash('error', "Логин сотрудника $user->last_name $user->name не был изменен.");
-        }
 
-        return redirect()->back();
+        return redirect()->route('admin.user.edit', ['id'=>$id]);
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Requests\Pet\AddRequest;
 use App\Models\Pet;
 use App\Models\Visit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class PetController extends Controller
@@ -44,7 +45,7 @@ class PetController extends Controller
             $validatedRequest['pet_id'] = $id;
             $query = Visit::filter($validatedRequest);
         } else {
-            $query = Visit::query()->where('pet_id', '=', $id);
+            $query = Visit::where('pet_id', '=', $id);
         }
             $visits = $query->with('user')->orderBy('visit_date', 'DESC')->paginate(5)->withQueryString();
 
@@ -54,11 +55,15 @@ class PetController extends Controller
     public function add(AddRequest $request)
     {
         $validatedRequest = $request->validated();
-        $newPet = Pet::create($validatedRequest['pet']);
-
-        if ($newPet->id) {
+        try{
+            $newPet = Pet::create($validatedRequest['pet']);
             Session::flash('success', "Питомец $newPet->name успешно добавлен.");
+        }catch (\Exception $e) {
+            Log::debug($e);
+            return redirect()->route('owner.show', ['id' => $validatedRequest['pet']['owner_id']])
+                ->withErrors('error', 'Питомец не был добавлен. Проверьте введенные данные.');
         }
+
         return redirect()->route('owner.show', ['id' => $validatedRequest['pet']['owner_id']]);
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Requests\Visit\AddRequest;
 use App\Http\Requests\Visit\EditRequest;
 use App\Models\Visit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 
@@ -67,13 +68,16 @@ class VisitController extends Controller
     public function create(AddRequest $request)
     {
         $validatedRequest = $request->validated();
-        $validatedRequest['visit']['weight'] = Visit::weightNormalize($validatedRequest['visit']['weight']);
-        $validatedRequest['visit']['temperature'] = Visit::temperatureNormalize($validatedRequest['visit']['temperature']);
-        $newVisit = Visit::create($validatedRequest['visit']);
-
-        if($newVisit->id)
-        {
+        try{
+            $validatedRequest['visit']['weight'] = Visit::weightNormalize($validatedRequest['visit']['weight']);
+            $validatedRequest['visit']['temperature'] = Visit::temperatureNormalize($validatedRequest['visit']['temperature']);
+            Visit::create($validatedRequest['visit']);
             Session::flash('success', "Прием успешно добавлен!");
+        }catch (\Exception $e){
+            Log::debug($e);
+            return redirect()
+                ->route('pet.show', ['id' => $validatedRequest['visit']['pet_id']])
+                ->withErrors('Ошибка при создании према. Перезагрузите страницу и попробуйте снова.');
         }
 
         return redirect()->route('pet.show', ['id' => $validatedRequest['visit']['pet_id']]);
@@ -89,18 +93,19 @@ class VisitController extends Controller
     public function update(EditRequest $request, $id)
     {
         $validatedRequest = $request->validated();
-
-        $visit = Visit::find($id);
-        $visit->weight = Visit::weightNormalize($validatedRequest['visit']['weight']);
-        $visit->temperature = Visit::temperatureNormalize($validatedRequest['visit']['temperature']);
-        $visit->pre_diagnosis = $validatedRequest['visit']['pre_diagnosis'];
-        $visit->visit_info = $validatedRequest['visit']['visit_info'];
-        $visit->user_id = $validatedRequest['visit']['doctor_id'];
-
-        $save = $visit->save();
-        if($save)
-        {
-            Session::flash('success', "Прием успешно изменен!");
+        try {
+            $validatedRequest['visit']['weight'] = Visit::weightNormalize($validatedRequest['visit']['weight']);
+            $validatedRequest['visit']['temperature'] = Visit::temperatureNormalize($validatedRequest['visit']['temperature']);
+            $visit = Visit::find($id);
+            $visit->fill($validatedRequest['visit']);
+            $visit->save()?
+                Session::flash('success', "Прием успешно изменен!"):
+                throw new \Exception('Ошибка при изменении према. Перезагрузите страницу и попробуйте снова.');
+        }catch (\Exception $e){
+            Log::debug($e);
+            return redirect()
+                ->route('visit.edit', ['id'=>$id])
+                ->withErrors($e);
         }
 
         return redirect(route('visit.edit', ['id'=>$id]));
