@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="row row-cols-1 mt-5 note_wrapper">
-        <div class="col col-xl-3 col-lg-4 col-md-6 col-sm-9 mb-lg-3 mb-4 mb-5  note_col">
+        <div class="col col-xl-3 col-lg-4 col-md-6 col-sm-9 mb-4 mb-5  note_col">
             <div class="note create_note_status">
                 <form method="POST" action="{{route('note.create')}}">
                     @csrf
@@ -21,7 +21,7 @@
         </div>
         @if(!empty($notes))
             @foreach($notes as $note)
-                <div class="col col-xl-3 col-lg-4 col-md-6 col-sm-9 mb-lg-3 mb-4 mb-5 note_col">
+                <div class="col col-xl-3 col-lg-4 col-md-6 col-sm-9 mb-4 mb-5 note_col">
                     <div class="note note_item {{$note->status->class_name}}_status">
                         <p class="date">{{$note->dateFormat()}}</p>
                         <p class="status">Важность: {{$note->status->name}}</p>

@@ -56,11 +56,11 @@ class VisitController extends Controller
                 'visits.to.before_or_equal'=>'Дата в поле "По:" имеет некорректное значение',
             ]);
 
-            $query = Visit::filter($validatedRequest);;
+            $query = Visit::filter($validatedRequest);
         } else {
-            $query = Visit::filter(['search'=>'today']);;
+            $query = Visit::filter(['search'=>'today']);
         }
-        $visits = $query->with('pet', 'user')->orderBy('id', 'DESC')->paginate(20)->withQueryString();
+        $visits = $query->with('pet', 'user')->orderBy('id', 'DESC')->paginate(10)->withQueryString();
 
         return view('visit.index', compact('visits'));
     }

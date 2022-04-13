@@ -7,7 +7,7 @@
             <ul class="nav header-item menu">
                 Вы вошли как: {{Auth::user()->email}}
                 <a class=" btn btn-menu" href="{{route('notes')}}">
-                    <li class="nav-item">Главная</li>
+                    <li class="nav-item">Заметки</li>
                 </a>
                 <a class="btn btn-menu" href="{{route('cards')}}">
                     <li class="nav-item">Картотека</li>
