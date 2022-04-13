@@ -1,14 +1,4 @@
-.note_wrapper {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: auto;
-
-}
-
 .note {
-    display: block;
-    margin: 15px;
-    width: 300px;
     height: 420px;
     text-align: center;
     border: 1px solid gray;
@@ -65,4 +55,16 @@
 
 .note_icon {
     font-size: 20px;
+}
+
+@media (max-width: 576px) {
+    .note_col {
+        width: 80%!important;
+    }
+}
+
+@media (max-width: 768px) {
+    .note_wrapper {
+        justify-content: center!important;
+    }
 }

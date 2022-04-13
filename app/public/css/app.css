@@ -11,7 +11,7 @@ header {
 
 .header_content {
     display: grid;
-    grid-template-columns: repeat(2, minmax(auto, 1fr));
+    grid-template-columns: 1fr 2fr;
 }
 
 .header-item {
@@ -39,12 +39,18 @@ header {
 }
 
 .menu li {
-    margin-left: 20px;
     cursor: pointer;
 }
 
 .menu li:hover {
     color: peachpuff;
+}
+
+.btn-menu
+{
+    margin-left: 20px;
+    color: white!important;
+    background-color: #2d3748!important;
 }
 
 
@@ -69,7 +75,6 @@ footer {
 }
 
 .search_block {
-    padding: 20px;
     border: 1px solid black;
     border-radius: 30px;
 }
@@ -83,6 +88,12 @@ footer {
     text-align: center;
 }
 
+@media (max-width: 576px) {
+    .card_input {
+        margin-bottom: 3rem;
+        width: 90%!important;
+    }
+}
 
 .single_visit {
     margin: 20px 0;
@@ -102,17 +113,7 @@ footer {
     padding: 20px;
 }
 
-.note_wrapper {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: auto;
-
-}
-
 .note {
-    display: block;
-    margin: 15px;
-    width: 300px;
     height: 420px;
     text-align: center;
     border: 1px solid gray;
@@ -169,6 +170,18 @@ footer {
 
 .note_icon {
     font-size: 20px;
+}
+
+@media (max-width: 576px) {
+    .note_col {
+        width: 80%!important;
+    }
+}
+
+@media (max-width: 768px) {
+    .note_wrapper {
+        justify-content: center!important;
+    }
 }
 
 .login_form_block {

@@ -6,7 +6,7 @@ header {
 
 .header_content {
     display: grid;
-    grid-template-columns: repeat(2, minmax(auto, 1fr));
+    grid-template-columns: 1fr 2fr;
 }
 
 .header-item {
@@ -33,11 +33,17 @@ header {
 }
 
 .menu li {
-    margin-left: 20px;
     cursor: pointer;
 }
 
 .menu li:hover {
     color: peachpuff;
+}
+
+.btn-menu
+{
+    margin-left: 20px;
+    color: white!important;
+    background-color: #2d3748!important;
 }
 

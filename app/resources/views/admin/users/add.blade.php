@@ -1,5 +1,6 @@
-@extends('admin.layouts.layout')
+@extends('layouts.body.admin.layout')
 
+@section('title') VetJournal::Добавить пользователя @endsection
 
 @section('content')
     <h2>Создать новый профиль сотрудника:</h2>

@@ -8,6 +8,7 @@
     <link rel="shortcut icon" href="{{asset('favicon.ico')}}" type="image/ico">
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    <script src="https://kit.fontawesome.com/8b6867068a.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 </head>
 @yield('layout')

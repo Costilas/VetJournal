@@ -5,26 +5,26 @@
                 <img src="{{asset('img/logo.png')}}" class="logo-img"><span>ZooMedPetVet</span>
             </div>
             <ul class="nav header-item menu">
-                <a href="{{route('notes')}}">
+                Вы вошли как: {{Auth::user()->email}}
+                <a class=" btn btn-menu" href="{{route('notes')}}">
                     <li class="nav-item">Главная</li>
                 </a>
-                <a href="{{route('cards')}}">
+                <a class="btn btn-menu" href="{{route('cards')}}">
                     <li class="nav-item">Картотека</li>
                 </a>
-                <a href="{{route('visits')}}">
+                <a class="btn btn-menu" href="{{route('visits')}}">
                     <li class="nav-item">Приемы</li>
                 </a>
-                @if(!empty(auth()->user()->is_admin))
-                    <a href="{{route('admin')}}">
-                        <li class="nav-item">Управление приложением</li>
+                @if(!empty(Auth::user()->is_admin))
+                    <a class="btn btn-menu" href="{{route('admin')}}">
+                        <li class="nav-item">Управление</li>
                     </a>
                 @endif
-                @if(auth()->check())
-                    <a href="{{route('logout')}}">
-                        <li class="nav-item">Выход</li>
+                @if(Auth::check())
+                    <a class="btn btn-menu" href="{{route('logout')}}">
+                        <li class="nav-item"><i class="bi bi-box-arrow-left"></i></li>
                     </a>
                 @endif
-                <li>Вы вошли как: {{}}</li>
             </ul>
         </div>
     </div>

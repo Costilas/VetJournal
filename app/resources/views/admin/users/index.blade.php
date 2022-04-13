@@ -1,5 +1,6 @@
-@extends('admin.layouts.layout')
+@extends('layouts.body.admin.layout')
 
+@section('title') VetJournal::Пользователи @endsection
 
 @section('content')
     <h2>Сотрудники</h2>
