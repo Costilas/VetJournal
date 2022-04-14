@@ -42,12 +42,12 @@
         </div>
         <div class="collapse" id="newPet">
             <div class="card card-body m-2">
-                @include('owner.pet.add')
+                @include('owner.pet.forms.add')
             </div>
         </div>
         <div class="collapse" id="editOwner">
             <div class="card card-body m-2">
-                hello
+                @include('owner.forms.edit')
             </div>
         </div>
     </div>

@@ -1,11 +1,11 @@
 @extends('layouts.body.app.layout')
 
-@section('title') Пациент::{{$pet->pet_name}} ({{$pet->owner->last_name}}) @endsection
+@section('title') Пациент::{{$pet->pet_name}} ({{$owner->last_name}}) @endsection
 
 @section('content')
     <div class="row">
         <div class="col-12">
-            <h2 class="text-center m-5">Пациент: <strong>{{$pet->pet_name}}</strong>({{$pet->owner->last_name}})</h2>
+            <h2 class="text-center m-5">Пациент: <strong>{{$pet->pet_name}}</strong>({{$owner->last_name}})</h2>
         </div>
     </div>
     <div class="info_block row row-cols-auto justify-content-center">
@@ -18,6 +18,8 @@
                     <p class="card-text">Дата рождения: <strong>{{$pet->birthDateFormat()}}</strong></p>
                     <p class="card-text">Возраст: (<i>{{$pet->countYears()}} лет</i>)</p>
                     <p class="card-text"></p>
+                    <a href="{{route('pet.edit', ['id'=>$pet->id])}}" class="btn btn-primary mt-auto"><i
+                            class="bi bi-file-earmark-person"></i> Редактировать профиль пациента</a>
                 </div>
             </div>
         </div>
@@ -26,11 +28,11 @@
                 <div class="card-body">
                     <p class="text-center"> Владелец: </p>
                     <h5 class="card-title">ФИО:
-                        <strong>{{$pet->owner->last_name}} {{$pet->owner->name}} {{$pet->owner->patronymic}}</strong>
+                        <strong>{{$owner->last_name}} {{$owner->name}} {{$owner->patronymic}}</strong>
                     </h5>
-                    <p class="card-text"> Адрес: <strong>{{$pet->owner->address}}</strong></p>
-                    <p class="card-text"> Телефон: <strong>{{$pet->owner->phone}}</strong></p>
-                    <a href="{{route('owner.show', ['id'=>$pet->owner->id])}}" class="btn btn-primary mt-auto"><i
+                    <p class="card-text"> Адрес: <strong>{{$owner->address}}</strong></p>
+                    <p class="card-text"> Телефон: <strong>{{$owner->phone}}</strong></p>
+                    <a href="{{route('owner.show', ['id'=>$owner->id])}}" class="btn btn-primary mt-auto"><i
                             class="bi bi-file-earmark-person"></i> Профиль владельца</a>
                 </div>
             </div>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Pet\AddRequest;
+use App\Http\Requests\Pet\EditRequest;
+use App\Models\Owner;
 use App\Models\Pet;
 use App\Models\Visit;
 use Illuminate\Http\Request;
@@ -47,9 +49,10 @@ class PetController extends Controller
             $query = Visit::where('pet_id', '=', $id);
         }
             $pet = Pet::with('gender', 'kind')->findOrFail($id);
+            $owner = Owner::find($pet->owner_id);
             $visits = $query->with('user')->orderBy('visit_date', 'DESC')->paginate(5)->withQueryString();
 
-        return view('pet.show', compact('pet', 'visits'));
+        return view('pet.show', compact('pet', 'visits', 'owner'));
     }
 
     public function add(AddRequest $request)
@@ -65,5 +68,32 @@ class PetController extends Controller
         }
 
         return redirect()->route('owner.show', ['id' => $validatedRequest['pet']['owner_id']]);
+    }
+
+    public function edit($id)
+    {
+        $pet = Pet::with('kind', 'gender')->find($id);
+
+        return view('pet.edit', compact('pet'));
+    }
+
+    public function update(EditRequest $request, $id)
+    {
+        $validatedRequest = $request->validated();
+        try{
+            $owner = Pet::findOrFail($id);
+            $owner->fill($validatedRequest['pet']);
+            $owner->save()?
+                Session::flash('success', "Питомец успешно отредактирован!"):
+                throw new \Exception('Ошибка при редактирования питомца. Перезагрузите страницу и попробуйте снова.');
+        }catch (\Exception $e) {
+            Log::debug($e);
+            return redirect()
+                ->route('pet.edit', ['id' => $id])
+                ->withErrors($e);
+        }
+
+        return redirect()->route('pet.edit', ['id' => $id]);
+
     }
 }

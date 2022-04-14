@@ -18,8 +18,11 @@ Route::group(['middleware'=>'auth'], function (){
 //Pet
     Route::get('/pet/{id}/show', [App\Http\Controllers\PetController::class, 'show'])->name('pet.show')->where('id', '[0-9]+');
     Route::post('/pet/add', [App\Http\Controllers\PetController::class, 'add'])->name('pet.add');
+    Route::get('/pet/{id}/edit', [App\Http\Controllers\PetController::class, 'edit'])->name('pet.edit');
+    Route::post('/pet/{id}/update', [App\Http\Controllers\PetController::class, 'update'])->name('pet.update');
 //Owner
     Route::get('/owner/{id}/show', [App\Http\Controllers\OwnerController::class, 'show'])->name('owner.show')->where('id', '[0-9]+');
+    Route::post('/owner/{id}/update', [App\Http\Controllers\OwnerController::class, 'update'])->name('owner.update');
 //Visit
     Route::get('/visits', [App\Http\Controllers\VisitController::class, 'index'])->name('visits');
     Route::post('/visit/create', [App\Http\Controllers\VisitController::class, 'create'])->name('visit.create');
