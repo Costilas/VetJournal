@@ -6,13 +6,6 @@ use EloquentFilter\ModelFilter;
 
 class VisitFilter extends ModelFilter
 {
-    /**
-    * Related Models that have ModelFilters as well as the method on the ModelFilter
-    * As [relationMethod => [input_key1, input_key2]].
-    *
-    * @var array
-    */
-
 
     public function pet($pet_id)
     {
@@ -21,31 +14,35 @@ class VisitFilter extends ModelFilter
 
     public function visits($visit_date)
     {
-        return $this->whereBetween('visit_date', [$visit_date['from'] . ' 00:00:01', $visit_date['to'] . ' 23:59:59']);
+        $dayRangeFrom = ' 00:00:01';
+        $dayRangeTo = ' 23:59:59';
+        return $this->whereBetween('visit_date', [$visit_date['from'] . $dayRangeFrom, $visit_date['to'] . $dayRangeTo]);
     }
 
     public function search($when)
     {
+        $dayRangeFrom = ' 00:00:01';
+        $dayRangeTo = ' 23:59:59';
         switch ($when) {
             case 'today':
                 return $this->whereBetween('visit_date',
                     [
-                        date('Y-m-d 00:00:01', time()),
-                        date('Y-m-d 23:59:59', time())
+                        date('Y-m-d'.$dayRangeFrom, time()),
+                        date('Y-m-d'.$dayRangeTo, time())
                     ]
                 );
             case 'yesterday':
                 return $this->whereBetween('visit_date',
                     [
-                        date('Y-m-d 00:00:01', strtotime('-1day')),
-                        date('Y-m-d 23:59:59', strtotime('-1day'))
+                        date('Y-m-d'.$dayRangeFrom, strtotime('-1day')),
+                        date('Y-m-d'.$dayRangeTo, strtotime('-1day'))
                     ]
                 );
             case 'week':
                 return $this->whereBetween('visit_date',
                     [
-                        date('Y-m-d 00:00:01', strtotime('-1week')),
-                        date('Y-m-d 23:59:59', time())
+                        date('Y-m-d'.$dayRangeFrom, strtotime('-1week')),
+                        date('Y-m-d'.$dayRangeTo, time())
                     ]
                 );
             default:
