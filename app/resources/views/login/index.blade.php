@@ -20,16 +20,16 @@
                 <form method="POST" action="{{route('auth')}}">
                     @csrf
                     <div class="row row-cols-1 mb-3">
-                        <div class="col  col-lg-6 col-md-8 col-sm-9 m-auto">
+                        <div class="col col-lg-6 col-md-8 col-sm-9 m-auto xs-w-9 xs-mb-3">
                             <label for="login" class="form-label">Логин:</label>
-                            <input type="text" name="user[email]" class="form-control login_input @error('user.email') is-invalid @enderror"
+                            <input type="text" name="user[email]" class="form-control @error('user.email') is-invalid @enderror"
                                    id="login" aria-describedby="emailHelp" value="{{request()->input('user.email')}}">
                         </div>
                     </div>
                     <div class="row row-cols-1 mb-3">
-                        <div class="col col-lg-6 col-md-8 col-sm-9 m-auto">
+                        <div class="col col-lg-6 col-md-8 col-sm-9 m-auto xs-w-9 xs-mb-3">
                             <label for="inputPassword" class="form-label">Пароль:</label>
-                            <input type="password" name="user[password]" class="form-control login_input  @error('user.password') is-invalid @enderror"
+                            <input type="password" name="user[password]" class="form-control @error('user.password') is-invalid @enderror"
                                    id="inputPassword">
                         </div>
                     </div>

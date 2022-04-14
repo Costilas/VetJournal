@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="row row-cols-1">
-        <div class="col-12">
+        <div class="col-10 m-auto">
             <div class="card mb-3 mt-3 p-3">
                 <div class="owner_credentials">
                     <div class="row">

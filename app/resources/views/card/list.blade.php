@@ -13,7 +13,7 @@
                     {{view('card.row', compact('owner'))}}
                 @endforeach
             @else
-                <tr class="text-center">
+                <tr class="text-center text-break">
                     <td colspan="5">
                         <p> Результатов по введенным данным нет. <br> Проверьте правильность заполнения полей. </p>
                     </td>

@@ -1,6 +1,36 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);
-.wrapper_login {
-    padding-top: 150px;
+.row {
+    margin-left: 0!important;
+    margin-right: 0!important;
+}
+
+.padding_block {
+    padding: 10px;
+    margin: 15px 0;
+}
+
+.border_block {
+    border: 1px solid black;
+    border-radius: 30px;
+}
+
+.pagination {
+    justify-content: center;
+}
+
+@media (max-width: 576px) {
+    .xs-w-9 {
+        width: 90%!important;
+    }
+    .xs-mt-3 {
+        margin-top: 3rem!important;
+    }
+    .xs-mb-3 {
+        margin-bottom: 3rem!important;
+    }
+    .xs-m-9 {
+        margin: 3rem!important;
+    }
 }
 
 header {
@@ -69,34 +99,6 @@ footer {
     grid-template-columns: repeat(2, minmax(auto, 1fr));
 }
 
-.new_card_block, .search_block {
-    padding: 20px;
-    margin: 15px 0;
-}
-
-.search_block {
-    border: 1px solid black;
-    border-radius: 30px;
-}
-
-.pagination {
-    justify-content: center;
-}
-
-@media (max-width: 576px) {
-    .card_input {
-        margin-bottom: 3rem;
-        width: 90%!important;
-    }
-}
-
-.single_visit {
-    margin: 20px 0;
-}
-.more_info_button {
-    width: 25%;
-}
-
 .pet_badge_block {
     padding: 5px;
     border: 1px solid gray;
@@ -109,30 +111,29 @@ footer {
 }
 
 .note {
-    height: 420px;
+    padding: 15px;
+    min-height: 420px;
     text-align: center;
-    border: 1px solid gray;
     border-radius: 10px;
     box-shadow: 5px 5px 20px rgba(0,0,0,0.8);;
 }
 
-.note textarea {
-    resize: none;
-    width: 90%;
-    height: 200px;
-    padding: 5px;
-}
-
-.note form {
+.flex_column_parameters {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 100%;
-    height: 100%;
+    align-items: center;
 }
 
-.note form * {
-    margin: 15px auto;
+.note_item {
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+.note textarea {
+    resize: none;
+    height: 200px;
+    padding: 5px;
 }
 
 .low_status{
@@ -151,14 +152,6 @@ footer {
     background-color: crimson;
 }
 
-.note_item {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    overflow: hidden;
-    word-wrap: break-word;
-}
-
 .note_item :where(.date, .theme, .body){
     padding: 10px;
 }
@@ -167,16 +160,21 @@ footer {
     font-size: 20px;
 }
 
-@media (max-width: 576px) {
-    .note_col {
-        width: 80%!important;
-    }
-}
-
 @media (max-width: 768px) {
     .note_wrapper {
         justify-content: center!important;
     }
+}
+
+@media (max-width: 576px) {
+    .xs_note {
+        width:80% !important;
+    }
+}
+
+
+.wrapper_login {
+    padding-top: 150px;
 }
 
 .login_form_block {
@@ -186,22 +184,9 @@ footer {
     background-color: #2d3748;
 }
 
-@media (max-width: 575.98px) {
-    .login_input{
-        margin: 20px auto;
-        width: 80% !important;
-    }
-}
-
-/*General styles*/
-
 /*Header styles*/
 
 /*Footer styles*/
-
-/*Card list and single card styles*/
-
-/*Visit styles*/
 
 /*Pet*/
 

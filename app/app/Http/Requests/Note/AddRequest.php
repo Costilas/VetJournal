@@ -24,9 +24,9 @@ class AddRequest extends FormRequest
     public function rules()
     {
         return [
-            'status_id'=>'digits:1|required',
-            'theme'=>'string|required|max:25',
-            'body'=>'string|required|max:255',
+            'status_id'=>'required|digits:1',
+            'theme'=>'required|string|max:25',
+            'body'=>'required|string|max:255',
         ];
     }
 

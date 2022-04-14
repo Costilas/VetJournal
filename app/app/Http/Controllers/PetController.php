@@ -13,7 +13,6 @@ class PetController extends Controller
 {
     public function show($id, Request $request)
     {
-        $pet = Pet::with('owner.pets', 'gender', 'kind')->findOrFail($id);
         if (!empty($request) && $request->has('visits')) {
             $validatedRequest = $request->validate([
                 "visits" => [
@@ -47,6 +46,7 @@ class PetController extends Controller
         } else {
             $query = Visit::where('pet_id', '=', $id);
         }
+            $pet = Pet::with('gender', 'kind')->findOrFail($id);
             $visits = $query->with('user')->orderBy('visit_date', 'DESC')->paginate(5)->withQueryString();
 
         return view('pet.show', compact('pet', 'visits'));

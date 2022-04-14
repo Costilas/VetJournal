@@ -1,28 +1,27 @@
 .note {
-    height: 420px;
+    padding: 15px;
+    min-height: 420px;
     text-align: center;
-    border: 1px solid gray;
     border-radius: 10px;
     box-shadow: 5px 5px 20px rgba(0,0,0,0.8);;
 }
 
-.note textarea {
-    resize: none;
-    width: 90%;
-    height: 200px;
-    padding: 5px;
-}
-
-.note form {
+.flex_column_parameters {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 100%;
-    height: 100%;
+    align-items: center;
 }
 
-.note form * {
-    margin: 15px auto;
+.note_item {
+    overflow: hidden;
+    word-wrap: break-word;
+}
+
+.note textarea {
+    resize: none;
+    height: 200px;
+    padding: 5px;
 }
 
 .low_status{
@@ -41,14 +40,6 @@
     background-color: crimson;
 }
 
-.note_item {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    overflow: hidden;
-    word-wrap: break-word;
-}
-
 .note_item :where(.date, .theme, .body){
     padding: 10px;
 }
@@ -57,14 +48,15 @@
     font-size: 20px;
 }
 
-@media (max-width: 576px) {
-    .note_col {
-        width: 80%!important;
-    }
-}
-
 @media (max-width: 768px) {
     .note_wrapper {
         justify-content: center!important;
     }
 }
+
+@media (max-width: 576px) {
+    .xs_note {
+        width:80% !important;
+    }
+}
+

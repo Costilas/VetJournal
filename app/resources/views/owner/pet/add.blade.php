@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary m-3"><i class="bi bi-plus-lg"></i> Добавить </button>
+        <button type="submit" class="btn btn-primary m-3 d-block m-auto"><i class="bi bi-plus-lg"></i> Добавить </button>
 
         <input name="pet[owner_id]" type="hidden" value="{{$owner->id}}">
     </form>

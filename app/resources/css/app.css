@@ -1,4 +1,3 @@
-/*General styles*/
 @import url('general/style.css');
 
 /*Header styles*/
@@ -6,12 +5,6 @@
 
 /*Footer styles*/
 @import url('footer/style.css');
-
-/*Card list and single card styles*/
-@import url('card/search.css');
-
-/*Visit styles*/
-@import url('visit/single.css');
 
 /*Pet*/
 @import url('pet/style.css');
