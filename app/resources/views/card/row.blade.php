@@ -1,4 +1,4 @@
-<tr class="search_row">
+<tr class="align-middle text-center">
     <td>{{$owner->last_name}} {{$owner->name}} {{$owner->patronymic}}</td>
     <td>{{$owner->address}}</td>
     <td>{{$owner->phone}}</td>

@@ -1,4 +1,4 @@
-<div class="card card-body row row-cols-1">
+<div class="card card-body">
     <form action="{{route('card.create')}}" method="POST">
         @csrf
         <div class="row row-cols-1">
@@ -38,10 +38,11 @@
                        value="{{session()->getOldInput('owner.address')}}">
             </div>
         </div>
-        <div class="col-12">
-            <h4 class="text-center"><i class="fa-solid fa-paw"></i> Питомец:</h4>
+        <div class="row row-cols-1">
+            <div class="col-12">
+                <h4 class="text-center"><i class="fa-solid fa-paw"></i> Питомец:</h4>
+            </div>
         </div>
-
         <div class="row row-cols-1 mb-3 mt-3 justify-content-center">
             <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 card_input">
                 <label for="last_name">Кличка питомца:</label>

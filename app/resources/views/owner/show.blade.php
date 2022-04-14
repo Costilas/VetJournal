@@ -3,43 +3,57 @@
 @section('title') Владелец::{{$owner->last_name}} @endsection
 
 @section('content')
-    <div class="owner_info">
-        <div class="owner_credentials">
-            {{$owner->last_name}}{{$owner->patronymic}}{{$owner->name}}
-            {{$owner->address}}
-            {{$owner->phone}}
-            Дата регистрации: {{$owner->created_at}}
-            {{$owner->address}}
-        </div>
-        <div class="m-3 text-center">
-            <p>
-                <a class="btn btn-success" data-bs-toggle="collapse" href="#newPet" role="button" aria-expanded="false"
-                   aria-controls="newPet">
-                    <i class="bi bi-journal-plus"></i> Добавить питомца
-                </a>
-            </p>
-            <div class="collapse" id="newPet">
-                <div class="card card-body">
-                    @include('owner.pet.add')
+    <div class="row row-cols-1">
+        <div class="col-12">
+            <div class="card mb-3 mt-3 p-3">
+                <div class="owner_credentials">
+                    <div class="row">
+                        <div class="col-12 text-center display-6">
+                            <strong>{{$owner->last_name}} {{$owner->name}} {{$owner->patronymic}}</strong>
+                        </div>
+                        <div class="col-12 text-center m-3">
+                            Телефон: <strong>{{$owner->phone}}</strong>
+                        </div>
+                        <div class="col-12 text-center m-3">
+                            Дата регистрации: {{$owner->created_at}}
+                        </div>
+                        <div class="col-12 text-center m-3">
+                            Адрес: {{$owner->address}}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="owner_pet_list">
-            <div class="row">
-            @foreach($owner->pets as $pet)
-                    <div class="col-sm-6 mt-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title"> Кличка: {{$pet->pet_name}} </h5>
-                                <p class="card-text"> Вид: {{$pet->kind->kind}} </p>
-                                <p class="card-text"> Пол: {{$pet->gender->gender}} </p>
-                                <a href="{{route('pet.show', ['id'=>$pet->id])}}" class="btn btn-primary">К питомцу</a>
-                            </div>
-                        </div>
-                    </div>
-            @endforeach
+    </div>
+    <div class="row row-cols-1">
+        <div class="col-auto m-auto">
+            <div class="card mb-3 p-2">
+                <div class="text-center">
+                    <a class="btn btn-success m-1" data-bs-toggle="collapse" href="#newPet" role="button" aria-expanded="false"
+                       aria-controls="newPet">
+                        <i class="bi bi-journal-plus"></i> Добавить питомца
+                    </a>
+                    <a class="btn btn-warning m-1" data-bs-toggle="collapse" href="#editOwner" role="button" aria-expanded="false"
+                       aria-controls="editOwner">
+                        <i class="bi bi-pencil-square"></i> Редактировать профиль владельца
+                    </a>
+                </div>
             </div>
+        </div>
+        <div class="collapse" id="newPet">
+            <div class="card card-body m-2">
+                @include('owner.pet.add')
+            </div>
+        </div>
+        <div class="collapse" id="editOwner">
+            <div class="card card-body m-2">
+                hello
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-lg-12 m-auto">
+            @include('owner.pet.list')
         </div>
     </div>
 @endsection
