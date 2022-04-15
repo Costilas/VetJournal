@@ -6,21 +6,21 @@
         </div>
     </div>
     <div class="row row-cols-auto mt-3 justify-content-center">
-        <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 col-xs-10 mb-lg-3 mb-md-4 mb-sm-5 card_input">
+        <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 col-xs-10 mb-lg-3 mb-md-4 mb-sm-5  xs-w-9 xs-mb-3">
             <label for="last_name">Кличка питомца:</label>
             <input type="text" class="form-control @error('pet.pet_name') is-invalid @enderror"
                    name="pet[pet_name]" placeholder="Боня" aria-label="Pet name"
                    value="{{session()->getOldInput('pet.pet_name')}}">
         </div>
 
-        <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 col-xs-10 mb-lg-3 mb-md-4 mb-sm-5 card_input">
+        <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 col-xs-10 mb-lg-3 mb-md-4 mb-sm-5  xs-w-9 xs-mb-3">
             <label for="birth">Дата рождения питомца:</label>
             <input type="date" class="form-control @error('pet.birth') is-invalid @enderror"
                    name="pet[birth]" aria-label="birth"
                    value="{{session()->getOldInput('pet.birth')}}">
         </div>
 
-        <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 col-xs-10 mb-lg-3 mb-md-4 mb-sm-5 card_input">
+        <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 col-xs-10 mb-lg-3 mb-md-4 mb-sm-5  xs-w-9 xs-mb-3">
             <label for="pet[kind_id]">Вид питомца:</label>
             <select name="pet[kind_id]" class="form-control @error('pet.kind_id') is-invalid @enderror">
                 @foreach($kinds as $kind)
@@ -28,7 +28,7 @@
                 @endforeach
             </select>
         </div>
-        <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 col-xs-10 mb-lg-3 mb-md-4 mb-sm-5 card_input">
+        <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 col-xs-10 mb-lg-3 mb-md-4 mb-sm-5  xs-w-9 xs-mb-3">
             <label for="pet[gender_id]">Пол питомца:</label>
             @foreach($genders as $gender)
                 <br><input type="radio" name="pet[gender_id]" @if($gender->id == session()->getOldInput('pet.gender_id')) checked @endif value="{{$gender->id}}"> <i

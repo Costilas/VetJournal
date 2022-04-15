@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Visit\AddRequest;
 use App\Http\Requests\Visit\EditRequest;
 use App\Models\Visit;
+use App\Services\VisitService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
@@ -55,14 +56,14 @@ class VisitController extends Controller
                 'visits.to.required'=>'Поле "По:" должно быть заполнено.',
                 'visits.to.before_or_equal'=>'Дата в поле "По:" имеет некорректное значение',
             ]);
-
             $query = Visit::filter($validatedRequest);
         } else {
             $query = Visit::filter(['search'=>'today']);
         }
+        $resultTitle = VisitService::searchResultString($request, 'visit');
         $visits = $query->with('pet', 'user')->orderBy('id', 'DESC')->paginate(10)->withQueryString();
 
-        return view('visit.index', compact('visits'));
+        return view('visit.index', compact('visits', 'resultTitle'));
     }
 
     public function create(AddRequest $request)

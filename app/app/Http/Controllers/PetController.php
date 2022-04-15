@@ -7,6 +7,7 @@ use App\Http\Requests\Pet\EditRequest;
 use App\Models\Owner;
 use App\Models\Pet;
 use App\Models\Visit;
+use App\Services\VisitService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
@@ -43,6 +44,7 @@ class PetController extends Controller
                 'visits.to.required'=>'Необходимо заполнить поле "По:".',
                 'visits.to.before_or_equals:'=>'Неверный формат даты в поле "По:".',
             ]);
+
             $validatedRequest['pet_id'] = $id;
             $query = Visit::filter($validatedRequest);
         } else {
@@ -51,8 +53,9 @@ class PetController extends Controller
             $pet = Pet::with('gender', 'kind')->findOrFail($id);
             $owner = Owner::find($pet->owner_id);
             $visits = $query->with('user')->orderBy('visit_date', 'DESC')->paginate(5)->withQueryString();
+            $resultTitle = VisitService::searchResultString($request, 'pet');
 
-        return view('pet.show', compact('pet', 'visits', 'owner'));
+        return view('pet.show', compact('pet', 'visits', 'owner', 'resultTitle'));
     }
 
     public function add(AddRequest $request)

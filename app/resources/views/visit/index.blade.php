@@ -34,7 +34,7 @@
             </div>
         </div>
     </div>
-    <div class="padding_block border_block">
+    <div class="padding_block">
         <div class="row">
             <div class="col-12">
                 <h2 class="text-center text-break">Предустановленные фильтры:</h2>
@@ -61,8 +61,7 @@
             </form>
         </div>
     </div>
-    @if(!empty($visits))
-        {{view('visit.list', compact('visits'))}}
-    @endif
+    <p class="text-center m-2"><em>{{$resultTitle}}</em></p>
+    {{view('visit.list', compact('visits'))}}
     {{$visits->links()}}
 @endsection

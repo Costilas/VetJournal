@@ -9,31 +9,33 @@
         </div>
     </div>
     <div class="info_block row row-cols-auto justify-content-center">
-        <div class="col col-lg-6 col-xl-6 col-md-10 col-sm-12 h-auto">
-            <div class="card">
-                <div class="card-body">
+        <div class="col col-lg-6 col-xl-6 col-md-10 col-sm-12 xs-w-9 xs-mb-3">
+            <div class="card h-100">
+                <div class="card-body d-flex flex-column justify-content-between">
                     <h5 class="card-title text-center">Кличка: <strong>{{$pet->pet_name}}</strong></h5>
                     <p class="card-text">Вид: <strong>{{$pet->kind->kind}}</strong></p>
                     <p class="card-text">Пол: <strong>{{$pet->gender->gender}}</strong></p>
                     <p class="card-text">Дата рождения: <strong>{{$pet->birthDateFormat()}}</strong></p>
                     <p class="card-text">Возраст: (<i>{{$pet->countYears()}} лет</i>)</p>
                     <p class="card-text"></p>
-                    <a href="{{route('pet.edit', ['id'=>$pet->id])}}" class="btn btn-primary mt-auto"><i
-                            class="bi bi-file-earmark-person"></i> Редактировать профиль пациента</a>
+                    <div class="text-center xs-mt-3">
+                        <a href="{{route('pet.edit', ['id'=>$pet->id])}}" class="btn btn-primary"><i
+                                class="bi bi-pencil-fill"></i> Редактировать данные пациента</a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col col-lg-6 col-xl-6 col-md-10 col-sm-12 h-auto">
-            <div class="card">
-                <div class="card-body">
-                    <p class="text-center"> Владелец: </p>
-                    <h5 class="card-title">ФИО:
-                        <strong>{{$owner->last_name}} {{$owner->name}} {{$owner->patronymic}}</strong>
-                    </h5>
+        <div class="col col-lg-6 col-xl-6 col-md-10 col-sm-12 xs-w-9 xs-mb-3">
+            <div class="card h-100">
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <h5 class="text-center"> Владелец: <strong>{{$owner->last_name}} {{$owner->name}} {{$owner->patronymic}}</strong></h5>
                     <p class="card-text"> Адрес: <strong>{{$owner->address}}</strong></p>
                     <p class="card-text"> Телефон: <strong>{{$owner->phone}}</strong></p>
-                    <a href="{{route('owner.show', ['id'=>$owner->id])}}" class="btn btn-primary mt-auto"><i
-                            class="bi bi-file-earmark-person"></i> Профиль владельца</a>
+
+                    <div class="text-center xs-mt-3">
+                        <a href="{{route('owner.show', ['id'=>$owner->id])}}" class="btn btn-primary"><i
+                                class="bi bi-file-earmark-person"></i> Профиль владельца</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -42,16 +44,17 @@
         <div class="col-12">
             <div class="actions">
                 <div class="m-3 text-center">
-                    <a class="btn btn-success" data-bs-toggle="collapse" href="#newVisit" role="button"
+                    <a class="btn btn-success xs-m-1" data-bs-toggle="collapse" href="#newVisit" role="button"
                        aria-expanded="false"
                        aria-controls="newVisit m-1">
                         <i class="bi bi-journal-plus"></i> Новый прием
                     </a>
-                    <a class="btn btn-warning" data-bs-toggle="collapse" href="#searchVisit" role="button"
+                    <a class="btn btn-warning xs-m-1" data-bs-toggle="collapse" href="#searchVisit" role="button"
                        aria-expanded="false"
                        aria-controls="searchVisit m-1">
                         <i class="bi bi-search"></i> Поиск приемов по дате
                     </a>
+                    <a class="btn btn-secondary xs-m-1" href="{{route('pet.show', ['id'=>$pet->id])}}"><i class="bi bi-x-octagon"></i> Сброс фильтров поиска</a>
                 </div>
                 <div class="collapse mb-1" id="searchVisit">
                     <div class="card card-body row row-cols-1">
@@ -68,6 +71,7 @@
         </div>
     </div>
     <div class="visit_block">
+        <p class="text-center m-2"><em>{{$resultTitle}}</em></p>
         @include('pet.visit.list')
     </div>
 @endsection
