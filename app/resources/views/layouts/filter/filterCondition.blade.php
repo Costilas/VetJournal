@@ -1,20 +1,8 @@
 <p class="text-center m-2">
-    @if(!empty($filterCondition))
-        @if(is_array($filterCondition))
-            Результаты с {{$filterCondition['from']. ' по ' . $filterCondition['to']}}
-        @else
-            @switch($filterCondition)
-                @case('today')
-                    Результаты за текущий день.
-                @break
-                @case('yesterday')
-                    Результаты за вчерашний день.
-                @break
-                @case('week')
-                    Результаты за неделю.
-                @break
-            @endswitch
-        @endif
+    @if(!empty($validatedRequest['search']))
+        {!!$validatedRequest['search']['from']===$validatedRequest['search']['to']?
+            "Результат за <strong>" . $validatedRequest['search']['from']. "</strong>":
+            "Результат с <strong>" . $validatedRequest['search']['from'] . "</strong> по <strong>" . $validatedRequest['search']['to'] . "</strong>"!!}
     @else
         @yield('default')
     @endif

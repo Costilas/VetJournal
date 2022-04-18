@@ -71,7 +71,7 @@
         </div>
     </div>
     <div class="visit_block">
-        {{view('layouts.filter.pet', compact('filterCondition'))}}
+        {{view('layouts.filter.pet', compact('validatedRequest'))}}
         @include('pet.visit.list')
     </div>
 @endsection

@@ -45,7 +45,6 @@ class PetController extends Controller
             ]);
         }
         $validatedRequest['pet_id'] = $id;
-        $filterCondition = $validatedRequest['search']??null;
 
         $pet = Pet::with('gender', 'kind')
             ->findOrFail($id);
@@ -56,7 +55,7 @@ class PetController extends Controller
             ->paginate(5)
             ->withQueryString();
 
-        return view('pet.show', compact('pet', 'visits', 'owner', 'filterCondition'));
+        return view('pet.show', compact('pet', 'visits', 'owner', 'validatedRequest'));
     }
 
     public function add(AddRequest $request)

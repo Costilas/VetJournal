@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Visit\AddRequest;
 use App\Http\Requests\Visit\EditRequest;
 use App\Models\Visit;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Validation\Rule;
 
 class VisitController extends Controller
 {
@@ -17,26 +17,25 @@ class VisitController extends Controller
         if($request->has('search'))
         {
             $rules = [
-                "search.from" => [
-                    'sometimes',
+                "search" => [
                     'required',
-                    'before_or_equal:'. now()->format('Y-m-d 00:00:01'),
+                    'array',
+                    'min:2',
+                    'max:2',
+                ],
+                "search.from" => [
+                    'required',
+                    'before_or_equal:'. now()->format('Y-m-d 00:00:00'),
                 ],
                 "search.to" => [
-                    'sometimes',
                     'required',
                     'before_or_equal:'. now()->format('Y-m-d 23:59:59'),
                 ],
             ];
-            $rules['search'] = is_string($request->input('search'))?
-                ['alpha', Rule::in(['today', 'week', 'yesterday']),]:
-                ['required', 'array', 'min:2', 'max:2',];
 
             $validatedRequest = $request->validate($rules,
                 [
                 'search.required' => 'Ошибка фильтрации. Обновите страницу и попробуйте снова.',
-                'search.alpha' => 'Ошибка фильтрации. Обновите страницу и попробуйте снова.',
-                'search.in' => 'Ошибка фильтрации. Обновите страницу и попробуйте снова.',
                 'search.min'=>'Некорректное количество данных для поиска приема по датам.',
                 'search.max'=>'Некорректное количество данных для поиска приема по датам.',
 
@@ -46,17 +45,22 @@ class VisitController extends Controller
                 'search.to.required'=>'Поле "По:" должно быть заполнено.',
                 'search.to.before_or_equal'=>'Дата в поле "По:" имеет некорректное значение',
             ]);
-            $query = Visit::filter($validatedRequest);
+
+
         } else {
-            $query = Visit::filter(['search'=>'today']);
+            $validatedRequest = ['search'=> [
+                    'from'=>Carbon::create('today')->toDateString(),
+                    'to'=>Carbon::create('today')->toDateString()
+                ]
+            ];
         }
-        $filterCondition = $validatedRequest['search']??null;
-        $visits = $query->with('pet', 'user')
+
+        $visits =  Visit::filter($validatedRequest)->with('pet', 'user')
             ->orderBy('id', 'DESC')
             ->paginate(10)
             ->withQueryString();
 
-        return view('visit.index', compact('visits', 'filterCondition'));
+        return view('visit.index', compact('visits', 'validatedRequest'));
     }
 
     public function create(AddRequest $request)
