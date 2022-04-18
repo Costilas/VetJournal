@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('last_name', 50)->index();
             $table->string('phone', 15)->index();
             $table->string('address', 100);
-            $table->timestamps();
+            $table->timestamps(6);
         });
     }
 

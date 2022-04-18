@@ -7,7 +7,6 @@ use App\Http\Requests\Pet\EditRequest;
 use App\Models\Owner;
 use App\Models\Pet;
 use App\Models\Visit;
-use App\Services\VisitService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
@@ -16,46 +15,48 @@ class PetController extends Controller
 {
     public function show($id, Request $request)
     {
-        if (!empty($request) && $request->has('visits')) {
+        if ($request->has('search')) {
             $validatedRequest = $request->validate([
-                "visits" => [
+                "search" => [
                     'required',
                     'array',
                     'min:2',
                     'max:2'
                 ],
-                "visits.from" => [
+                "search.from" => [
                     'required',
                     'before_or_equal:' . now()->format('Y-m-d'),
                 ],
-                "visits.to" => [
+                "search.to" => [
                     'required',
                     'before_or_equal:' . now()->format('Y-m-d'),
                 ],
             ], [
-                'visits.min' => 'Все поля данных поиска приема должны быть заполнены.',
-                'visits.array' => 'Проверьте заполненность всех полей поиска приема.',
-                'visits.required' => 'Все поля формы поиска приема должны быть заполнены.',
-                'visits.max'=>' Обнаружены лишние поля.',
+                'search.min' => 'Все поля данных поиска приема должны быть заполнены.',
+                'search.array' => 'Проверьте заполненность всех полей поиска приема.',
+                'search.required' => 'Все поля формы поиска приема должны быть заполнены.',
+                'search.max'=>' Обнаружены лишние поля.',
 
-                'visits.from.required'=>'Необходимо заполнить поле "С:".',
-                'visits.from.before_or_equals'=>'Неверный формат даты в поле "С:".',
+                'search.from.required'=>'Необходимо заполнить поле "С:".',
+                'search.from.before_or_equals'=>'Неверный формат даты в поле "С:".',
 
-                'visits.to.required'=>'Необходимо заполнить поле "По:".',
-                'visits.to.before_or_equals:'=>'Неверный формат даты в поле "По:".',
+                'search.to.required'=>'Необходимо заполнить поле "По:".',
+                'search.to.before_or_equals:'=>'Неверный формат даты в поле "По:".',
             ]);
-
-            $validatedRequest['pet_id'] = $id;
-            $query = Visit::filter($validatedRequest);
-        } else {
-            $query = Visit::where('pet_id', '=', $id);
         }
-            $pet = Pet::with('gender', 'kind')->findOrFail($id);
-            $owner = Owner::find($pet->owner_id);
-            $visits = $query->with('user')->orderBy('visit_date', 'DESC')->paginate(5)->withQueryString();
-            $resultTitle = VisitService::searchResultString($request, 'pet');
+        $validatedRequest['pet_id'] = $id;
+        $filterCondition = $validatedRequest['search']??null;
 
-        return view('pet.show', compact('pet', 'visits', 'owner', 'resultTitle'));
+        $pet = Pet::with('gender', 'kind')
+            ->findOrFail($id);
+        $owner = Owner::find($pet->owner_id);
+        $visits = Visit::filter($validatedRequest)
+            ->with('user')
+            ->orderBy('visit_date', 'DESC')
+            ->paginate(5)
+            ->withQueryString();
+
+        return view('pet.show', compact('pet', 'visits', 'owner', 'filterCondition'));
     }
 
     public function add(AddRequest $request)

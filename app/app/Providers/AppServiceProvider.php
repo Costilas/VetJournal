@@ -6,7 +6,6 @@ use App\Models\Gender;
 use App\Models\Kind;
 use App\Models\User;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

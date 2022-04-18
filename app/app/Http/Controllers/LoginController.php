@@ -15,7 +15,7 @@ class LoginController extends Controller
         if (Auth::attempt(
             [
                 'email' => $request['user']['email'],
-                'password' => PasswordService::salting($request['user']['password']),
+                'password' => $request['user']['password'],
                 'is_active' => 1
             ]
         )) {

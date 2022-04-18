@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('class_name');
-            $table->timestamps();
+            $table->timestamps(6);
         });
     }
 

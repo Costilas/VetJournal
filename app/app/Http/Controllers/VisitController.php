@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Visit\AddRequest;
 use App\Http\Requests\Visit\EditRequest;
 use App\Models\Visit;
-use App\Services\VisitService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
@@ -15,60 +14,55 @@ class VisitController extends Controller
 {
     public function index(Request $request)
     {
-        if($request->has('visits')||$request->has('search'))
+        if($request->has('search'))
         {
-            $validatedRequest = $request->validate([
-                "visits" => [
-                    'sometimes',
-                    'required',
-                    'array',
-                    'min:2',
-                    'max:2'
-                ],
-                "visits.from" => [
+            $rules = [
+                "search.from" => [
                     'sometimes',
                     'required',
                     'before_or_equal:'. now()->format('Y-m-d 00:00:01'),
                 ],
-                "visits.to" => [
+                "search.to" => [
                     'sometimes',
                     'required',
                     'before_or_equal:'. now()->format('Y-m-d 23:59:59'),
                 ],
-                "search" => [
-                    'sometimes',
-                    'required',
-                    'alpha',
-                    Rule::in(['today', 'week', 'yesterday']),
-                ]
-            ], [
+            ];
+            $rules['search'] = is_string($request->input('search'))?
+                ['alpha', Rule::in(['today', 'week', 'yesterday']),]:
+                ['required', 'array', 'min:2', 'max:2',];
+
+            $validatedRequest = $request->validate($rules,
+                [
                 'search.required' => 'Ошибка фильтрации. Обновите страницу и попробуйте снова.',
                 'search.alpha' => 'Ошибка фильтрации. Обновите страницу и попробуйте снова.',
                 'search.in' => 'Ошибка фильтрации. Обновите страницу и попробуйте снова.',
+                'search.min'=>'Некорректное количество данных для поиска приема по датам.',
+                'search.max'=>'Некорректное количество данных для поиска приема по датам.',
 
-                'visits.required'=>'Все поля дат должны быть заполнены',
-                'visits.min'=>'Некорректное количество данных для поиска приема по датам.',
-                'visits.max'=>'Некорректное количество данных для поиска приема по датам.',
+                'search.from.required'=>'Поле "С:" должно быть заполнено.',
+                'search.from.before_or_equal'=>'Дата в поле "С:" имеет некорректное значение',
 
-                'visits.from.required'=>'Поле "С:" должно быть заполнено.',
-                'visits.from.before_or_equal'=>'Дата в поле "С:" имеет некорректное значение',
-
-                'visits.to.required'=>'Поле "По:" должно быть заполнено.',
-                'visits.to.before_or_equal'=>'Дата в поле "По:" имеет некорректное значение',
+                'search.to.required'=>'Поле "По:" должно быть заполнено.',
+                'search.to.before_or_equal'=>'Дата в поле "По:" имеет некорректное значение',
             ]);
             $query = Visit::filter($validatedRequest);
         } else {
             $query = Visit::filter(['search'=>'today']);
         }
-        $resultTitle = VisitService::searchResultString($request, 'visit');
-        $visits = $query->with('pet', 'user')->orderBy('id', 'DESC')->paginate(10)->withQueryString();
+        $filterCondition = $validatedRequest['search']??null;
+        $visits = $query->with('pet', 'user')
+            ->orderBy('id', 'DESC')
+            ->paginate(10)
+            ->withQueryString();
 
-        return view('visit.index', compact('visits', 'resultTitle'));
+        return view('visit.index', compact('visits', 'filterCondition'));
     }
 
     public function create(AddRequest $request)
     {
         $validatedRequest = $request->validated();
+
         try{
             $validatedRequest['visit']['weight'] = Visit::weightNormalize($validatedRequest['visit']['weight']);
             $validatedRequest['visit']['temperature'] = Visit::temperatureNormalize($validatedRequest['visit']['temperature']);

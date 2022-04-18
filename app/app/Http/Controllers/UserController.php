@@ -39,9 +39,9 @@ class UserController extends Controller
             $query = User::filter(['search'=>'all']);
         }
         $users = $query->paginate(5)->withQueryString();
-        $currentUserId = Auth::user()->id;
+        $currentUser = Auth::user();
 
-        return view('admin.users.index', compact('users', 'currentUserId'));
+        return view('admin.users.index', compact('users', 'currentUser'));
     }
 
     public function create()
@@ -52,7 +52,7 @@ class UserController extends Controller
     public function store(AddRequest $request)
     {
         $request = $request->validated();
-        $request['user']['password'] = Hash::make(PasswordService::salting($request['user']['password']));
+        $request['user']['password'] = Hash::make($request['user']['password']);
         $user = User::create($request['user']);
 
         try {
@@ -126,7 +126,7 @@ class UserController extends Controller
         $request = $request->validated();
         try {
             $user = User::query()->findOrFail($id);
-            $user->fill(['password'=>Hash::make(PasswordService::salting($request['user']['password']))]);
+            $user->fill(['password'=>Hash::make($request['user']['password'])]);
             $user->save()?
                 Session::flash('success', "Пароль сотрудника $user->last_name $user->name успешно изменен."):
                 throw new \Exception('Изменение пароля не удалось. Перезагрузите страницу и попробуйте снова.');

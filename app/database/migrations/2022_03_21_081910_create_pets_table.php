@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('pets', function (Blueprint $table) {
             $table->id();
             $table->string('pet_name')->index();
-            $table->integer('owner_id')->unsigned();
+            $table->foreignId('owner_id');
             $table->integer('kind_id')->unsigned();
             $table->integer('gender_id')->unsigned();
-            $table->date('birth');
-            $table->timestamps();
+            $table->timestamp('birth', 6);
+            $table->timestamps(6);
         });
     }
 

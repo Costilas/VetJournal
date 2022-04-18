@@ -27,7 +27,7 @@
         @foreach($users as $user)
             {{$user->id .' '. $user->email .' '. $user->last_name .' '. $user->name .' '. $user->patronymic}}
             <a href="{{route('admin.user.edit', ['id'=>$user->id])}}">Редактировать</a>
-            @if($user->id == $currentUserId)
+            @if($user->id == $currentUser->id)
                 (Текущий пользователь)
             @else
                 @if($user->is_active)

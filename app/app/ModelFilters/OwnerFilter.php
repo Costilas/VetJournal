@@ -36,6 +36,6 @@ class OwnerFilter extends ModelFilter
 
     public function pets($pet_name)
     {
-        $this->related('pets', 'pet_name', 'LIKE', "$pet_name%");
+        return $this->related('pets', 'pet_name', 'LIKE', "$pet_name%");
     }
 }

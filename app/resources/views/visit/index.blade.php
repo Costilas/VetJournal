@@ -15,16 +15,16 @@
                     @csrf
                     <div class="row row-cols-auto justify-content-center">
                         <div class="col col-xl-6 col-lg-6 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
-                            <label for="visits[from]">С:</label>
-                            <input type="date" class="form-control @error('visits.from') is-invalid @enderror"
-                                   name="visits[from]"
+                            <label for="search[from]">С:</label>
+                            <input type="date" class="form-control @error('search.from') is-invalid @enderror"
+                                   name="search[from]"
                                    max="{{date('Y-m-d')}}"
                                    aria-label="visits[from]">
                         </div>
                         <div class="col col-xl-6 col-lg-6 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
                             <label for="visits[to]">По:</label>
-                            <input type="date" class="form-control @error('visits.to') is-invalid @enderror"
-                                   name="visits[to]"
+                            <input type="date" class="form-control @error('search.to') is-invalid @enderror"
+                                   name="search[to]"
                                    max="{{date('Y-m-d')}}"
                                    aria-label="visits[to]">
                         </div>
@@ -61,7 +61,7 @@
             </form>
         </div>
     </div>
-    <p class="text-center m-2"><em>{{$resultTitle}}</em></p>
+    {{view('layouts.filter.visits', compact('filterCondition'))}}
     {{view('visit.list', compact('visits'))}}
     {{$visits->links()}}
 @endsection

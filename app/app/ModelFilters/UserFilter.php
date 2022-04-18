@@ -20,13 +20,13 @@ class UserFilter extends ModelFilter
         Auth::user()->is_dev?$this->select('*'):$this->where('is_dev', '!=', '1');
         switch ($who) {
             case 'active':
-                return $this->where('is_active',  '1');
-
+                $this->where('is_active',  '1');
+                break;
             case 'inactive':
-                return $this->where('is_active', '0');
-
-            default:
-                return $this;
+                $this->where('is_active', '0');
+                break;
         }
+
+        return $this;
     }
 }

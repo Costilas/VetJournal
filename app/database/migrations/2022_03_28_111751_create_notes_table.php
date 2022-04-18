@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('theme',25);
             $table->string('body',255);
             $table->integer('status_id')->unsigned();
-            $table->timestamps();
+            $table->timestamps(6);
         });
     }
 

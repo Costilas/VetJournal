@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('genders', function (Blueprint $table) {
             $table->id();
             $table->string('gender',20);
-            $table->timestamps();
+            $table->string('icon',30);
+            $table->timestamps(6);
         });
     }
 

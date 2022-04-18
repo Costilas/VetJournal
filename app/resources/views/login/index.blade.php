@@ -23,7 +23,7 @@
                         <div class="col col-lg-6 col-md-8 col-sm-9 m-auto xs-w-9 xs-mb-3">
                             <label for="login" class="form-label">Логин:</label>
                             <input type="text" name="user[email]" class="form-control @error('user.email') is-invalid @enderror"
-                                   id="login" aria-describedby="emailHelp" value="{{request()->input('user.email')}}">
+                                   id="login" aria-describedby="emailHelp" value="{{session()->getOldInput('user.email')}}">
                         </div>
                     </div>
                     <div class="row row-cols-1 mb-3">

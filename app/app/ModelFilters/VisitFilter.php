@@ -2,53 +2,38 @@
 
 namespace App\ModelFilters;
 
+use Carbon\Carbon;
 use EloquentFilter\ModelFilter;
 
 class VisitFilter extends ModelFilter
 {
+    private const DATEFORMAT = 'Y-m-d';
 
-    public function pet($pet_id)
+    private const FILTERS = [
+        'today' => 'today',
+        'yesterday' => 'yesterday',
+        'week' => '-1 week',
+    ];
+
+    public function pet($pet_id):self
     {
-        return $this->where('pet_id', '=', $pet_id);
+        return $this->where('pet_id', $pet_id);
     }
 
-    public function visits($visit_date)
+    public function search(string|array $when):self
     {
-        $dayRangeFrom = ' 00:00:01';
-        $dayRangeTo = ' 23:59:59';
-        return $this->whereBetween('visit_date', [$visit_date['from'] . $dayRangeFrom, $visit_date['to'] . $dayRangeTo]);
-    }
-
-    public function search($when)
-    {
-        $dayRangeFrom = ' 00:00:01';
-        $dayRangeTo = ' 23:59:59';
-        switch ($when) {
-            case 'today':
-                return $this->whereBetween('visit_date',
-                    [
-                        date('Y-m-d'.$dayRangeFrom, time()),
-                        date('Y-m-d'.$dayRangeTo, time())
-                    ]
-                );
-            case 'yesterday':
-                return $this->whereBetween('visit_date',
-                    [
-                        date('Y-m-d'.$dayRangeFrom, strtotime('-1day')),
-                        date('Y-m-d'.$dayRangeTo, strtotime('-1day'))
-                    ]
-                );
-            case 'week':
-                return $this->whereBetween('visit_date',
-                    [
-                        date('Y-m-d'.$dayRangeFrom, strtotime('-1week')),
-                        date('Y-m-d'.$dayRangeTo, time())
-                    ]
-                );
-            default:
-                return null;
+        if(is_array($when))
+        {
+            $from = Carbon::createFromFormat(self::DATEFORMAT, $when['from'])->startOfDay()->toDateTimeString();
+            $to = Carbon::createFromFormat(self::DATEFORMAT, $when['to'])->endOfDay()->toDateTimeString();
+        }elseif (is_string($when)) {
+            $date = Carbon::create(self::FILTERS[$when]);
+            $date->format(self::DATEFORMAT);
+            $from = $date->startOfDay()->toDateTimeString();
+            $to = $when==='week'?Carbon::now()->endOfDay()->toDateTimeString():$date->endOfDay()->toDateTimeString();
         }
 
+        return $this->whereBetween('visit_date', [$from, $to]);
     }
 
 }
