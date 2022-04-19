@@ -39,9 +39,8 @@ class UserController extends Controller
             $query = User::filter(['search'=>'all']);
         }
         $users = $query->paginate(5)->withQueryString();
-        $currentUser = Auth::user();
 
-        return view('admin.users.index', compact('users', 'currentUser'));
+        return view('admin.users.index', compact('users'));
     }
 
     public function create()

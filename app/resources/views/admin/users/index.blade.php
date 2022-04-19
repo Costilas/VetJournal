@@ -1,44 +1,85 @@
-@extends('layouts.body.admin.layout')
+@extends('layouts.body.app.layout')
 
-@section('title') VetJournal::Пользователи @endsection
+@section('title') VetJournal::Сотрудники @endsection
 
 @section('content')
-    <h2>Сотрудники</h2>
-
-    <div>
-        <a href="{{route('admin.user.register')}}">Добавить сотрудника</a>
+    {{--<div class="row row-cols-1">
+        <div class="col-10 m-auto">
+            <div class="mb-3 mt-3 p-3">
+                <div class="row">
+                    <div class="col-12 text-center display-6">
+                        <h2>Сотрудники</h2>
+                    </div>
+                    <div class="col-12 text-center m-3">
+                        <a class="btn btn-success" href="{{route('admin.user.register')}}">Добавить
+                            сотрудника</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div>
-        <form action="{{route('admin.users')}}" method="GET">
-            <input type="hidden" name="search" value="all">
-            <button type="submit">Все пользователи</button>
-         </form>
-        <form action="{{route('admin.users')}}" method="GET">
-            <input type="hidden" name="search" value="active">
-            <button type="submit">Только активные</button>
-        </form>
-        <form action="{{route('admin.users')}}" method="GET">
-            <input type="hidden" name="search" value="inactive">
-            <button type="submit">Только неактивные</button>
-        </form>
+    <div class="row row-cols-1">
+        <div class="col-auto m-auto">
+            <div class="card mb-3 p-2">
+                <div class="text-center">
+                    <form class="text-center  m-2 my-md-3 xs-m-3" action="{{route('admin.users')}}" method="GET">
+                        <input type="hidden" name="search" value="active">
+                        <button class="btn btn-primary" type="submit">Только активные</button>
+                    </form>
 
+                    <form class="text-center m-2 my-md-3 xs-m-3" action="{{route('admin.users')}}" method="GET">
+                        <input type="hidden" name="search" value="all">
+                        <button class="btn btn-primary" type="submit">Все пользователи</button>
+                    </form>
+                    <form class="text-center  m-2 my-md-3 xs-m-3" action="{{route('admin.users')}}" method="GET">
+                        <input type="hidden" name="search" value="inactive">
+                        <button class="btn btn-primary" type="submit">Только неактивные</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 m-auto">
+            {{view('admin.users.list', compact('users'))}}
+        </div>--}}
+    <div class="row row-cols-1">
+        <div class="col-10 m-auto">
+            <div class="card mb-3 mt-3 p-3">
+                <div class="owner_credentials">
+                    <div class="row justify-content-center">
+                        <div class="col-12 text-center">
+                            <h2>Сотрудники</h2>
+                        </div>
+                        <div class="col-auto">
+                            <a class="btn btn-success" href="{{route('admin.user.register')}}">
+                                <i class="bi bi-person-plus-fill"></i> Новый сотрудник
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    @if(!empty($users->items()))
-        @foreach($users as $user)
-            {{$user->id .' '. $user->email .' '. $user->last_name .' '. $user->name .' '. $user->patronymic}}
-            <a href="{{route('admin.user.edit', ['id'=>$user->id])}}">Редактировать</a>
-            @if($user->id == $currentUser->id)
-                (Текущий пользователь)
-            @else
-                @if($user->is_active)
-                    <a href="{{route('admin.user.deactivate', ['id'=>$user->id])}}">Деактивировать</a>
-                @else
-                    <a href="{{route('admin.user.restore', ['id'=>$user->id])}}">Активировать</a>
-                @endif
-            @endif
-            <br>
-        @endforeach
-    @else
-        Сотрудников пока не зарегистрировано.
-    @endif
+    <div class="row row-cols-1">
+        <div class="col-auto m-auto">
+            <div class="card mb-3 p-2">
+                <div class="text-center">
+                    <a href="{{route('admin.users', ['search'=>'all'])}}" class="btn btn-outline-success m-1">
+                        <i class="bi bi-list-nested"></i> Все пользователи
+                    </a>
+                    <a href="{{route('admin.users', ['search'=>'active'])}}" class="btn btn-outline-info m-1">
+                        <i class="bi bi-capslock-fill"></i> Только активные
+                    </a>
+                    <a href="{{route('admin.users', ['search'=>'inactive'])}}" class="btn btn-outline-danger m-1">
+                        <i class="bi bi-lock-fill"></i> Только неактивные
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-lg-12 m-auto">
+            {{view('admin.users.list', compact('users'))}}
+        </div>
+    </div>
 @endsection

@@ -7,6 +7,7 @@ use App\Models\Kind;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
@@ -41,11 +42,16 @@ class AppServiceProvider extends ServiceProvider
             $view->with('doctors', User::where('is_active', '=', 1)->where('is_dev','!=', 1)->get());
         });
 
+        view()->composer(['admin.users.row'], function ($view) {
+            $view->with('currentUser', Auth::user());
+        });
+
         Blade::directive('createDate', function (string $when) {
             try{
-               $date =  Carbon::createFromFormat('d-m-Y',$when)->toDateString();
+               $date =  Carbon::create($when)->toDateString();
                if(!$date){throw new \Exception();}
             }catch(\Exception $e) {
+                Log::debug($e);
                 $date = Carbon::createFromFormat('d-m-Y','yesterday')->toDateString();
             }
 

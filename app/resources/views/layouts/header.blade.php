@@ -16,8 +16,8 @@
                     <li class="nav-item">Приемы</li>
                 </a>
                 @if(!empty(Auth::user()->is_admin))
-                    <a class="btn btn-menu" href="{{route('admin')}}">
-                        <li class="nav-item">Управление</li>
+                    <a class="btn btn-menu" href="{{route('admin.users')}}">
+                        <li class="nav-item">Сотрудники</li>
                     </a>
                 @endif
                 @if(Auth::check())

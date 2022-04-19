@@ -35,7 +35,6 @@ Route::group(['middleware'=>'auth'], function (){
 //Authorized and Admin access
 //Management
 Route::group(['prefix'=>'admin', 'middleware'=>'admin'], function (){
-    Route::get('/', [App\Http\Controllers\AdminController::class, 'index'])->name('admin');
     Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('admin.users');
     Route::get('/user/register', [App\Http\Controllers\UserController::class, 'create'])->name('admin.user.register');
     Route::post('/user/register', [App\Http\Controllers\UserController::class, 'store'])->name('admin.user.store');

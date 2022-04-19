@@ -1,4 +1,8 @@
-.row {
+ol, ul {
+    padding-left: 0!important;
+}
+
+*.row {
     margin-left: 0!important;
     margin-right: 0!important;
 }
@@ -39,5 +43,14 @@
     }
     .xs-m-1 {
         margin: 1.5rem!important;
+    }
+    .flex-xs-column {
+        flex-direction: column!important;
+    }
+}
+
+@media (max-width: 810px) {
+    .flex-xs-column {
+        flex-direction: column!important;
     }
 }
