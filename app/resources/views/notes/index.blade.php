@@ -7,16 +7,23 @@
         <div class="col col-xl-3 col-lg-4 col-md-6 col-sm-9 mb-4 mb-5 xs_input xs_note">
             <form class="note flex_column_parameters" method="POST" action="{{route('note.create')}}">
                 @csrf
-                <select class="form-control" name="status_id">
+                <select class="form-control" name="status_id" required>
                     @foreach($statuses as $status)
                         <option @if(session()->getOldInput('status_id')===$status->id) selected
                                 @endif value="{{$status->id}}">{{$status->name}}</option>
                     @endforeach
                 </select>
-                <input class="form-control" type="text" name="theme" placeholder="Тема заметки"
-                       value="{{session()->getOldInput('theme')}}">
-                <textarea class="form-control" name="body"
-                          placeholder="Текст заметки">{{session()->getOldInput('body')}}</textarea>
+                <input class="form-control"
+                       type="text" name="theme"
+                       placeholder="Тема заметки"
+                       value="{{session()->getOldInput('theme')}}"
+                       required
+                       maxlength="25">
+                <textarea class="form-control"
+                          name="body"
+                          placeholder="Текст заметки"
+                          required
+                          maxlength="255">{{session()->getOldInput('body')}}</textarea>
                 <button class="btn" type="submit"><i class="bi bi-plus-lg note_icon"></i></button>
             </form>
         </div>
