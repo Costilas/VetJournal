@@ -3,12 +3,7 @@
 @section('title') VetJournal::Поиск приемов @endsection
 
 @section('content')
-    <script>
-        function yesterday(a, b) {
-
-        }
-    </script>
-    <div class="padding_block border_block">
+    <div class="padding_block bg-white border border_block">
         <div class="row">
             <div class="col-12">
                 <h2 class="text-center">Поиск приемов по дате:</h2>
@@ -60,8 +55,10 @@
                 </form>
             </div>
         </div>
+
+        {{view('layouts.filter.filterCondition', compact('validatedRequest'))}}
+        {{view('visit.list', compact('visits'))}}
+        {{$visits->links()}}
     </div>
-    {{view('layouts.filter.filterCondition', compact('validatedRequest'))}}
-    {{view('visit.list', compact('visits'))}}
-    {{$visits->links()}}
+
 @endsection

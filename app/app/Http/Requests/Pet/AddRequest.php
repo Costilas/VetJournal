@@ -45,7 +45,7 @@ class AddRequest extends FormRequest
             ],
             "pet.birth" => [
                'required',
-               'date',
+                'before_or_equal:'. now()->format('Y-m-d'),
             ],
             "pet.owner_id" => [
                 'required',
@@ -77,7 +77,7 @@ class AddRequest extends FormRequest
             'pet.gender_id.digit'=>'Неверные данные в поле "Пол питомца".',
 
             'pet.birth.required'=>'Необходимо заполнить поле "Дата рождения питомца".',
-            'pet.birth.date'=>'Неверный формат поля "Дата рождения питомца".',
+            'pet.birth.before_or_equal'=>'Неверный формат поля "Дата рождения питомца". Дата не может быть больше чем текущая.',
 
             'pet.owner_id.required' => 'Ошибка запроса. Обновите странице и попробуйте снова.',
             'pet.owner_id.numeric' => 'Ошибка запроса. Обновите странице и попробуйте снова.'

@@ -1,5 +1,5 @@
 <tr>
-    <td>{{$visit->dateFormat()}}</td>
+    <td>{{$visit->visitDate()}}</td>
     <td>{{$visit->weightFormat()}} кг.</td>
     <td>{{$visit->temperatureFormat()}} &#176;</td>
     <td>{{$visit->pre_diagnosis}}</td>

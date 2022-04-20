@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Services\VisitService;
+use Carbon\Carbon;
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -34,9 +35,10 @@ class Visit extends Model
         return VisitService::prepareNumericData($temperature)*1000;
     }
 
-    public function dateFormat()
+    public function visitDate()
     {
-        return date('d.m.Y / H:i', strtotime($this->visit_date));
+        //return date('d.m.Y / H:i', strtotime($this->visit_date));
+        return Carbon::create($this->visit_date)->format('d.m.Y / H:i');
     }
 
     public function temperatureFormat():float

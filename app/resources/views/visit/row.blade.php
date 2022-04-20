@@ -1,5 +1,5 @@
 <tr class="align-middle text-center">
-    <td>{{$visit->dateFormat()}}</td>
+    <td>{{$visit->visitDate()}}</td>
     <td>{{$visit->pet->pet_name}}</td>
     <td>{{$visit->pre_diagnosis}}</td>
     <td>{{$visit->user->doctorName()}}</td>

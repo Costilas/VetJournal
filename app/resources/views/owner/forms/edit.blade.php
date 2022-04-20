@@ -2,7 +2,7 @@
     @csrf
     <div class="row row-cols-1">
         <div class="col-12">
-            <h4 class="text-center"><i class="bi bi-person-plus"></i> Владелец:</h4>
+            <h4 class="text-center"><i class="bi bi-pencil-fill"></i> Редактировать профиль владельца:</h4>
         </div>
     </div>
     <div class="row row-cols-auto mb-3 mt-3 justify-content-center">

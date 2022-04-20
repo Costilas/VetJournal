@@ -2,7 +2,7 @@
     @csrf
     <div class="row row-cols-1">
         <div class="col-12">
-            <h4 class="text-center"><i class="fa-solid fa-paw"></i> Новый питомец:</h4>
+            <h4 class="text-center"><i class="fa-solid fa-paw"></i> Добавить нового питомца:</h4>
         </div>
     </div>
     <div class="row row-cols-auto mt-3 justify-content-center">

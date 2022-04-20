@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('name', 50)->index();
             $table->string('patronymic', 50)->index();
             $table->string('last_name', 50)->index();
-            $table->string('phone', 15)->index();
-            $table->string('address', 100);
-            $table->timestamps(6);
+            $table->string('phone', 11)->index();
+            $table->string('address', 255);
+            $table->timestamps();
         });
     }
 

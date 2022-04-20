@@ -56,8 +56,6 @@ class User extends Authenticatable
 
     public function doctorName()
     {
-        $doctorName = $this->last_name . ' ' . $this->name;
-
-        return $doctorName;
+        return $this->last_name . ' ' . $this->name;
     }
 }

@@ -25,11 +25,11 @@ class VisitController extends Controller
                 ],
                 "search.from" => [
                     'required',
-                    'before_or_equal:'. now()->format('Y-m-d 00:00:00'),
+                    'before_or_equal:'. now()->format('Y-m-d'),
                 ],
                 "search.to" => [
                     'required',
-                    'before_or_equal:'. now()->format('Y-m-d 23:59:59'),
+                    'before_or_equal:'. now()->format('Y-m-d'),
                 ],
             ];
 

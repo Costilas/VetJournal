@@ -17,12 +17,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('pet_id');
             $table->foreignId('user_id');
-            $table->timestamp('visit_date',6);
+            $table->timestamp('visit_date');
             $table->integer('weight')->unsigned();
             $table->integer('temperature')->unsigned();
             $table->string('pre_diagnosis', 60);
             $table->text('visit_info');
-            $table->timestamps(6);
+            $table->timestamps();
         });
     }
 

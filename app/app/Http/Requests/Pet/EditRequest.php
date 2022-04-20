@@ -44,7 +44,7 @@ class EditRequest extends FormRequest
             ],
             "pet.birth" => [
                 'required',
-                'date',
+                'before_or_equal:'. now()->format('Y-m-d'),
             ],
         ];
     }
@@ -71,7 +71,7 @@ class EditRequest extends FormRequest
             'pet.gender_id.digit'=>'Неверные данные в поле "Пол питомца".',
 
             'pet.birth.required'=>'Необходимо заполнить поле "Дата рождения питомца".',
-            'pet.birth.date'=>'Неверный формат поля "Дата рождения питомца".',
+            'pet.birth.before_or_equal'=>'Неверный формат поля "Дата рождения питомца". Дата не может быть больше чем текущая.',
         ];
     }
 }

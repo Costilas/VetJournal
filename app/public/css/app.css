@@ -14,7 +14,6 @@ ol, ul {
 }
 
 .border_block {
-    border: 1px solid black;
     border-radius: 30px;
 }
 
@@ -56,21 +55,24 @@ ol, ul {
     }
 }
 
+@media (max-width: 992px) {
+
+    .header-mt-3 {
+        margin-top: 3rem!important;
+    }
+    .header-mb-3 {
+        margin-bottom: 3rem!important;
+    }
+
+    .header-pb-3 {
+        padding-bottom: 3rem!important;
+    }
+}
+
 header {
     width: 100%;
     background-color: black;
     padding: 20px;
-}
-
-.header_content {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-}
-
-.header-item {
-    display: flex;
-    align-items: center;
-    color: #fff;
 }
 
 .logo {
@@ -87,10 +89,6 @@ header {
        object-fit: cover;
 }
 
-.menu {
-    justify-content: end;
-}
-
 .menu li {
     cursor: pointer;
 }
@@ -99,39 +97,19 @@ header {
     color: peachpuff;
 }
 
-.btn-menu
-{
-    margin-left: 20px;
+.btn-menu {
     color: white!important;
     background-color: #2d3748!important;
 }
 
-
-footer {
-    color: #fff;
-    width: 100%;
-    background-color: black;
-    padding: 30px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
+@media (min-width: 993px) {
+    .btn-menu {
+        margin-left: 30px;
+    }
 }
 
-.footer_content {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(auto, 1fr));
-}
 
-.pet_badge_block {
-    padding: 5px;
-    border: 1px solid gray;
-    border-radius: 5px;
-    margin: 20px;
-}
 
-.pet_badge {
-    padding: 20px;
-}
 
 .note {
     padding: 15px;
@@ -210,10 +188,6 @@ footer {
 /*General styles*/
 
 /*Header styles*/
-
-/*Footer styles*/
-
-/*Pet*/
 
 /*Notes*/
 

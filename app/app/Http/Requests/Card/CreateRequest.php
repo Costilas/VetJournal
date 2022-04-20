@@ -32,17 +32,17 @@ class CreateRequest extends FormRequest
             "owner.name" => [
                 'required',
                 'alpha',
-                'max:20',
+                'max:30',
             ],
             "owner.patronymic" => [
                 'required',
                 'alpha',
-                'max:20',
+                'max:30',
             ],
             "owner.last_name" => [
                 'required',
                 'alpha',
-                'max:20',
+                'max:30',
             ],
             "owner.phone" => [
                 'required',
@@ -53,7 +53,7 @@ class CreateRequest extends FormRequest
             "owner.address" => [
                 'required',
                 'string',
-                'max:60',
+                'max:255',
             ],
             "pet" => [
                 'required',
@@ -75,7 +75,7 @@ class CreateRequest extends FormRequest
             ],
             "pet.birth" => [
                 'required',
-                'date',
+                'before_or_equal:'. now()->format('Y-m-d'),
             ],
         ];
     }
@@ -107,15 +107,15 @@ class CreateRequest extends FormRequest
             'owner.last_name.max' => 'Привышен лимит символов в поле "Фамилия владельца"(20).',
 
             'owner.phone.required' => 'Необходио заполнить поле "Телефон владельца".',
-            'owner.phone.digits' => 'Поле "Телефон владельца" должно содержать только числа (Без пробелов и специальных символов).',
+            'owner.phone.digits' => 'Поле "Телефон владельца" должно содержать 11 чисел(Без пробелов и специальных символов).',
             'owner.phone.max' => 'Привышен лимит символов в поле "Телефон владельца"(11).',
             'owner.phone.unique' => "  Данные введенные в поле 'Телефон владельца' уже найдены в списке зарегистрированных пользователей.
                                        Проверьте правильность заполнения поля или проерьте телефон в поиске по существующим.",
             'owner.phone.starts_with' => 'Телефон должен начинаться с "8".',
 
             'owner.address.required' => 'Необходио заполнить поле "Адрес владельца".',
-            'owner.address.string' => 'Поле "Адрес владельца" не должно содержать числа и специальные символы.',
-            'owner.address.max' => 'Привышен лимит символов в поле "Фамилия владельца"(60)',
+            'owner.address.string' => 'Поле "Адрес владельца" имеет неверный формат',
+            'owner.address.max' => 'Привышен лимит символов в поле "Адрес владельца"(255)',
 
             'pet.pet_name.required'=>'Необходимо заполнить поле "Кличка питомца".',
             'pet.pet_name.alpha'=>'Поле "Кличка питомца" не должно содержать числа и специальные символы.',
@@ -128,7 +128,7 @@ class CreateRequest extends FormRequest
             'pet.gender_id.digit'=>'Неверные данные в поле "Пол питомца".',
 
             'pet.birth.required'=>'Необходимо заполнить поле "Дата рождения питомца".',
-            'pet.birth.date'=>'Неверный формат поля "Дата рождения питомца".',
+            'pet.birth.before_or_equal'=>'Неверный формат поля "Дата рождения питомца". Дата не может быть больше чем текущая.',
         ];
     }
 }

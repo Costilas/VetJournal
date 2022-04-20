@@ -54,7 +54,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary m-3"><i class="bi bi-plus-lg"></i> Сохранить изменения</button>
-                    <a class="btn btn-info" href="{{route('pet.show', ['id'=>$visit->pet->id])}}">Назад к питомцу</a>
+                    <a class="btn btn-info" href="{{route('pet.show', ['id'=>$visit->pet->id])}}">К пациенту</a>
                 </form>
             </div>
         </div>

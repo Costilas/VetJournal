@@ -12,7 +12,7 @@
             @include('card.create')
         </div>
     </div>
-    <div class="padding_block border_block row row-cols-1">
+    <div class="padding_block bg-white border border_block border_block row row-cols-1">
         <div class="col mb-3">
             <h2 class="text-center">Поиск по существующим:</h2>
         </div>

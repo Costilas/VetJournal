@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('gender',20);
             $table->string('icon',30);
-            $table->timestamps(6);
+            $table->timestamps();
         });
     }
 

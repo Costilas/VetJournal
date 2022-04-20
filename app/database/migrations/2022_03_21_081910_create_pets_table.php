@@ -19,8 +19,8 @@ return new class extends Migration
             $table->foreignId('owner_id');
             $table->integer('kind_id')->unsigned();
             $table->integer('gender_id')->unsigned();
-            $table->timestamp('birth', 6);
-            $table->timestamps(6);
+            $table->timestamp('birth');
+            $table->timestamps();
         });
     }
 

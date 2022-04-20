@@ -18,5 +18,6 @@
                 </td>
             </tr>
         @endif
+        {{$users->links()}}
     </table>
 </div>

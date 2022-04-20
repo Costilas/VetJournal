@@ -23,8 +23,8 @@ return new class extends Migration
             $table->tinyInteger('is_active')->unsigned()->default(1);
             $table->tinyInteger('is_admin')->unsigned()->default(0);
             $table->tinyInteger('is_dev')->unsigned()->default(0);
-            $table->timestamps(6);
-            $table->timestamp('email_verified_at', 6)->nullable();
+            $table->timestamps();
+            $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
         });
     }

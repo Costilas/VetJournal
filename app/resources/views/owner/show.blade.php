@@ -15,7 +15,7 @@
                             Телефон: <strong>{{$owner->phone}}</strong>
                         </div>
                         <div class="col-12 text-center m-3">
-                            Дата регистрации: {{$owner->created_at}}
+                            Дата регистрации: {{$owner->registerDate()}}
                         </div>
                         <div class="col-12 text-center m-3">
                             Адрес: {{$owner->address}}

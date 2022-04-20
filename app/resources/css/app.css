@@ -4,12 +4,6 @@
 /*Header styles*/
 @import url('header/style.css');
 
-/*Footer styles*/
-@import url('footer/style.css');
-
-/*Pet*/
-@import url('pet/style.css');
-
 /*Notes*/
 @import url('notes/style.css');
 

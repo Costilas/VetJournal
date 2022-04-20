@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -34,13 +35,13 @@ class Pet extends Model
         return $this->hasMany(Visit::class);
     }
 
-    public function birthDateFormat()
+    public function birthDate(string $format)
     {
-        return date('d.m.Y', strtotime($this->birth));
+        return Carbon::create($this->birth)->format($format);
     }
 
     public function countYears()
     {
-        return round(((((time() - strtotime($this->birth)) / 60) / 60) / 24) / 365, 1);
+        return Carbon::parse($this->birth)->diff(\Carbon\Carbon::now())->format('%y г. %m м.');
     }
 }

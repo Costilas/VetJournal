@@ -5,10 +5,9 @@
 @section('content')
 <div class="card m-3">
     <div class="card-body">
-        <h3 class="padding_block text-center m-3">Редактирование пациента {{$pet->pet_name}}
-            (ID:{{$pet->id}})</h3>
+        <h3 class="padding_block text-center m-3">Редактирование пациента - <strong>{{$pet->pet_name}}</strong></h3>
         <div class="col-lg-10 m-auto">
-            <form action="{{route('pet.update', ['id'=>$pet->id])}}" method="POST">
+            <form class="text-center" action="{{route('pet.update', ['id'=>$pet->id])}}" method="POST">
                 @csrf
                 <div class="row row-cols-auto justify-content-center">
                     <div class="col col-xl-3 col-lg-5 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
@@ -21,7 +20,8 @@
                         <label for="birth">Дата рождения питомца:</label>
                         <input type="date" class="form-control @error('pet.birth') is-invalid @enderror"
                                name="pet[birth]" aria-label="birth"
-                               value="{{session()->getOldInput('pet.birth')??$pet->birth}}">
+                               max="@createDate(today)"
+                               value="{{session()->getOldInput('pet.birth')??$pet->birthDate('Y-m-d')}}">
                     </div>
                     <div class="col col-xl-3 col-lg-5 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
                         <label for="pet[kind_id]">Вид питомца:</label>
@@ -40,8 +40,11 @@
                     </div>
 
                 </div>
-                <button type="submit" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Сохранить изменения</button>
-                <a class="btn btn-info m-3" href="{{route('pet.show', ['id'=>$pet->id])}}">Назад к питомцу</a>
+                <button type="submit" class="btn btn-primary xs-m-3"><i class="bi bi-plus-lg"></i> Сохранить изменения</button>
+                <div class="m-3">
+                    <a class="btn btn-info xs-m-3" href="{{route('pet.show', ['id'=>$pet->id])}}">К питомцу</a>
+                    <a class="btn btn-warning xs-m-3" href="{{route('owner.show', ['id'=>$pet->owner_id])}}">К владельцу</a>
+                </div>
             </form>
         </div>
     </div>
