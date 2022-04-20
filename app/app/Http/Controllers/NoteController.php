@@ -25,7 +25,7 @@ class NoteController extends Controller
             Note::create($validatedRequest);
             Session::flash('success', "Заметка успешно добавлена!");
         } catch (\Exception $e){
-            Log::debug($e);
+            Log::debug($e->getMessage());
             return redirect('notes')->withErrors('Добавление карточки не выполнено. Перезагрузите страницу и попробуйте снова');
         }
 
@@ -41,8 +41,8 @@ class NoteController extends Controller
                 Session::flash('success', "Заметка удалена!"):
                 throw new \Exception('При удалении заметки произошла ошибка. Попробуйте перезагрузить страницу и выполнить действие снова.');
         }catch (\Exception $e){
-            Log::debug($e);
-            return redirect()->route('notes')->withErrors($e);
+            Log::debug($e->getMessage());
+            return redirect()->route('notes')->withErrors($e->getMessage());
         }
 
         return redirect()->route('notes');

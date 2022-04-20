@@ -57,6 +57,9 @@ class AddRequest extends FormRequest
             ],
              "user.is_admin" => [
                 'sometimes',
+                 'numeric:1',
+                 'min:0',
+                 'max:1',
                  'digits:1',
             ],
         ];
@@ -90,9 +93,10 @@ class AddRequest extends FormRequest
             'user.password.string' => 'Поле "Пароль" имеет неверный формат.',
             'user.password.confirmed' => 'Поле "Пароль" не совпадает с введенным в поле "Подтвердите пароль".',
 
-            'user.is_admin.sometimes' => 'Ошибка запроса. Обновите страницу и попробуйте снова.',
+            'user.admin.sometimes' => 'Ошибка запроса. Обновите страницу и попробуйте снова.',
             'user.is_admin.digits' => 'Ошибка запроса. Обновите страницу и попробуйте снова',
-
+            'user.is_admin.max' => 'Ошибка запроса. Обновите страницу и попробуйте снова',
+            'user.is_admin.min' => 'Ошибка запроса. Обновите страницу и попробуйте снова',
         ];
     }
 }

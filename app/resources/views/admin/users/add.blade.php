@@ -64,6 +64,13 @@
                            type="password" name="user[password_confirmation]"
                            id="password_confirmed">
                 </div>
+                @if($currentUser->is_dev)
+                    <div class="col col-xl-8 col-lg-8 col-md-8 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
+                        <input class="@error('user.password_confirmation') is-invalid @enderror"
+                               type="checkbox" name="user[is_admin]" value="1"
+                               id="user_admin"> Администраторские права.
+                    </div>
+                @endif
             </div>
 
             <button class="btn btn-primary" type="submit"> Добавить </button>

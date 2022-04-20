@@ -11,7 +11,7 @@ class LoginController extends Controller
 {
 
     public function auth(LoginRequest $request)
-    {
+    {   $request = $request->validated();
         if (Auth::attempt(
             [
                 'email' => $request['user']['email'],

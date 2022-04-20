@@ -28,10 +28,10 @@ class OwnerController extends Controller
                 Session::flash('success', "Профиль владельца успешно отредактирован!"):
                 throw new \Exception('Ошибка при редактировании профиля владельца. Перезагрузите страницу и попробуйте снова.');
         }catch (\Exception $e) {
-            Log::debug($e);
+            Log::debug($e->getMessage());
             return redirect()
                 ->route('owner.show', ['id' => $id])
-                ->withErrors($e);
+                ->withErrors($e->getMessage());
         }
 
         return redirect()->route('owner.show', ['id' => $id]);

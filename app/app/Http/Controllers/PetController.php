@@ -65,7 +65,7 @@ class PetController extends Controller
             $newPet = Pet::create($validatedRequest['pet']);
             Session::flash('success', "Питомец $newPet->name успешно добавлен.");
         }catch (\Exception $e) {
-            Log::debug($e);
+            Log::debug($e->getMessage());
             return redirect()->route('owner.show', ['id' => $validatedRequest['pet']['owner_id']])
                 ->withErrors('error', 'Питомец не был добавлен. Проверьте введенные данные.');
         }
@@ -90,10 +90,10 @@ class PetController extends Controller
                 Session::flash('success', "Питомец успешно отредактирован!"):
                 throw new \Exception('Ошибка при редактирования питомца. Перезагрузите страницу и попробуйте снова.');
         }catch (\Exception $e) {
-            Log::debug($e);
+            Log::debug($e->getMessage());
             return redirect()
                 ->route('pet.edit', ['id' => $id])
-                ->withErrors($e);
+                ->withErrors($e->getMessage());
         }
 
         return redirect()->route('pet.edit', ['id' => $id]);

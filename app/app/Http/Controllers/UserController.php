@@ -7,7 +7,6 @@ use App\Http\Requests\User\ChangeLoginRequest;
 use App\Http\Requests\User\UpdateRequest;
 use App\Http\Requests\User\ChangePasswordRequest;
 use App\Models\User;
-use App\Services\PasswordService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -17,11 +16,12 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
+
     public function index(Request $request)
     {
         if($request->has('search'))
         {
-            $validated = $request->validate([
+            $validatedRequest = $request->validate([
                 "search" => [
                     'sometimes',
                     'required',
@@ -34,29 +34,32 @@ class UserController extends Controller
                 'search.in' => 'Ошибка фильтрации. Обновите страницу и попробуйте снова.',
             ]);
 
-            $query = User::filter($validated);
+            $query = User::filter($validatedRequest);
         } else {
             $query = User::filter(['search'=>'all']);
         }
         $users = $query->paginate(5)->withQueryString();
-
         return view('admin.users.index', compact('users'));
     }
 
     public function create()
     {
-        return view('admin.users.add');
+        $currentUser = Auth::user();
+
+        return view('admin.users.add', compact('currentUser'));
     }
 
     public function store(AddRequest $request)
     {
-        $request = $request->validated();
-        $request['user']['password'] = Hash::make($request['user']['password']);
-        $user = User::create($request['user']);
-
+        $validatedRequest = $request->validated();
         try {
+            $validatedRequest['user']['password'] = Hash::make($validatedRequest['user']['password']);
+            $validatedRequest['user']['is_admin'] = $validatedRequest['user']['is_admin']??0;
+            $validatedRequest['user']['is_active'] = 1;
+            $user = User::create($validatedRequest['user']);
             Session::flash('success', "Сотрудник $user->last_name $user->name $user->patronymic успешно добавлен/добавлена.");
         } catch (\Exception $e) {
+            Log::debug($e->getMessage());
             return redirect()->route('admin.users')
                 ->withErrors('error', 'Сотрудник не был добавлен. Проверьте введенные данные.');
         }
@@ -66,23 +69,33 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $user = User::query()->findOrFail($id);
+        try{
+            $currentUser = Auth::user();
+            $user = User::query()->findOrFail($id);
+            if($user->is_dev&&!$currentUser->is_dev){throw new \Exception('Ошибочная операция');}
+        }catch (\Exception $e) {
+            Log::debug($e->getMessage());
+            return redirect()->route('admin.users')->withErrors($e->getMessage());
+        }
 
-        return view('admin.users.edit', compact('user'));
+
+        return view('admin.users.edit', compact('user', 'currentUser'));
     }
 
     public function update(UpdateRequest $request, $id)
     {
-        $request = $request->validated();
+        $validatedRequest = $request->validated();
         try {
+            $currentUser = Auth::user();
             $user = User::query()->findOrFail($id);
-            $user->fill($request['user']);
+            if($user->is_dev&&!$currentUser->is_dev){throw new \Exception('Ошибочная операция');}
+            $user->fill($validatedRequest['user']);
             $user->save()?
                 Session::flash('success', "Данные сотрудника успешно изменены."):
                 throw new \Exception('Редактирование не удалось. Проверьте введенные данные и попробуйте снова');
         } catch (\Exception $e) {
-            Log::debug($e);
-            return redirect()->route('admin.user.edit', ['id'=>$user->id])->withErrors($e);
+            Log::debug($e->getMessage());
+            return redirect()->route('admin.user.edit', ['id'=>$user->id])->withErrors($e->getMessage());
         }
 
         return redirect()->route('admin.user.edit', ['id'=>$user->id]);
@@ -91,30 +104,36 @@ class UserController extends Controller
     public function deactivate($id)
     {
         try {
+            $currentUser = Auth::user();
+            if($currentUser->id==$id){throw new \Exception('Пользователь не может деактивировать сам себя');}
             $user = User::query()->findOrFail($id);
+            if($user->is_dev&&!$currentUser->is_dev){throw new \Exception('Ошибочная операция');}
             $user->fill(['is_active'=>0]);
             $user->save()?
                 Session::flash('success', "Профиль сотрудника $user->last_name $user->name успешно деактивирован."):
                 throw new \Exception('Деактивация не удалась. Перезагрузите страницу и попробуйте снова.');
         } catch (\Exception $e) {
-            Log::debug($e);
-            return redirect()->route('admin.users')->withErrors($e);
+            Log::debug($e->getMessage());
+            return redirect()->route('admin.users')->withErrors($e->getMessage());
         }
 
         return redirect()->route('admin.users');
     }
 
-    public function restore($id)
+    public function activate($id)
     {
         try {
+            $currentUser = Auth::user();
+            if($currentUser->id===$id){throw new \Exception('Пользователь не может активировать сам себя');}
             $user = User::query()->findOrFail($id);
+            if($user->is_dev&&!$currentUser->is_dev){throw new \Exception('Ошибочная операция');}
             $user->fill(['is_active'=>1]);
             $user->save()?
                 Session::flash('success', "Профиль сотрудника $user->last_name $user->name успешно активирован."):
                 throw new \Exception('Активация не удалась. Перезагрузите страницу и попробуйте снова.');
         } catch (\Exception $e) {
-            Log::debug($e);
-            return redirect()->route('admin.users')->withErrors($e);
+            Log::debug($e->getMessage());
+            return redirect()->route('admin.users')->withErrors($e->getMessage());
         }
 
         return redirect()->route('admin.users');
@@ -122,16 +141,18 @@ class UserController extends Controller
 
     public function passwordChange(ChangePasswordRequest $request, $id)
     {
-        $request = $request->validated();
+        $validatedRequest = $request->validated();
         try {
+            $currentUser = Auth::user();
             $user = User::query()->findOrFail($id);
-            $user->fill(['password'=>Hash::make($request['user']['password'])]);
+            if($user->is_dev&&!$currentUser->is_dev){throw new \Exception('Ошибочная операция');}
+            $user->fill(['password'=>Hash::make($validatedRequest['user']['password'])]);
             $user->save()?
                 Session::flash('success', "Пароль сотрудника $user->last_name $user->name успешно изменен."):
                 throw new \Exception('Изменение пароля не удалось. Перезагрузите страницу и попробуйте снова.');
         } catch (\Exception $e) {
-            Log::debug($e);
-            return redirect()->route('admin.user.edit', ['id'=>$id])->withErrors($e);
+            Log::debug($e->getMessage());
+            return redirect()->route('admin.user.edit', ['id'=>$id])->withErrors($e->getMessage());
         }
 
         return redirect()->route('admin.user.edit', ['id'=>$id]);
@@ -139,16 +160,58 @@ class UserController extends Controller
 
     public function loginChange(ChangeLoginRequest $request, $id)
     {
-        $request = $request->validated();
+        $validatedRequest = $request->validated();
         try {
+            $currentUser = Auth::user();
             $user = User::query()->findOrFail($id);
-            $user->fill($request['user']);
+            if($user->is_dev&&!$currentUser->is_dev){throw new \Exception('Ошибочная операция');}
+            $user->fill($validatedRequest['user']);
             $user->save()?
                 Session::flash('success', "Логин сотрудника $user->last_name $user->name успешно изменен."):
                 throw new \Exception("Логин сотрудника $user->last_name $user->name не был изменен. Перезагрузите страницу и попробуйте снова.");
         } catch (\Exception $e) {
-            Log::debug($e);
-            return redirect()->route('admin.user.edit', ['id'=>$id])->withErrors($e);
+            Log::debug($e->getMessage());
+            return redirect()->route('admin.user.edit', ['id'=>$id])->withErrors($e->getMessage());
+        }
+
+        return redirect()->route('admin.user.edit', ['id'=>$id]);
+    }
+
+    public function promoteAdmin($id)
+    {
+        try {
+            $currentUser = Auth::user();
+            if(!$currentUser->is_dev){throw new \Exception('Ошибочная операция(1)');}
+            if($currentUser->id==$id){throw new \Exception('Ошибочная операция(2)');}
+            $user = User::query()->findOrFail($id);
+            if($user->is_dev&&!$currentUser->is_dev){throw new \Exception('Ошибочная операция(3)');}
+            $user->fill(['is_admin'=>1]);
+            $user->save()?
+                Session::flash('success', "Сотруднику $user->last_name $user->name предоставлены администраторские права."):
+                throw new \Exception('Деактивация не удалась. Перезагрузите страницу и попробуйте снова.');
+        } catch (\Exception $e) {
+            Log::debug($e->getMessage());
+            return redirect()->route('admin.users')->withErrors($e->getMessage());
+        }
+
+        return redirect()->route('admin.user.edit', ['id'=>$id]);
+    }
+
+    public function demoteAdmin($id)
+    {
+        try {
+            $currentUser = Auth::user();
+            if(!$currentUser->is_dev){throw new \Exception('Ошибочная операция(1)');}
+            if($currentUser->id==$id){throw new \Exception('Ошибочная операция(2)');}
+            $user = User::query()->findOrFail($id);
+            if($user->is_dev&&!$currentUser->is_dev){throw new \Exception('Ошибочная операция(3)');}
+            $user->fill(['is_admin'=>0]);
+            $user->save()?
+                Session::flash('success', "С сотрудника $user->last_name $user->name сняты администраторские права."):
+                throw new \Exception('Операция изменения прав не удалась. Перезагрузите страницу и попробуйте снова.');
+        } catch (\Exception $e) {
+            Log::debug($e->getMessage());
+            return redirect()->route('admin.users')->withErrors($e->getMessage());
         }
 
         return redirect()->route('admin.user.edit', ['id'=>$id]);

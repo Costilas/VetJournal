@@ -73,7 +73,7 @@ class VisitController extends Controller
             Visit::create($validatedRequest['visit']);
             Session::flash('success', "Прием успешно добавлен!");
         }catch (\Exception $e){
-            Log::debug($e);
+            Log::debug($e->getMessage());
             return redirect()
                 ->route('pet.show', ['id' => $validatedRequest['visit']['pet_id']])
                 ->withErrors('Ошибка при создании према. Перезагрузите страницу и попробуйте снова.');
@@ -101,10 +101,10 @@ class VisitController extends Controller
                 Session::flash('success', "Прием успешно изменен!"):
                 throw new \Exception('Ошибка при изменении према. Перезагрузите страницу и попробуйте снова.');
         }catch (\Exception $e){
-            Log::debug($e);
+            Log::debug($e->getMessage());
             return redirect()
                 ->route('visit.edit', ['id'=>$id])
-                ->withErrors($e);
+                ->withErrors($e->getMessage());
         }
 
         return redirect(route('visit.edit', ['id'=>$id]));

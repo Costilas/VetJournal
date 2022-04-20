@@ -13,7 +13,7 @@
                     <i class="bi bi-x-octagon"></i>
                 </a>
             @else
-                <a class="btn btn-success m-1" href="{{route('admin.user.restore', ['id'=>$user->id])}}">
+                <a class="btn btn-success m-1" href="{{route('admin.user.activate', ['id'=>$user->id])}}">
                     <i class="bi bi-check-square"></i>
                 </a>
             @endif

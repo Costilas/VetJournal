@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Owner;
+use App\Models\Status;
 use App\Models\Visit;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,9 +18,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            OwnerSeeder::class,
-            PetSeeder::class,
-            VisitSeeder::class
+            UserSeeder::class,
+            KindSeeder::class,
+            GenderSeeder::class,
+            StatusSeeder::class,
         ]);
     }
 }

@@ -81,7 +81,7 @@ class CardController extends Controller
             $newOwner->pets()->create($validatedData['pet']);
             Session::flash('success', "Новая карточка успешно создана!");
         } catch (\Exception $e) {
-            Log::debug($e);
+            Log::debug($e->getMessage());
             return redirect()->back()->withErrors('При создании карточки что-то пошло не так. Перезагрузите страницу и попробуйте снова.');
         }
 

@@ -3,45 +3,6 @@
 @section('title') VetJournal::Сотрудники @endsection
 
 @section('content')
-    {{--<div class="row row-cols-1">
-        <div class="col-10 m-auto">
-            <div class="mb-3 mt-3 p-3">
-                <div class="row">
-                    <div class="col-12 text-center display-6">
-                        <h2>Сотрудники</h2>
-                    </div>
-                    <div class="col-12 text-center m-3">
-                        <a class="btn btn-success" href="{{route('admin.user.register')}}">Добавить
-                            сотрудника</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row row-cols-1">
-        <div class="col-auto m-auto">
-            <div class="card mb-3 p-2">
-                <div class="text-center">
-                    <form class="text-center  m-2 my-md-3 xs-m-3" action="{{route('admin.users')}}" method="GET">
-                        <input type="hidden" name="search" value="active">
-                        <button class="btn btn-primary" type="submit">Только активные</button>
-                    </form>
-
-                    <form class="text-center m-2 my-md-3 xs-m-3" action="{{route('admin.users')}}" method="GET">
-                        <input type="hidden" name="search" value="all">
-                        <button class="btn btn-primary" type="submit">Все пользователи</button>
-                    </form>
-                    <form class="text-center  m-2 my-md-3 xs-m-3" action="{{route('admin.users')}}" method="GET">
-                        <input type="hidden" name="search" value="inactive">
-                        <button class="btn btn-primary" type="submit">Только неактивные</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 m-auto">
-            {{view('admin.users.list', compact('users'))}}
-        </div>--}}
     <div class="row row-cols-1">
         <div class="col-10 m-auto">
             <div class="card mb-3 mt-3 p-3">
