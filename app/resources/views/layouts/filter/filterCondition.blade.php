@@ -8,4 +8,3 @@
         @yield('default')
     @endif
 </p>
-
