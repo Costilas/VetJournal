@@ -27,6 +27,8 @@ class ChangeLoginRequest extends FormRequest
             "user.email" => [
                 'required',
                 'email',
+                'unique:users,email',
+                'max:50'
             ],
         ];
     }
@@ -34,8 +36,10 @@ class ChangeLoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'visit.email.required' => 'Поле "Логин" является обязательным.',
-            'visit.email.email' => 'Поле "Email" должно соответствовать формату email@example.com.',
+            'user.email.required' => 'Поле "Email" обязательно к заполнению.',
+            'user.email.email' => 'Поле "Email" должно соответствовать формату email@example.com',
+            'user.email.unique' => 'Данный email адрес уже существует в базе данных. Проверьте правильность заполнения или укажите другой.',
+            'user.email.max' =>'В поле "Email" превышен лимит символов(50)',
         ];
     }
 }

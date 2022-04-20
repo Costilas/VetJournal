@@ -10,19 +10,22 @@
             </div>
         </div>
         <div class="row row-cols-auto justify-content-center align-items-center">
-            <div class="col col-xl-3 col-lg-3 col-md-3 col-sm-10 m-lg-3 m-md-4 m-sm-3 xs-w-9 xs-mb-3 xs-mt-3 text-center align-middle">
+            <div
+                class="col col-xl-3 col-lg-3 col-md-3 col-sm-10 m-lg-3 m-md-4 m-sm-3 xs-w-9 xs-mb-3 xs-mt-3 text-center align-middle">
                 <a href="{{route('visits')}}" class="btn btn-primary">Сегодня</a>
             </div>
-            <form class="col col-xl-3 col-lg-3 col-md-3 col-sm-10 m-lg-3 m-md-4 m-sm-3 xs-w-9 xs-mb-3 text-center align-middle"
-                  action="{{route('visits')}}" method="GET">
+            <form
+                class="col col-xl-3 col-lg-3 col-md-3 col-sm-10 m-lg-3 m-md-4 m-sm-3 xs-w-9 xs-mb-3 text-center align-middle"
+                action="{{route('visits')}}" method="GET">
                 @csrf
                 <input type="hidden" name="search[from]" value="@createDate(yesterday)">
                 <input type="hidden" name="search[to]" value="@createDate(yesterday)">
 
                 <button class="btn btn-primary" type="submit">Вчера</button>
             </form>
-            <form class="col col-xl-3 col-lg-3 col-md-3 col-sm-10 m-lg-3 m-md-4 m-sm-3 xs-w-9 xs-mb-3 text-center align-middle"
-                  action="{{route('visits')}}" method="GET">
+            <form
+                class="col col-xl-3 col-lg-3 col-md-3 col-sm-10 m-lg-3 m-md-4 m-sm-3 xs-w-9 xs-mb-3 text-center align-middle"
+                action="{{route('visits')}}" method="GET">
                 @csrf
                 <input type="hidden" name="search[from]" value="@createDate(-1 week)">
                 <input type="hidden" name="search[to]" value="@createDate(today)">
@@ -60,5 +63,4 @@
         {{view('visit.list', compact('visits'))}}
         {{$visits->links()}}
     </div>
-
 @endsection

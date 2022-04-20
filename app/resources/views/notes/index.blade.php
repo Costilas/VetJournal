@@ -9,11 +9,14 @@
                 @csrf
                 <select class="form-control" name="status_id">
                     @foreach($statuses as $status)
-                        <option @if(session()->getOldInput('status_id')===$status->id) selected @endif value="{{$status->id}}">{{$status->name}}</option>
+                        <option @if(session()->getOldInput('status_id')===$status->id) selected
+                                @endif value="{{$status->id}}">{{$status->name}}</option>
                     @endforeach
                 </select>
-                <input class="form-control" type="text" name="theme" placeholder="Тема заметки" value="{{session()->getOldInput('theme')}}">
-                <textarea class="form-control" name="body" placeholder="Текст заметки">{{session()->getOldInput('body')}}</textarea>
+                <input class="form-control" type="text" name="theme" placeholder="Тема заметки"
+                       value="{{session()->getOldInput('theme')}}">
+                <textarea class="form-control" name="body"
+                          placeholder="Текст заметки">{{session()->getOldInput('body')}}</textarea>
                 <button class="btn" type="submit"><i class="bi bi-plus-lg note_icon"></i></button>
             </form>
         </div>
@@ -25,7 +28,8 @@
                         <p class="status">Приоритет: {{$note->status->name}}</p>
                         <h5 class="theme ">{{$note->theme}}</h5>
                         <p class="body overflow-hidden text-break">{{$note->body}}</p>
-                        <a class="btn" href="{{route('note.delete', ['id'=>$note->id])}}"><i class="bi bi-x-lg note_icon"></i></a>
+                        <a class="btn" href="{{route('note.delete', ['id'=>$note->id])}}"><i
+                                class="bi bi-x-lg note_icon"></i></a>
                     </div>
                 </div>
             @endforeach

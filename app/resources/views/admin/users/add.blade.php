@@ -22,6 +22,8 @@
                     <input class="form-control @error('user.email') is-invalid @enderror"
                            type="email"
                            name="user[email]"
+                           maxlength="50"
+                           required
                            id="email"
                            value="{{session()->getOldInput('user.email')??''}}">
                 </div>
@@ -30,6 +32,8 @@
                     <input class="form-control @error('user.last_name') is-invalid @enderror"
                            type="text"
                            name="user[last_name]"
+                           maxlength="30"
+                           required
                            id="last_name"
                            value="{{session()->getOldInput('user.last_name')??''}}">
                 </div>
@@ -39,6 +43,8 @@
                     <input class="form-control @error('user.name') is-invalid @enderror"
                            type="text"
                            name="user[name]"
+                           maxlength="30"
+                           required
                            id="name"
                            value="{{session()->getOldInput('user.patronymic')??''}}">
                 </div>
@@ -47,6 +53,8 @@
                     <input class="form-control @error('user.patronymic') is-invalid @enderror"
                            type="text"
                            name="user[patronymic]"
+                           maxlength="30"
+                           required
                            id="patronymic"
                            value="{{session()->getOldInput('user.patronymic')??''}}">
                 </div>
@@ -56,12 +64,14 @@
                     <input class="form-control @error('user.password') is-invalid @enderror"
                            type="password"
                            name="user[password]"
+                           required
                            id="password">
                 </div>
                 <div class="col col-xl-8 col-lg-8 col-md-8 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
                     <label for="password_confirmed">Подтвердите пароль:</label><br>
                     <input class="form-control @error('user.password_confirmation') is-invalid @enderror"
                            type="password" name="user[password_confirmation]"
+                           required
                            id="password_confirmed">
                 </div>
                 @if($currentUser->is_dev)
@@ -73,6 +83,6 @@
                 @endif
             </div>
 
-            <button class="btn btn-primary" type="submit"> Добавить </button>
+            <button class="btn btn-primary" type="submit"> Добавить</button>
         </form>
 @endsection

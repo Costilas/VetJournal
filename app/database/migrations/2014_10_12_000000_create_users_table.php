@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('last_name', 50);
-            $table->string('patronymic', 50);
-            $table->string('name', 50);
-            $table->string('email', 70)->unique();
+            $table->string('last_name', 30);
+            $table->string('patronymic', 30);
+            $table->string('name', 30);
+            $table->string('email', 50)->unique();
             $table->string('password');
             $table->tinyInteger('is_active')->unsigned()->default(1);
             $table->tinyInteger('is_admin')->unsigned()->default(0);

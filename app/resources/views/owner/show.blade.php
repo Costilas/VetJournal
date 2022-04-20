@@ -29,11 +29,13 @@
         <div class="col-auto m-auto">
             <div class="card mb-3 p-2">
                 <div class="text-center">
-                    <a class="btn btn-success m-1" data-bs-toggle="collapse" href="#newPet" role="button" aria-expanded="false"
+                    <a class="btn btn-success m-1" data-bs-toggle="collapse" href="#newPet" role="button"
+                       aria-expanded="false"
                        aria-controls="newPet">
                         <i class="bi bi-journal-plus"></i> Добавить питомца
                     </a>
-                    <a class="btn btn-warning m-1" data-bs-toggle="collapse" href="#editOwner" role="button" aria-expanded="false"
+                    <a class="btn btn-warning m-1" data-bs-toggle="collapse" href="#editOwner" role="button"
+                       aria-expanded="false"
                        aria-controls="editOwner">
                         <i class="bi bi-pencil-square"></i> Редактировать профиль владельца
                     </a>

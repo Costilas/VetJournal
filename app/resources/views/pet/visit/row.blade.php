@@ -21,4 +21,3 @@
         <p>{{$visit->visit_info}}</p>
     </td>
 </tr>
-

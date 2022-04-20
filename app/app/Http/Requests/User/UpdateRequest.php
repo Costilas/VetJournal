@@ -33,17 +33,17 @@ class UpdateRequest extends FormRequest
             "user.name" => [
                 'required',
                 'alpha',
-                'max:25',
+                'max:30',
             ],
             "user.patronymic" => [
                 'required',
                 'alpha',
-                'max:25',
+                'max:30',
             ],
             "user.last_name" => [
                 'required',
                 'alpha',
-                'max:25',
+                'max:30',
             ],
         ];
     }
@@ -58,15 +58,15 @@ class UpdateRequest extends FormRequest
 
             'user.name.required' =>'Поле "Имя" обязательно к заполнению.',
             'user.name.alpha' =>'Поле "Имя" имеет неверный формат(не должно содержать цифр и специальных символов)',
-            'user.name.max' =>'В поле "Имя" превышен лимит символов(25)',
+            'user.name.max' =>'В поле "Имя" превышен лимит символов(30)',
 
             'user.patronymic.required' =>'Поле "Отчество" обязательно к заполнению.',
             'user.patronymic.alpha' =>'Поле "Отчество" имеет неверный формат(не должно содержать цифр и специальных символов)',
-            'user.patronymic.max' =>'В поле "Отчество" превышен лимит символов(25)',
+            'user.patronymic.max' =>'В поле "Отчество" превышен лимит символов(30)',
 
             'user.last_name.required' =>'Поле "Фамилия" обязательно к заполнению.',
             'user.last_name.alpha' =>'Поле "Фамилия" имеет неверный формат(не должно содержать цифр и специальных символов)',
-            'user.last_name.max' =>'В поле "Фамилия" превышен лимит символов(25)',
+            'user.last_name.max' =>'В поле "Фамилия" превышен лимит символов(30)',
         ];
     }
 }

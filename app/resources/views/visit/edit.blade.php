@@ -5,8 +5,8 @@
 @section('content')
     <div class="card m-3">
         <div class="card-body">
-            <h3 class="padding_block text-center m-3">Редактирование приема от {{$visit->dateFormat()}} животного {{$visit->pet->pet_name}}
-                (ID:{{$visit->pet->id}})</h3>
+            <h3 class="padding_block text-center m-3">Редактирование приема от {{$visit->visitDate()}}
+                пациента <strong>{{$visit->pet->pet_name}}</strong></h3>
             <div class="col-lg-10 m-auto">
                 <form action="{{route('visit.update', ['id'=>$visit->id])}}" method="POST">
                     @csrf
@@ -39,7 +39,8 @@
                             <select class="form-control @error('visit.user_id') is-invalid @enderror"
                                     name="visit[user_id]">
                                 @foreach($doctors as $doctor)
-                                    <option value="{{$doctor->id}}" @if($doctor->id==$visit->user_id) selected @endif>{{$doctor->doctorName()}}</option>
+                                    <option value="{{$doctor->id}}"
+                                            @if($doctor->id==$visit->user_id) selected @endif>{{$doctor->doctorName()}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -53,7 +54,8 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary m-3"><i class="bi bi-plus-lg"></i> Сохранить изменения</button>
+                    <button type="submit" class="btn btn-primary m-3"><i class="bi bi-plus-lg"></i> Сохранить изменения
+                    </button>
                     <a class="btn btn-info" href="{{route('pet.show', ['id'=>$visit->pet->id])}}">К пациенту</a>
                 </form>
             </div>

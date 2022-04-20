@@ -33,7 +33,7 @@ class AddRequest extends FormRequest
             "pet.pet_name" => [
                'required',
                'alpha',
-               'max:20'
+               'max:30'
             ],
             "pet.kind_id" => [
                'required',
@@ -68,7 +68,7 @@ class AddRequest extends FormRequest
 
             'pet.pet_name.required'=>'Необходимо заполнить поле "Кличка питомца".',
             'pet.pet_name.alpha'=>'Поле "Кличка питомца" не должно содержать числа и специальные символы.',
-            'pet.pet_name.max'=>'Привышен лимит символов в поле "Кличка питомца"(20).',
+            'pet.pet_name.max'=>'Привышен лимит символов в поле "Кличка питомца"(30).',
 
             'pet.kind_id.required'=>'Необходимо заполнить поле "Вид питомца".',
             'pet.kind_id.digit'=>'Неверные данные в поле "Вид питомца".',

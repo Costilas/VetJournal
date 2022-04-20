@@ -1,7 +1,7 @@
 @extends('layouts.html')
 
 @section('layout')
-<body>
+    <body>
     <div class="wrapper">
         @include('layouts.header')
         <main>
@@ -12,5 +12,5 @@
         </main>
     </div>
     <script src="/js/app.js"></script>
-</body>
+    </body>
 @endsection

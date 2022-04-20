@@ -22,5 +22,4 @@
         </table>
     </div>
 </div>
-
 {{$owners->links()}}

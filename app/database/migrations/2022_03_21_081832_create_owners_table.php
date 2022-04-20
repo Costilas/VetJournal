@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('owners', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 50)->index();
-            $table->string('patronymic', 50)->index();
-            $table->string('last_name', 50)->index();
+            $table->string('name', 30)->index();
+            $table->string('patronymic', 30)->index();
+            $table->string('last_name', 30)->index();
             $table->string('phone', 11)->index();
             $table->string('address', 255);
             $table->timestamps();

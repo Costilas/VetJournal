@@ -28,7 +28,8 @@
         <div class="col col-lg-6 col-xl-6 col-md-10 col-sm-12 xs-w-9 xs-mb-3">
             <div class="card h-100">
                 <div class="card-body d-flex flex-column justify-content-between">
-                    <h5 class="text-center"> Владелец: <strong>{{$owner->last_name}} {{$owner->name}} {{$owner->patronymic}}</strong></h5>
+                    <h5 class="text-center"> Владелец:
+                        <strong>{{$owner->last_name}} {{$owner->name}} {{$owner->patronymic}}</strong></h5>
                     <p class="card-text"> Адрес: <strong>{{$owner->address}}</strong></p>
                     <p class="card-text"> Телефон: <strong>{{$owner->phone}}</strong></p>
 
@@ -54,7 +55,8 @@
                        aria-controls="searchVisit m-1">
                         <i class="bi bi-search"></i> Поиск приемов по дате
                     </a>
-                    <a class="btn btn-secondary xs-m-1" href="{{route('pet.show', ['id'=>$pet->id])}}"><i class="bi bi-x-octagon"></i> Сброс фильтров поиска</a>
+                    <a class="btn btn-secondary xs-m-1" href="{{route('pet.show', ['id'=>$pet->id])}}"><i
+                            class="bi bi-x-octagon"></i> Сброс фильтров поиска</a>
                 </div>
                 <div class="collapse mb-1" id="searchVisit">
                     <div class="card card-body row row-cols-1">

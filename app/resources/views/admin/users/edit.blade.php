@@ -9,7 +9,8 @@
         </div>
     </div>
     <div class="card card-body w-75 mx-auto my-3">
-        <form class="text-center m-3 border p-2" action="{{route('admin.user.update',['id'=>$user->id])}}" method="POST">
+        <form class="text-center m-3 border p-2" action="{{route('admin.user.update',['id'=>$user->id])}}"
+              method="POST">
             @csrf
             <div class="row row-cols-1">
                 <div class="col-12">
@@ -22,6 +23,8 @@
                     <input class="form-control @error('user.last_name') is-invalid @enderror"
                            type="text"
                            name="user[last_name]"
+                           required
+                           maxlength="30"
                            id="last_name"
                            value="{{session()->getOldInput('user.last_name')??$user->last_name}}">
                 </div>
@@ -31,6 +34,8 @@
                     <input class="form-control @error('user.name') is-invalid @enderror"
                            type="text"
                            name="user[name]"
+                           required
+                           maxlength="30"
                            id="name"
                            value="{{session()->getOldInput('user.name')??$user->name}}">
                 </div>
@@ -39,6 +44,8 @@
                     <input class="form-control @error('user.patronymic') is-invalid @enderror"
                            type="text"
                            name="user[patronymic]"
+                           required
+                           maxlength="30"
                            id="patronymic"
                            value="{{session()->getOldInput('user.patronymic')??$user->patronymic}}">
                 </div>
@@ -69,15 +76,18 @@
                 <div class="row row-cols-auto mb-3 mt-3 justify-content-center text-center">
                     <div class="col col-xl-8 col-lg-8 col-md-8 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
                         @if($user->is_admin)
-                            <a href="{{route('admin.user.demote', ['id'=>$user->id])}}" class="btn btn-primary"> Снять права администратора</a>
+                            <a href="{{route('admin.user.demote', ['id'=>$user->id])}}" class="btn btn-primary"> Снять
+                                права администратора</a>
                         @else
-                            <a href="{{route('admin.user.promote', ['id'=>$user->id])}}" class="btn btn-primary"> Предоставить права администратора</a>
+                            <a href="{{route('admin.user.promote', ['id'=>$user->id])}}" class="btn btn-primary">
+                                Предоставить права администратора</a>
                         @endif
                     </div>
                 </div>
             </div>
         @endif
-        <form class="text-center m-3 border p-2" action="{{route('admin.user.login', ['id'=>$user->id])}}" method="POST">
+        <form class="text-center m-3 border p-2" action="{{route('admin.user.login', ['id'=>$user->id])}}"
+              method="POST">
             @csrf
             <div class="row row-cols-1">
                 <div class="col-12">
@@ -90,6 +100,8 @@
                     <input class="form-control @error('user.email') is-invalid @enderror"
                            type="email"
                            name="user[email]"
+                           required
+                           maxlength="50"
                            id="email"
                            value="{{session()->getOldInput('user.email')??''}}">
                 </div>
@@ -97,7 +109,8 @@
 
             <button class="btn btn-primary" type="submit"> Изменить email</button>
         </form>
-        <form class="text-center m-3 border p-2" action="{{route('admin.user.password', ['id'=>$user->id])}}" method="POST">
+        <form class="text-center m-3 border p-2" action="{{route('admin.user.password', ['id'=>$user->id])}}"
+              method="POST">
             @csrf
             <div class="row row-cols-1">
                 <div class="col-12">
@@ -110,12 +123,14 @@
                     <input class="form-control @error('user.password') is-invalid @enderror"
                            type="password"
                            name="user[password]"
+                           required
                            id="password">
                 </div>
                 <div class="col col-xl-8 col-lg-8 col-md-8 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
                     <label for="password_confirmed">Подтвердите пароль:</label><br>
                     <input class="form-control @error('user.password_confirmation') is-invalid @enderror"
                            type="password" name="user[password_confirmation]"
+                           required
                            id="password_confirmed">
                 </div>
             </div>

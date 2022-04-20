@@ -1,8 +1,7 @@
 @extends('layouts.html')
 
-
 @section('layout')
-<body style="background-size:cover; background-color: #1a202c;">
+    <body style="background-size:cover; background-color: #1a202c;">
     <div class="wrapper_login">
         <main>
             <div class="container-xxl">
@@ -12,5 +11,5 @@
         </main>
     </div>
     <script src="/js/app.js"></script>
-</body>
+    </body>
 @endsection

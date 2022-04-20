@@ -1,5 +1,6 @@
 <tr class="align-middle text-center">
-    <td @if($user->id === $currentUser->id)style="color: green;" @endif>{{$user->id}}@if($user->id === $currentUser->id)(Вы)@endif</td>
+    <td @if($user->id === $currentUser->id)style="color: green;" @endif>{{$user->id}}@if($user->id === $currentUser->id)
+            (Вы)@endif</td>
     <td>{{$user->last_name .' '. $user->name .' '. $user->patronymic}}</td>
     <td>{{$user->email}}</td>
     <td style="color: {{$user->is_active?'green;':'red;'}}">{{$user->is_active?'Активный':'Заблокирован'}}</td>
