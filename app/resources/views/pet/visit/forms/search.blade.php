@@ -6,17 +6,17 @@
             <label for="searchFrom">С:</label>
             <input type="date" id="searchFrom" class="form-control @error('visits.from') is-invalid @enderror"
                    name="search[from]"
-                   max="{{date('Y-m-d')}}"
+                   max="@createDate(today)"
                    aria-label="searchFrom"
-                   value="{{ request()->input('search.from')??date('Y-m-d', strtotime("-1 day"))}}">
+                   value="{{ request()->input('search.from')??\Carbon\Carbon::create('-1 day')->format('Y-m-d')}}">
         </div>
         <div class="col col-xl-4 col-lg-5 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3 text-center">
             <label for="searchTo">По:</label>
             <input type="date" id="searchTo" class="form-control @error('visits.to') is-invalid @enderror"
                    name="search[to]"
-                   max="{{date('Y-m-d')}}"
+                   max="@createDate(today)"
                    aria-label="searchTo"
-                   value="{{ request()->input('search.to')??date('Y-m-d')}}">
+                   value="{{ request()->input('search.to')??now()->format('Y-m-d')}}">
         </div>
     </div>
     <button type="submit" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Искать</button>

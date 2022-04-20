@@ -16,7 +16,7 @@ class VisitController extends Controller
     {
         if($request->has('search'))
         {
-            $rules = [
+            $validatedRequest = $request->validate([
                 "search" => [
                     'required',
                     'array',
@@ -31,19 +31,17 @@ class VisitController extends Controller
                     'required',
                     'before_or_equal:'. now()->format('Y-m-d'),
                 ],
-            ];
-
-            $validatedRequest = $request->validate($rules,
-                [
+            ],
+            [
                 'search.required' => 'Ошибка фильтрации. Обновите страницу и попробуйте снова.',
                 'search.min'=>'Некорректное количество данных для поиска приема по датам.',
                 'search.max'=>'Некорректное количество данных для поиска приема по датам.',
 
                 'search.from.required'=>'Поле "С:" должно быть заполнено.',
-                'search.from.before_or_equal'=>'Дата в поле "С:" имеет некорректное значение',
+                'search.from.before_or_equal'=>'Дата в поле "С:" имеет некорректное значение. Дата не может быть больше текущей.',
 
                 'search.to.required'=>'Поле "По:" должно быть заполнено.',
-                'search.to.before_or_equal'=>'Дата в поле "По:" имеет некорректное значение',
+                'search.to.before_or_equal'=>'Дата в поле "По:" имеет некорректное значение. Дата не может быть больше текущей.',
             ]);
 
 

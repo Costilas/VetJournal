@@ -48,13 +48,12 @@ class AppServiceProvider extends ServiceProvider
 
         Blade::directive('createDate', function (string $when) {
             try{
-               $date =  Carbon::create($when)->toDateString();
+               $date =  Carbon::create($when)->format('Y-m-d');
                if(!$date){throw new \Exception();}
             }catch(\Exception $e) {
                 Log::debug($e);
-                $date = Carbon::createFromFormat('d-m-Y','yesterday')->toDateString();
+                $date = Carbon::create('today')->format('Y-m-d');
             }
-
             return $date;
         });
 

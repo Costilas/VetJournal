@@ -53,7 +53,7 @@
 
             <input type="hidden" name="visit[pet_id]" value="{{$pet->id}}">
             <input type="hidden" name="visit[visit_date]"
-                   value="{{session()->getOldInput('visit.visit_date')??date('Y-m-d H:i:s', time())}}">
+                   value="{{session()->getOldInput('visit.visit_date')??now()->format('Y-m-d H:i:s')}}">
         </div>
 
         <button type="submit" class="btn btn-primary m-3 d-block m-auto"><i class="bi bi-plus-lg"></i> Создать</button>
