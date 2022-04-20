@@ -1,7 +1,7 @@
 <div class="col-lg-10 m-auto">
     <div class="col-12 text-center">
         <p>Время/Дата
-            приема: {{session()->getOldInput('visit.visit_date')??date('Y-m-d H:i:s', time())}}
+            приема: {{session()->getOldInput('visit.visit_date')??now()->format('d-m-Y / H:i')}}
         </p>
     </div>
     <form action="{{route('visit.create')}}" method="POST">

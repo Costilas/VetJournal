@@ -5,14 +5,13 @@
 @section('content')
     <div class="card m-3">
         <div class="card-body">
-            <h3 class="padding_block text-center m-3">Редактирование приема от {{$visit->visitDate()}}
-                пациента <strong>{{$visit->pet->pet_name}}</strong></h3>
+            <h3 class="padding_block text-center m-3">Редактирование приема пациента <strong>{{$visit->pet->pet_name}}</strong> от <strong>{{$visit->visitDate()}}</strong>.</h3>
             <div class="col-lg-10 m-auto">
                 <form action="{{route('visit.update', ['id'=>$visit->id])}}" method="POST">
                     @csrf
                     <div class="row row-cols-auto justify-content-center">
                         <div class="col col-xl-3 col-lg-5 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
-                            <label for="weight">Вес(kg):</label>
+                            <label for="weight">Вес(кг.):</label>
                             <input class="form-control @error('visit.weight') is-invalid @enderror"
                                    type="text"
                                    name="visit[weight]"
@@ -48,9 +47,7 @@
                             <label for="visit_info">Информация о приеме:</label>
                             <textarea class="form-control @error('visit.visit_info') is-invalid @enderror"
                                       name="visit[visit_info]"
-                                      style=" height: 250px;">
-                        {{session()->getOldInput('visit.visit_info')??$visit->visit_info}}
-                        </textarea>
+                                      style=" height: 250px;">{{session()->getOldInput('visit.visit_info')??$visit->visit_info}}</textarea>
                         </div>
                     </div>
 

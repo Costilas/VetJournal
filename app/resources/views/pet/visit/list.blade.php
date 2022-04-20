@@ -3,7 +3,7 @@
         <table class="table table-striped table-hover align-middle text-center">
             <tr>
                 <th>Дата приема:</th>
-                <th>Вес(кг):</th>
+                <th>Вес(кг.):</th>
                 <th>Температура(C&#176;):</th>
                 <th>Предварительный диагноз:</th>
                 <th>Врач:</th>
