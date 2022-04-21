@@ -45,17 +45,5 @@ class AppServiceProvider extends ServiceProvider
         view()->composer(['admin.users.row'], function ($view) {
             $view->with('currentUser', Auth::user());
         });
-
-        Blade::directive('createDate', function (string $when) {
-            try{
-               $date =  Carbon::create($when)->format('Y-m-d');
-               if(!$date){throw new \Exception();}
-            }catch(\Exception $e) {
-                Log::debug($e);
-                $date = Carbon::create('today')->format('Y-m-d');
-            }
-            return $date;
-        });
-
     }
 }

@@ -15,20 +15,21 @@ class VisitFilter extends ModelFilter
         return $this->where('pet_id', $pet_id);
     }
 
-    public function search(array $when):self
+    public function search(array $when)
     {
         try{
-            if(strtotime($when['from'])>strtotime($when['to'])){throw new \Exception('Попытка вручную поменять настройки максимального порога дат.');}
-            $start = $when['from'];
-            $end = $when['to'];
+            //If date validation is broken somehow and is not a date format
+            if(!strtotime($when['from'])&&!strtotime($when['to'])){throw new \Exception('Ошибка валидации. Даты имеют неверный формат');}
+
+            //If start date greater than end date then we need to revert it
+            $start = strtotime($when['from'])>strtotime($when['to'])?$when['to']:$when['from'];
+            $end = strtotime($when['from'])>strtotime($when['to'])?$when['from']:$when['to'];
+            $from = Carbon::createFromFormat(self::DATEFORMAT, $start)->startOfDay()->toDateTimeString();
+            $to = Carbon::createFromFormat(self::DATEFORMAT, $end)->endOfDay()->toDateTimeString();
         }catch(\Exception $e){
             Log::debug($e->getMessage());
-            //If validation before_or_equal is corrupted somehow then from becomes to and to - from
-           $start = $when['to'];
-           $end = $when['from'];
+           return redirect()->back()->withErrors($e->getMessage());
         }
-        $from = Carbon::createFromFormat(self::DATEFORMAT, $start)->startOfDay()->toDateTimeString();
-        $to = Carbon::createFromFormat(self::DATEFORMAT, $end)->endOfDay()->toDateTimeString();
 
         return $this->whereBetween('visit_date', [$from, $to]);
     }

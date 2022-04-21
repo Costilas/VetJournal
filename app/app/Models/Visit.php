@@ -30,14 +30,13 @@ class Visit extends Model
         return VisitService::prepareNumericData($temperature)*10;
     }
 
-    public static function weightNormalize(string $temperature):int
+    public static function weightNormalize(string $weight):int
     {
-        return VisitService::prepareNumericData($temperature)*1000;
+        return VisitService::prepareNumericData($weight)*1000;
     }
 
     public function visitDate()
     {
-        //return date('d.m.Y / H:i', strtotime($this->visit_date));
         return Carbon::create($this->visit_date)->format('d.m.Y / H:i');
     }
 

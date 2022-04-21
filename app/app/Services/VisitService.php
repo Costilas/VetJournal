@@ -13,18 +13,7 @@ class VisitService
 
     private static function stringCleaner(string $string):string
     {
-        $prepared = rtrim(str_replace([',', '.'], '.', $string), ' 0');
-        $prepared = ltrim($prepared, ' ');
-        if(preg_match('/^0\d\./', $prepared))
-        {
-            $prepared = ltrim($prepared, ' 0');
-            if(str_ends_with($prepared, '.'))
-            {
-                $prepared = str_replace('.', '', $prepared);
-            }
-        }
-
-        return $prepared;
+        return trim(str_replace([',', '.'], '.', $string), ' .');
     }
 
     private static function stringToFloat(string $string):float

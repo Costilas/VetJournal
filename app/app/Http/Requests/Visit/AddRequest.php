@@ -33,14 +33,14 @@ class AddRequest extends FormRequest
             "visit.weight" => [
                 'required',
                 'string',
-                'not_regex:/^0{1,2}[\.\,]0+$/i',
-                'regex:/^(\d{1,2}[\.\,]\d{1,3})$|^(\d{1,2})$/i',
+                'not_regex:/^0+[\.\,]0+$|^0+$/i',
+                'regex:/^(\d{1,3}[\.\,]\d{1,3})$|^(\d{1,3})$/i',
             ],
             "visit.temperature" => [
                 'required',
                 'string',
                 'not_regex:/^0\d{1}[\.\,]0+$|^\d{1,2}[\,\.]0+$/i',
-                'regex:/^(\d{1,2}[\.\,]\d{1})$|^(\d{1,2})$/i',
+                'regex:/^(\d{1,2}[\.\,]\d{1})$|^(\d{1,2})\.?$/i',
             ],
             "visit.pre_diagnosis" => [
                 'required',
