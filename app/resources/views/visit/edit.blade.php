@@ -35,7 +35,7 @@
                         </div>
                         <div class="col col-xl-3 col-lg-5 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
                             <label for="visit[doctor_id]">Кем проведен прием:</label>
-                            <select class="form-control @error('visit.user_id') is-invalid @enderror"
+                            <select class="form-control select-css @error('visit.user_id') is-invalid @enderror"
                                     name="visit[user_id]">
                                 @foreach($doctors as $doctor)
                                     <option value="{{$doctor->id}}"
