@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
 
-        view()->composer(['card.create', 'owner.pet.forms.add', 'pet.edit'], function ($view) {
+        view()->composer(['card.forms.create', 'owner.pet.forms.add', 'pet.edit'], function ($view) {
             $view->with('genders', Gender::all());
             $view->with('kinds', Kind::all());
         });
@@ -44,6 +44,10 @@ class AppServiceProvider extends ServiceProvider
 
         view()->composer(['admin.users.row'], function ($view) {
             $view->with('currentUser', Auth::user());
+        });
+
+        view()->composer(['card.forms.create', ''], function ($view) {
+            $view->with('dateInputMaxValue', Carbon::create('today')->format('Y-m-d'));
         });
     }
 }

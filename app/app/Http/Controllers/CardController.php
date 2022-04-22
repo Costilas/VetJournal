@@ -3,77 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Card\CreateRequest;
+use App\Http\Requests\Card\SearchRequest;
 use App\Models\Owner;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class CardController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        if (!empty($request->query())) {
-            $validated = $request->validate([
-                'name' => [
-                    'alpha',
-                    'max:30',
-                    'nullable',
-                    'required_without_all:patronymic,lastName,phone,pets'
-                ],
-                'patronymic' => [
-                    'alpha',
-                    'max:25',
-                    'nullable',
-                    'required_without_all:name,lastName,phone,pets'
-                ],
-                'lastName' => [
-                    'alpha',
-                    'max:30',
-                    'nullable',
-                    'required_without_all:name,patronymic,phone,pets'
-                ],
-                'phone' => [
-                    'starts_with:8',
-                    'digits_between:1,11',
-                    'nullable',
-                    'required_without_all:name,patronymic,lastName,pets'
-                ],
-                'pets' => [
-                    'alpha',
-                    'max:30',
-                    'nullable',
-                    'required_without_all:name,patronymic,lastName,phone'
-                ]
-            ], [
-                'name.required_without_all' => 'Хотя бы одно поле, должно быть заполнено.',
-                'name.alpha' => 'Поле "Имя владельца" не должно содержать числа и специальные символы.',
-                'name.max' => 'Привышен лимит символов в поле "Имя владельца"(30).',
+        return view('card.index');
+    }
 
-                'patronymic.required_without_all' => 'Хотя бы одно поле, должно быть заполнено.',
-                'patronymic.alpha' => 'Поле "Отчество владельца" не должно содержать числа и специальные символы.',
-                'patronymic.max' => 'Привышен лимит символов в поле "Отчество владельца"(30).',
-
-                'lastName.required_without_all' => 'Хотя бы одно поле, должно быть заполнено.',
-                'lastName.alpha' => 'Поле "Фамилия владельца" не должно содержать числа и специальные символы.',
-                'lastName.max' => 'Привышен лимит символов в поле "Фамилия владельца"(30).',
-
-                'phone.required_without_all' => 'Хотя бы одно поле, должно быть заполнено.',
-                'phone.digits_between' => 'Поле "Телефон владельца" должно содержать только числа (Без пробелов и специальных символов), длина от 1 до 11.',
-                'phone.starts_with' => 'Телефон должен начинаться с "8".',
-
-                'pets.required_without_all'=>'Хотя бы одно поле, должно быть заполнено.',
-                'pets.alpha'=>'Поле "Кличка питомца" не должно содержать числа и специальные символы.',
-                'pets.max'=>'Привышен лимит символов в поле "Кличка питомца"(30).',
-            ]);
-            $owners = Owner::filter($validated)->with('pets.kind')->paginate(10)->withQueryString();
-        } else {
-            $owners = '';
-        }
+    public function search(SearchRequest $request)
+    {
+        $owners = Owner::filter($request->validated())->with('pets.kind')->paginate(10)->withQueryString();
 
         return view('card.index', compact('owners'));
     }
 
-    public function create(CreateRequest $request)
+    public function store(CreateRequest $request)
     {
         $validatedData = $request->validated();
         try {
@@ -82,7 +31,7 @@ class CardController extends Controller
             Session::flash('success', "Новая карточка успешно создана!");
         } catch (\Exception $e) {
             Log::debug($e->getMessage());
-            return redirect()->back()->withErrors('При создании карточки что-то пошло не так. Перезагрузите страницу и попробуйте снова.');
+            return redirect()->route('cards')->withErrors('При создании карточки что-то пошло не так. Перезагрузите страницу и попробуйте снова.');
         }
 
         return redirect()->route('owner.show', ['id' => $newOwner->id]);

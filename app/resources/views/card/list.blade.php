@@ -8,8 +8,8 @@
                 <th scope="col">Питомцы:</th>
                 <th scope="col">Действие:</th>
             </tr>
-            @if(!empty($owners->items()))
-                @foreach($owners->unique('id') as $owner)
+            @if($owners->count())
+                @foreach($owners as $owner)
                     {{view('card.row', compact('owner'))}}
                 @endforeach
             @else

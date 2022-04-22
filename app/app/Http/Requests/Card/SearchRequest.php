@@ -24,36 +24,35 @@ class SearchRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>[
+            'name' => [
+                'alpha',
+                'max:30',
+                'nullable',
+                'required_without_all:patronymic,lastName,phone,pets'
+            ],
+            'patronymic' => [
                 'alpha',
                 'max:25',
                 'nullable',
-                'required_without_all:patronymic,last_name,phone,pets'
+                'required_without_all:name,lastName,phone,pets'
             ],
-            'patronymic'=>[
+            'lastName' => [
                 'alpha',
-                'max:25',
-                'nullable',
-                'required_without_all:name,last_name,phone,pets'
-            ],
-            'last_name'=>[
-                'alpha',
-                'max:25',
+                'max:30',
                 'nullable',
                 'required_without_all:name,patronymic,phone,pets'
             ],
-            'phone'=>[
+            'phone' => [
                 'starts_with:8',
                 'digits_between:1,11',
                 'nullable',
-                'required_without_all:name,patronymic,last_name,pets'
+                'required_without_all:name,patronymic,lastName,pets'
             ],
-
-            'pets'=>[
+            'pets' => [
                 'alpha',
-                'max:25',
+                'max:30',
                 'nullable',
-                'required_without_all:name,patronymic,last_name,phone'
+                'required_without_all:name,patronymic,lastName,phone'
             ]
         ];
     }
@@ -61,27 +60,25 @@ class SearchRequest extends FormRequest
     public function messages()
     {
         return [
-
-            'name.required_without_all' => 'Необходио заполнить поле "Имя владельца".',
+            'name.required_without_all' => 'Хотя бы одно поле, должно быть заполнено.',
             'name.alpha' => 'Поле "Имя владельца" не должно содержать числа и специальные символы.',
-            'name.max' => 'Привышен лимит символов в поле "Имя владельца"(20).',
+            'name.max' => 'Привышен лимит символов в поле "Имя владельца"(30).',
 
-            'patronymic.required_without_all' => 'Необходио заполнить поле "Отчество владельца".',
+            'patronymic.required_without_all' => 'Хотя бы одно поле, должно быть заполнено.',
             'patronymic.alpha' => 'Поле "Отчество владельца" не должно содержать числа и специальные символы.',
-            'patronymic.max' => 'Привышен лимит символов в поле "Отчество владельца"(20).',
+            'patronymic.max' => 'Привышен лимит символов в поле "Отчество владельца"(30).',
 
-            'last_name.required_without_all' => 'Необходио заполнить поле "Фамилия владельца".',
-            'last_name.alpha' => 'Поле "Фамилия владельца" не должно содержать числа и специальные символы.',
-            'last_name.max' => 'Привышен лимит символов в поле "Фамилия владельца"(20).',
+            'lastName.required_without_all' => 'Хотя бы одно поле, должно быть заполнено.',
+            'lastName.alpha' => 'Поле "Фамилия владельца" не должно содержать числа и специальные символы.',
+            'lastName.max' => 'Привышен лимит символов в поле "Фамилия владельца"(30).',
 
-            'phone.required_without_all' => 'Необходио заполнить поле "Телефон владельца".',
-            'phone.digits' => 'Поле "Телефон владельца" должно содержать только числа (Без пробелов и специальных символов).',
-            'phone.max' => 'Привышен лимит символов в поле "Телефон владельца"(11).',
+            'phone.required_without_all' => 'Хотя бы одно поле, должно быть заполнено.',
+            'phone.digits_between' => 'Поле "Телефон владельца" должно содержать только числа (Без пробелов и специальных символов), длина от 1 до 11.',
             'phone.starts_with' => 'Телефон должен начинаться с "8".',
 
-            'pets.required_without_all'=>'Необходимо заполнить поле "Кличка питомца".',
+            'pets.required_without_all'=>'Хотя бы одно поле, должно быть заполнено.',
             'pets.alpha'=>'Поле "Кличка питомца" не должно содержать числа и специальные символы.',
-            'pets.max'=>'Привышен лимит символов в поле "Кличка питомца"(20).',
+            'pets.max'=>'Привышен лимит символов в поле "Кличка питомца"(30).',
         ];
     }
 
