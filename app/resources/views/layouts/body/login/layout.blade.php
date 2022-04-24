@@ -2,14 +2,14 @@
 
 @section('layout')
     <body style="background-size:cover; background-color: #1a202c;">
-    <div class="wrapper_login min-vh-100 d-flex align-items-center">
-        <main>
-            <div class="container-xxl">
+    <main>
+        <div class="container-xxl">
+            <div class="min-vh-100 d-flex align-items-center justify-content-center">
                 @include('layouts.notify')
                 @yield('content')
             </div>
-        </main>
-    </div>
+        </div>
+    </main>
     <script src="/js/app.js"></script>
     </body>
 @endsection

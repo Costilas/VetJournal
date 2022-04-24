@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col col-xl-6 col-lg-6 col-md-10 col-sm-12 m-auto">
+        <div class="col m-auto">
             <div class="login_form_block m-auto text-center">
                 <div class="row row-cols-1 mb-3">
                     <div class="col m-auto">
@@ -20,7 +20,7 @@
                 <form method="POST" action="{{route('auth')}}">
                     @csrf
                     <div class="row row-cols-1 mb-3">
-                        <div class="col col-lg-6 col-md-8 col-sm-9 m-auto xs-w-9 xs-mb-3">
+                        <div class="col col-lg-8 col-md-8 col-sm-10 m-auto xs-w-9 xs-mb-3">
                             <label for="login" class="form-label">Логин:</label>
                             <input type="text"
                                    name="email"
@@ -31,7 +31,7 @@
                         </div>
                     </div>
                     <div class="row row-cols-1 mb-3">
-                        <div class="col col-lg-6 col-md-8 col-sm-9 m-auto xs-w-9 xs-mb-3">
+                        <div class="col col-lg-8 col-md-8 col-sm-10 m-auto xs-w-9 xs-mb-3">
                             <label for="inputPassword" class="form-label">Пароль:</label>
                             <input type="password"
                                    name="password"

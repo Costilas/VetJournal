@@ -207,10 +207,11 @@ header {
     }
 }
 
+
 .login_form_block {
     border-radius: 25px;
     color: white;
-    padding:30px 0;
+    padding:30px;
     background-color: #2d3748;
 }
 
