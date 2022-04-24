@@ -20,13 +20,14 @@ class NoteController extends Controller
 
     public function create(AddRequest $request)
     {
-        $validatedRequest = $request->validated();
+        $validatedRequestData = $request->validated();
         try {
-            Note::create($validatedRequest);
-            Session::flash('success', "Заметка успешно добавлена!");
+            Note::create($validatedRequestData)
+                ?Session::flash('success', "Заметка успешно добавлена!")
+                :throw new \Exception();
         } catch (\Exception $e){
             Log::debug($e->getMessage());
-            return redirect('notes')->withErrors('Добавление карточки не выполнено. Перезагрузите страницу и попробуйте снова');
+            return redirect()->route('notes')->withErrors('Добавление карточки не выполнено. Перезагрузите страницу и попробуйте снова');
         }
 
         return redirect(route('notes'));
@@ -35,11 +36,10 @@ class NoteController extends Controller
     public function delete($id)
     {
         try{
-            $note = Note::query()->find($id);
-            $deleting = $note->delete();
-            $deleting?
-                Session::flash('success', "Заметка удалена!"):
-                throw new \Exception('При удалении заметки произошла ошибка. Попробуйте перезагрузить страницу и выполнить действие снова.');
+            $note = Note::find($id);
+            $note?->delete()
+                ? Session::flash('success', "Заметка удалена!")
+                : throw new \Exception('При удалении заметки произошла ошибка. Попробуйте перезагрузить страницу и выполнить действие снова.');
         }catch (\Exception $e){
             Log::debug($e->getMessage());
             return redirect()->route('notes')->withErrors($e->getMessage());

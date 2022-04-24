@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,8 +17,8 @@ class Note extends Model
         return $this->belongsTo(Status::class);
     }
 
-    public function dateFormat()
+    public function creationDate():string
     {
-        return date('d.m.Y H:i:s', strtotime($this->created_at));
+        return Carbon::create($this->created_at)->format('d.m.Y H:i:s');
     }
 }

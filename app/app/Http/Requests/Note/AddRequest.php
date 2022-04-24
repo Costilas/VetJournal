@@ -24,7 +24,7 @@ class AddRequest extends FormRequest
     public function rules()
     {
         return [
-            'status_id'=>'required|digits:1',
+            'status_id'=>'required|digits:1|exists:statuses,id',
             'theme'=>'required|string|max:25',
             'body'=>'required|string|max:255',
         ];
@@ -35,6 +35,7 @@ class AddRequest extends FormRequest
         return [
             'status_id.digits' => 'Ошибка запроса. Обновите странице и попробуйте снова.',
             'status_id.required' => 'Ошибка запроса. Обновите странице и попробуйте снова.',
+            'status_id.exists' => 'Ошибка запроса. Обновите странице и попробуйте снова.',
 
             'theme.string' => 'Поле "Тема заметки" имеет неверный формат.',
             'theme.required' => 'Поле "Тема заметки" обязательно к заполнению.',
@@ -45,5 +46,4 @@ class AddRequest extends FormRequest
             'body.max' => 'Поле "Текст заметки" превышен лимит символов(255).',
         ];
     }
-
 }
