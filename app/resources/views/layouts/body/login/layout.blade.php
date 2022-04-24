@@ -2,7 +2,7 @@
 
 @section('layout')
     <body style="background-size:cover; background-color: #1a202c;">
-    <div class="wrapper_login">
+    <div class="wrapper_login min-vh-100 d-flex align-items-center">
         <main>
             <div class="container-xxl">
                 @include('layouts.notify')

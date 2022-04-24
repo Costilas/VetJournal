@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Login;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Password;
 
 class LoginRequest extends FormRequest
 {
@@ -24,11 +25,11 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            "user.password" => [
+            "password" => [
                 'required',
-                'alpha_num',
+                'string',
             ],
-            "user.email" => [
+            "email" => [
                 'required',
                 'email',
             ],
@@ -38,11 +39,12 @@ class LoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'user.password.required' => 'Поле "Пароль" обязательно должно быть заполнено.',
-            'user.password.alpha_num' => 'Поле "Пароль" не должно содержать специальных символов.',
+            'password.required' => 'Поле "Пароль" обязательно должно быть заполнено.',
+            'password.string' => 'Поле "Пароль" имеет неверный формат.',
+            'password.password' => 'Поле "Пароль" тест.',
 
-            'user.email.required' => 'Поле "Email"',
-            'user.email.email' => 'Поле "Email" должно соответствовать формату email@example.com',
+            'email.required' => 'Поле "Email"',
+            'email.email' => 'Поле "Email" должно соответствовать формату email@example.com',
         ];
     }
 }
