@@ -16,6 +16,7 @@
         <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 col-xs-10 mb-lg-3 mb-md-4 mb-sm-5  xs-w-9 xs-mb-3">
             <label for="birth">Дата рождения питомца:</label>
             <input type="date" class="form-control @error('pet.birth') is-invalid @enderror"
+                   max="{{$dateInputMaxValue}}"
                    name="pet[birth]" aria-label="birth"
                    value="{{session()->getOldInput('pet.birth')}}">
         </div>

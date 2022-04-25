@@ -35,13 +35,13 @@ class Pet extends Model
         return $this->hasMany(Visit::class);
     }
 
-    public function birthDate(string $format)
+    public function birthDate()
     {
-        return Carbon::create($this->birth)->format($format);
+        return Carbon::create($this->birth)->format('d-m-Y');
     }
 
     public function countYears()
     {
-        return Carbon::parse($this->birth)->diff(\Carbon\Carbon::now())->format('%y г. %m м.');
+        return Carbon::parse($this->birth)->diff(now())->format('%y г. %m м.');
     }
 }

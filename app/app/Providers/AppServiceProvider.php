@@ -46,7 +46,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('currentUser', Auth::user());
         });
 
-        view()->composer(['card.forms.create', ''], function ($view) {
+        view()->composer(['card.forms.create', 'owner.pet.forms.add'], function ($view) {
             $view->with('dateInputMaxValue', Carbon::create('today')->format('Y-m-d'));
         });
     }

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Session;
 
 class OwnerController extends Controller
 {
+
     public function show($id)
     {
         $owner = Owner::findOrFail($id);
@@ -24,7 +25,7 @@ class OwnerController extends Controller
             $owner = Owner::findOrFail($id);
             $owner->fill($validatedRequest)?->save()
                 ? Session::flash('success', "Профиль владельца успешно отредактирован!")
-                : throw new \Exception('Ошибка при редактировании профиля владельца. Перезагрузите страницу и попробуйте снова.');;
+                : throw new \Exception('Ошибка при редактировании профиля владельца. Перезагрузите страницу и попробуйте снова.');
         }catch (\Exception $e) {
             Log::debug($e->getMessage());
             return redirect()
