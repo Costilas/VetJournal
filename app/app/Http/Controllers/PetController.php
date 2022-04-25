@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\FilterConditionDescriber;
 use App\Http\Requests\Pet\AddRequest;
 use App\Http\Requests\Pet\EditRequest;
 use App\Http\Requests\Pet\SearchRequest;
 use App\Models\Pet;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
@@ -24,9 +26,11 @@ class PetController extends Controller
         return view('pet.show', compact('pet', 'visits', 'owner'));
     }
 
-    public function search(SearchRequest $request, Pet $pet)
+    public function search(SearchRequest $request, Pet $pet, FilterConditionDescriber $filterDescriber)
     {
         $validatedData = $request->validated();
+        $filterCondition = $filterDescriber->describeFilterCondition($validatedData);
+
         $pet->load('gender', 'kind', 'owner');
         $owner = $pet->owner;
         $visits = $pet->visits()
@@ -36,7 +40,7 @@ class PetController extends Controller
             ->paginate(5)
             ->withQueryString();
 
-        return view('pet.show', compact('pet','visits', 'owner' ));
+        return view('pet.show', compact('pet','visits', 'owner', 'filterCondition'));
     }
 
 

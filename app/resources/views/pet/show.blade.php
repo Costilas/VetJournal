@@ -71,17 +71,18 @@
         </div>
     </div>
     <div class="visit_block">
-        @if($visits->count())
-            <p class="text-center">Поиск по фильтрам: <br>
-                @empty($filerCondition)
-                    За все время.
-                @else
-                    @foreach($filterCondition as $input => $condition)
-                        <em>{{$input}}:</em> <strong>{{$condition}}</strong>
-                    @endforeach
-                @endempty
+        <p class="text-center">Поиск по фильтрам: <br>
+            @if(!empty($filterCondition))
+                @foreach($filterCondition as $input => $condition)
+                    <em>{{$input}}:</em> <strong>{{$condition}}</strong>
+                @endforeach
+            @else
+               За все время.
+            @endif
 
-            </p>
+        </p>
+        @if($visits->count())
+
         @endif
 
         @include('pet.visit.list')

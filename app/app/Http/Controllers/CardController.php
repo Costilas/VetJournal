@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\FilterConditionDescriber;
 use App\Http\Requests\Card\CreateRequest;
 use App\Http\Requests\Card\SearchRequest;
 use App\Models\Owner;
@@ -10,30 +11,17 @@ use Illuminate\Support\Facades\Session;
 
 class CardController extends Controller
 {
-    private const FILTER_INPUT_TRANSLATIONS = [
-        'lastName' => 'Фамилия',
-        'name' => 'Имя',
-        'patronymic'=>'Отчество',
-        'phone'=>'Телефон',
-        'pets'=>'Кличка питомца'
-    ];
 
     public function index()
     {
         return view('card.index');
     }
 
-    public function search(SearchRequest $request)
+    public function search(SearchRequest $request, FilterConditionDescriber $filterDescriber)
     {
         $validatedData = $request->validated();
         $owners = Owner::filter($validatedData)->with('pets.kind')->paginate(10)->withQueryString();
-
-        $filterCondition = [];
-        foreach(array_filter($validatedData) as $inputName => $inputCondition){
-          if(key_exists($inputName,self::FILTER_INPUT_TRANSLATIONS)) {
-              $filterCondition[self::FILTER_INPUT_TRANSLATIONS[$inputName]] = $inputCondition;
-          }
-        }
+        $filterCondition = $filterDescriber->describeFilterCondition($validatedData);
 
         return view('card.index', compact('owners', 'filterCondition'));
     }
