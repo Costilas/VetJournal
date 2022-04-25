@@ -18,8 +18,6 @@ class CardController extends Controller
         'pets'=>'Кличка питомца'
     ];
 
-
-
     public function index()
     {
         return view('card.index');

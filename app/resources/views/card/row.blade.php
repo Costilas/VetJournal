@@ -4,7 +4,7 @@
     <td>{{$owner->phone}}</td>
     <td>
         @foreach($owner->pets as $pet)
-            <a class="d-block" href="{{route('pet.show', ['id'=>$pet->id])}}" target="_blank">
+            <a class="d-block" href="{{route('pet.show', ['pet'=>$pet])}}" target="_blank">
                 {{$pet->pet_name}} ({{$pet->kind->kind}})
             </a>
         @endforeach

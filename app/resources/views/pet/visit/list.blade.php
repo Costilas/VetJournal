@@ -9,7 +9,7 @@
                 <th>Врач:</th>
                 <th>Действие:</th>
             </tr>
-            @if(!empty($visits->items()))
+            @if($visits->count())
                 @foreach($visits as $visit)
                     {{view('pet.visit.row', compact('visit'))}}
                 @endforeach

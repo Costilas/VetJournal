@@ -37,11 +37,13 @@ class EditRequest extends FormRequest
             ],
             "pet.kind_id" => [
                 'required',
-                'digits:1'
+                'digits:1',
+                'exists:kinds,id'
             ],
             "pet.gender_id" => [
                 'required',
-                'digits:1'
+                'digits:1',
+                'exists:genders,id'
             ],
             "pet.birth" => [
                 'required',
@@ -59,7 +61,7 @@ class EditRequest extends FormRequest
     {
         return [
             'pet.min' => 'Все поля данных питомца должны быть заполнены.',
-            'pet.min' => 'Обнаружены лишние данных питомца.',
+            'pet.max' => 'Обнаружены лишние данных питомца.',
             'pet.array' => 'Проверьте заполненность всех полей питомца',
 
             'pet.pet_name.required'=>'Необходимо заполнить поле "Кличка питомца".',
@@ -68,9 +70,11 @@ class EditRequest extends FormRequest
 
             'pet.kind_id.required'=>'Необходимо заполнить поле "Вид питомца".',
             'pet.kind_id.digit'=>'Неверные данные в поле "Вид питомца".',
+            'pet.kind_id.exists'=>'Несуществующий id в поле "Вид питомца".',
 
             'pet.gender_id.required'=>'Необходимо заполнить поле "Пол питомца".',
             'pet.gender_id.digit'=>'Неверные данные в поле "Пол питомца".',
+            'pet.gender_id.exists'=>'Несуществующий id в поле "Пол питомца".',
 
             'pet.birth.required'=>'Необходимо заполнить поле "Дата рождения питомца".',
             'pet.birth.before_or_equal'=>'Неверный формат поля "Дата рождения питомца". Дата не может быть больше чем текущая.',

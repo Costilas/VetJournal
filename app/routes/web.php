@@ -19,19 +19,20 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/card/search', [App\Http\Controllers\CardController::class, 'search'])->name('card.search');
     Route::post('/card/store', [App\Http\Controllers\CardController::class, 'store'])->name('card.store');
     //Pet
-    Route::get('/pet/{id}/show', [App\Http\Controllers\PetController::class, 'show'])->name('pet.show')->where(
+    Route::get('/pet/{pet}/show', [App\Http\Controllers\PetController::class, 'show'])->name('pet.show')->where(
         'id',
         '[0-9]+'
     );
     Route::post('/pet/add', [App\Http\Controllers\PetController::class, 'add'])->name('pet.add');
-    Route::get('/pet/{id}/edit', [App\Http\Controllers\PetController::class, 'edit'])->name('pet.edit')->where(
+    Route::get('/pet/{pet}/edit', [App\Http\Controllers\PetController::class, 'edit'])->name('pet.edit')->where(
         'id',
         '[0-9]+'
     );
-    Route::post('/pet/{id}/update', [App\Http\Controllers\PetController::class, 'update'])->name('pet.update')->where(
+    Route::post('/pet/{pet}/update', [App\Http\Controllers\PetController::class, 'update'])->name('pet.update')->where(
         'id',
         '[0-9]+'
     );
+    Route::get('/{pet}/visit/search', [App\Http\Controllers\PetController::class, 'search'])->name('pet.visit.search');
     //Owner
     Route::get('/owner/{id}/show', [App\Http\Controllers\OwnerController::class, 'show'])->name('owner.show')->where(
         'id',

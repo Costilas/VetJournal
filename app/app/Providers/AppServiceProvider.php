@@ -38,15 +38,15 @@ class AppServiceProvider extends ServiceProvider
             $view->with('kinds', Kind::all());
         });
 
-        view()->composer(['pet.visit.forms.create', 'visit.edit'], function ($view) {
-            $view->with('doctors', User::where('is_active', '=', 1)->where('is_dev','!=', 1)->get());
+        view()->composer(['pet.visit.forms.add', 'visit.edit'], function ($view) {
+            $view->with('doctors', User::where('is_active', 1)->where('is_dev','!=', 1)->get());
         });
 
         view()->composer(['admin.users.row'], function ($view) {
             $view->with('currentUser', Auth::user());
         });
 
-        view()->composer(['card.forms.create', 'owner.pet.forms.add'], function ($view) {
+        view()->composer(['card.forms.create', 'owner.pet.forms.add', 'pet.visit.forms.add', 'pet.visit.forms.search', 'pet.edit'], function ($view) {
             $view->with('dateInputMaxValue', Carbon::create('today')->format('Y-m-d'));
         });
     }

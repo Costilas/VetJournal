@@ -19,7 +19,7 @@
                     <p class="card-text">Возраст: <em>{{$pet->countYears()}}</em></p>
                     <p class="card-text"></p>
                     <div class="text-center xs-mt-3">
-                        <a href="{{route('pet.edit', ['id'=>$pet->id])}}" class="btn btn-primary"><i
+                        <a href="{{route('pet.edit', ['pet'=>$pet])}}" class="btn btn-primary"><i
                                 class="bi bi-pencil-fill"></i> Редактировать данные пациента</a>
                     </div>
                 </div>
@@ -32,7 +32,6 @@
                         <strong>{{$owner->last_name}} {{$owner->name}} {{$owner->patronymic}}</strong></h5>
                     <p class="card-text"> Адрес: <strong>{{$owner->address}}</strong></p>
                     <p class="card-text"> Телефон: <strong>{{$owner->phone}}</strong></p>
-
                     <div class="text-center xs-mt-3">
                         <a href="{{route('owner.show', ['id'=>$owner->id])}}" class="btn btn-primary"><i
                                 class="bi bi-file-earmark-person"></i> Профиль владельца</a>
@@ -55,7 +54,7 @@
                        aria-controls="searchVisit m-1">
                         <i class="bi bi-search"></i> Поиск приемов по дате
                     </a>
-                    <a class="btn btn-secondary xs-m-1" href="{{route('pet.show', ['id'=>$pet->id])}}"><i
+                    <a class="btn btn-secondary xs-m-1" href="{{route('pet.show', ['pet'=>$pet])}}"><i
                             class="bi bi-x-octagon"></i> Сброс фильтров поиска</a>
                 </div>
                 <div class="collapse mb-1" id="searchVisit">
@@ -65,15 +64,26 @@
                 </div>
                 <div class="collapse mb-1" id="newVisit">
                     <div class="card card-body">
-                        @include('pet.visit.forms.create')
+                        @include('pet.visit.forms.add')
                     </div>
                 </div>
             </div>
-            <hr class="w-50 m-auto">
         </div>
     </div>
     <div class="visit_block">
-        {{view('layouts.filter.pet', compact('validatedRequest'))}}
+        @if($visits->count())
+            <p class="text-center">Поиск по фильтрам: <br>
+                @empty($filerCondition)
+                    За все время.
+                @else
+                    @foreach($filterCondition as $input => $condition)
+                        <em>{{$input}}:</em> <strong>{{$condition}}</strong>
+                    @endforeach
+                @endempty
+
+            </p>
+        @endif
+
         @include('pet.visit.list')
     </div>
 @endsection
