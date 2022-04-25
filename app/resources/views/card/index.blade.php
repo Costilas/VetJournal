@@ -56,6 +56,11 @@
         </div>
 
         @if(!empty($owners))
+            <p class="text-center">Поиск по фильтрам: <br>
+                @foreach($filterCondition as $input => $condition)
+                    <em>{{$input}}:</em> <strong>{{$condition}}</strong>
+                @endforeach
+            </p>
             {{view('card.list', compact('owners'))}}
         @endif
     </div>

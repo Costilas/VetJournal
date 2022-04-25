@@ -7,7 +7,7 @@
             <th scope="col">Дата рождения(день/месяц/год):</th>
             <th scope="col">Действие:</th>
         </tr>
-        @if(!empty($pets))
+        @if($pets->count())
             @foreach($pets as $pet)
                 {{view('owner.pet.row', compact('pet'))}}
             @endforeach

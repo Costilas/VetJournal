@@ -10,6 +10,16 @@ use Illuminate\Support\Facades\Session;
 
 class CardController extends Controller
 {
+    private const FILTER_INPUT_TRANSLATIONS = [
+        'lastName' => 'Фамилия',
+        'name' => 'Имя',
+        'patronymic'=>'Отчество',
+        'phone'=>'Телефон',
+        'pets'=>'Кличка питомца'
+    ];
+
+
+
     public function index()
     {
         return view('card.index');
@@ -17,9 +27,17 @@ class CardController extends Controller
 
     public function search(SearchRequest $request)
     {
-        $owners = Owner::filter($request->validated())->with('pets.kind')->paginate(10)->withQueryString();
+        $validatedData = $request->validated();
+        $owners = Owner::filter($validatedData)->with('pets.kind')->paginate(10)->withQueryString();
 
-        return view('card.index', compact('owners'));
+        $filterCondition = [];
+        foreach(array_filter($validatedData) as $inputName => $inputCondition){
+          if(key_exists($inputName,self::FILTER_INPUT_TRANSLATIONS)) {
+              $filterCondition[self::FILTER_INPUT_TRANSLATIONS[$inputName]] = $inputCondition;
+          }
+        }
+
+        return view('card.index', compact('owners', 'filterCondition'));
     }
 
     public function store(CreateRequest $request)
