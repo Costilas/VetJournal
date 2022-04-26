@@ -5,8 +5,12 @@
     <main>
         <div class="container-xxl">
             <div class="min-vh-100 d-flex align-items-center justify-content-center">
-                @include('layouts.notify')
-                @yield('content')
+                <div class="row row-cols-1 justify-content-center">
+                    <div class="col-12">
+                        @include('layouts.notify')
+                        @yield('content')
+                    </div>
+                </div>
             </div>
         </div>
     </main>

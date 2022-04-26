@@ -1,6 +1,6 @@
 @if(\Illuminate\Support\Facades\Session::has('success')||$errors->any())
     <div class="row row-cols-1">
-        <div class="col col-xl-6 col-lg-6 col-md-8 col-sm-10 xs-w-9 m-auto">
+        <div class="col col-xl-10 col-lg-10 col-md-8 col-sm-10 xs-w-9 m-auto">
             @if(\Illuminate\Support\Facades\Session::has('success'))
                 <div class="alert alert-success text-center m-3 text-break">
                     {{\Illuminate\Support\Facades\Session::get('success')}}
