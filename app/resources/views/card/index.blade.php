@@ -3,8 +3,8 @@
 @section('title') VetJournal::Поиск карт @endsection
 
 @section('content')
-    <div class="padding_block">
-        <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse" role="button" aria-expanded="false"
+    <div class="padding_block text-center">
+        <a class="btn btn-success" data-bs-toggle="collapse" href="#collapse" role="button" aria-expanded="false"
            aria-controls="collapseExample">
             <i class="bi bi-file-earmark-plus"></i> Создать новую карту
         </a>
