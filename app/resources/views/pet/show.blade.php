@@ -54,8 +54,11 @@
                        aria-controls="searchVisit m-1">
                         <i class="bi bi-search"></i> Поиск приемов по дате
                     </a>
-                    <a class="btn btn-secondary xs-m-1" href="{{route('pet.show', ['pet'=>$pet])}}"><i
-                            class="bi bi-x-octagon"></i> Сброс фильтров поиска</a>
+                    @if(Route::currentRouteName() === 'pet.visit.search')
+                        <a class="btn btn-secondary xs-m-1" href="{{route('pet.show', ['pet'=>$pet])}}"><i
+                                class="bi bi-x-octagon"></i> Сброс фильтров поиска</a>
+                    @endif
+
                 </div>
                 <div class="collapse mb-1" id="searchVisit">
                     <div class="card card-body row row-cols-1">
