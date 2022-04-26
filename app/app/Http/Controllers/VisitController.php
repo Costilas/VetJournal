@@ -2,69 +2,48 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Visit\AddRequest;
+use App\Helpers\FilterConditionDescriber;
+use App\Http\Requests\Visit\CreateRequest;
 use App\Http\Requests\Visit\EditRequest;
+use App\Http\Requests\Visit\SearchRequest;
 use App\Models\Visit;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 class VisitController extends Controller
 {
-    public function index(Request $request)
+    public function index(FilterConditionDescriber $conditionDescriber)
     {
-        if($request->has('search'))
-        {
-            $validatedRequest = $request->validate([
-                "search" => [
-                    'required',
-                    'array',
-                    'min:2',
-                    'max:2',
-                ],
-                "search.from" => [
-                    'required',
-                    'before_or_equal:'. now()->format('Y-m-d'),
-                ],
-                "search.to" => [
-                    'required',
-                    'before_or_equal:'. now()->format('Y-m-d'),
-                ],
-            ],
-            [
-                'search.required' => 'Ошибка фильтрации. Обновите страницу и попробуйте снова.',
-                'search.min'=>'Некорректное количество данных для поиска приема по датам.',
-                'search.max'=>'Некорректное количество данных для поиска приема по датам.',
-
-                'search.from.required'=>'Поле "С:" должно быть заполнено.',
-                'search.from.before_or_equal'=>'Дата в поле "С:" имеет некорректное значение. Дата не может быть больше текущей.',
-
-                'search.to.required'=>'Поле "По:" должно быть заполнено.',
-                'search.to.before_or_equal'=>'Дата в поле "По:" имеет некорректное значение. Дата не может быть больше текущей.',
-            ]);
-
-
-        } else {
-            $validatedRequest = ['search'=> [
-                    'from'=>Carbon::create('today')->toDateString(),
-                    'to'=>Carbon::create('today')->toDateString()
-                ]
-            ];
-        }
-
-        $visits =  Visit::filter($validatedRequest)->with('pet', 'user')
+        $searchDateRange = ['search'=> [
+                'from'=>Carbon::create('today')->toDateString(),
+                'to'=>Carbon::create('today')->toDateString()
+            ]
+        ];
+        $filterCondition = $conditionDescriber->describeFilterCondition($searchDateRange);
+        $visits =  Visit::filter($searchDateRange)->with('pet', 'user')
             ->orderBy('id', 'DESC')
             ->paginate(10)
             ->withQueryString();
 
-        return view('visit.index', compact('visits', 'validatedRequest'));
+        return view('visit.index', compact('visits', 'filterCondition', 'searchDateRange'));
     }
 
-    public function create(AddRequest $request)
+    public function search(SearchRequest $request, FilterConditionDescriber $conditionDescriber)
+    {
+        $searchDateRange = $request->validated();
+        $filterCondition = $conditionDescriber->describeFilterCondition($searchDateRange);
+        $visits =  Visit::filter($searchDateRange)->with('pet', 'user')
+            ->orderBy('id', 'DESC')
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('visit.index', compact('visits', 'filterCondition', 'searchDateRange'));
+    }
+
+    public function create(CreateRequest $request)
     {
         $validatedRequest = $request->validated();
-
         try{
             $validatedRequest['visit']['weight'] = Visit::weightNormalize($validatedRequest['visit']['weight']);
             $validatedRequest['visit']['temperature'] = Visit::temperatureNormalize($validatedRequest['visit']['temperature']);
@@ -73,11 +52,11 @@ class VisitController extends Controller
         }catch (\Exception $e){
             Log::debug($e->getMessage());
             return redirect()
-                ->route('pet.show', ['id' => $validatedRequest['visit']['pet_id']])
+                ->route('pet.show', ['pet' => $validatedRequest['visit']['pet_id']])
                 ->withErrors('Ошибка при создании према. Перезагрузите страницу и попробуйте снова.');
         }
 
-        return redirect()->route('pet.show', ['id' => $validatedRequest['visit']['pet_id']]);
+        return redirect()->route('pet.show', ['pet' => $validatedRequest['visit']['pet_id']]);
     }
 
     public function edit($id)

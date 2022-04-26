@@ -8,14 +8,14 @@
                 <th scope="col">Врач:</th>
                 <th scope="col">Действие:</th>
             </tr>
-            @if(!empty($visits->items()))
+            @if($visits->count())
                 @foreach($visits as $visit)
                     {{view('visit.row', compact('visit'))}}
                 @endforeach
             @else
                 <tr class="text-center">
                     <td colspan="5">
-                        <p> Приемов нет.</p>
+                        <p> Приемы отсутствуют.</p>
                     </td>
                 </tr>
             @endif

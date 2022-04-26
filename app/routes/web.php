@@ -43,6 +43,7 @@ Route::group(['middleware' => 'auth'], function () {
     )->where('owner', '[0-9]+');
     //Visit
     Route::get('/visits', [App\Http\Controllers\VisitController::class, 'index'])->name('visits');
+    Route::get('/visits/search', [App\Http\Controllers\VisitController::class, 'search'])->name('visits.search');
     Route::post('/visit/create', [App\Http\Controllers\VisitController::class, 'create'])->name('visit.create');
     Route::get('/visit/{id}/edit', [App\Http\Controllers\VisitController::class, 'edit'])->name('visit.edit')->where(
         'id',
