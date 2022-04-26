@@ -7,7 +7,6 @@ use App\Http\Requests\Pet\AddRequest;
 use App\Http\Requests\Pet\EditRequest;
 use App\Http\Requests\Pet\SearchRequest;
 use App\Models\Pet;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
@@ -43,7 +42,6 @@ class PetController extends Controller
         return view('pet.show', compact('pet','visits', 'owner', 'filterCondition'));
     }
 
-
     public function add(AddRequest $request)
     {
         $validatedRequest = $request->validated();
@@ -52,16 +50,16 @@ class PetController extends Controller
             Session::flash('success', "Питомец $newPet->name успешно добавлен.");
         }catch (\Exception $e) {
             Log::debug($e->getMessage());
-            return redirect()->route('owner.show', ['id' => $validatedRequest['pet']['owner_id']])
+            return redirect()->route('owner.show', ['owner' => $validatedRequest['pet']['owner_id']])
                 ->withErrors('Питомец не был добавлен. Проверьте введенные данные.');
         }
 
-        return redirect()->route('owner.show', ['id' => $validatedRequest['pet']['owner_id']]);
+        return redirect()->route('owner.show', ['owner' => $validatedRequest['pet']['owner_id']]);
     }
 
     public function edit(Pet $pet)
     {
-        $pet->load('kind', 'gender');
+        $pet->load('kind', 'gender', 'owner');
 
         return view('pet.edit', compact('pet'));
     }
@@ -81,6 +79,5 @@ class PetController extends Controller
         }
 
         return redirect()->route('pet.edit', ['pet' => $pet]);
-
     }
 }

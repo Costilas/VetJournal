@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="row row-cols-1">
-        <div class="col-10 card mb-3 mt-3 p-3 m-auto text-center">
+        <div class="col-8 card mb-3 mt-3 p-3 m-auto text-center">
             <h2><strong>{{$owner->last_name}} {{$owner->name}} {{$owner->patronymic}}</strong></h2>
                 <p>Телефон: <strong>{{$owner->phone}}</strong></p>
                 <p>Дата регистрации: {{$owner->registerDate()}}</p>
@@ -41,7 +41,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col col-lg-9 m-auto">
+        <div class="col col-lg-8 m-auto">
             @include('owner.pet.list')
         </div>
     </div>

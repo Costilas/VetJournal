@@ -1,4 +1,4 @@
-<form action="{{route('pet.add')}}" method="POST">
+<form action="{{route('pet.add', ['owner'=>$owner])}}" method="POST">
     @csrf
     <div class="row row-cols-1">
         <div class="col-12">
@@ -22,8 +22,8 @@
         </div>
 
         <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 col-xs-10 mb-lg-3 mb-md-4 mb-sm-5  xs-w-9 xs-mb-3">
-            <label for="pet[kind_id]">Вид питомца:</label>
-            <select name="pet[kind_id]" class="form-control @error('pet.kind_id') is-invalid @enderror">
+            <label for="kind">Вид питомца:</label>
+            <select name="pet[kind_id]" id="kind" class="form-control @error('pet.kind_id') is-invalid @enderror">
                 @foreach($kinds as $kind)
                     <option @if($kind->id == session()->getOldInput('pet.kind_id')) selected
                             @endif value="{{$kind->id}}">{{$kind->kind}}</option>
@@ -31,12 +31,14 @@
             </select>
         </div>
         <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 col-xs-10 mb-lg-3 mb-md-4 mb-sm-5  xs-w-9 xs-mb-3">
-            <label for="pet[gender_id]">Пол питомца:</label>
+            <label for="gender">Пол питомца:</label>
             @foreach($genders as $gender)
-                <br><input type="radio" name="pet[gender_id]"
+                <br><input type="radio"
+                           name="pet[gender_id]"
+                           id="gender"
                            @if($gender->id == session()->getOldInput('pet.gender_id')) checked
-                           @endif value="{{$gender->id}}"> <i
-                    class="bi bi-gender-{{$gender->icon}} @error('pet.gender_id') is-invalid @enderror"></i>  {{$gender->gender}}
+                           @endif value="{{$gender->id}}">
+                <i class="bi bi-gender-{{$gender->icon}} @error('pet.gender_id') is-invalid @enderror"></i> {{$gender->gender}}
             @endforeach
         </div>
     </div>

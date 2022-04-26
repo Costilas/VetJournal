@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Note\AddRequest;
+use App\Http\Requests\Note\CreateRequest;
 use App\Models\Note;
 use App\Models\Status;
 use Illuminate\Support\Facades\Log;
@@ -12,13 +12,15 @@ class NoteController extends Controller
 {
     public function index()
     {
-        $notes = Note::with('status')->orderBy('created_at', 'DESC')->paginate(10);
+        $notes = Note::with('status')
+            ->latest()
+            ->paginate(10);
         $statuses = Status::all();
 
         return view('notes.index', compact('notes', 'statuses'));
     }
 
-    public function create(AddRequest $request)
+    public function create(CreateRequest $request)
     {
         $validatedRequestData = $request->validated();
         try {
@@ -27,10 +29,11 @@ class NoteController extends Controller
                 :throw new \Exception();
         } catch (\Exception $e){
             Log::debug($e->getMessage());
-            return redirect()->route('notes')->withErrors('Добавление карточки не выполнено. Перезагрузите страницу и попробуйте снова');
+            return redirect()->route('notes')
+                ->withErrors('Добавление карточки не выполнено. Перезагрузите страницу и попробуйте снова');
         }
 
-        return redirect(route('notes'));
+        return redirect()->route('notes');
     }
 
     public function delete($id)
@@ -42,7 +45,8 @@ class NoteController extends Controller
                 : throw new \Exception('При удалении заметки произошла ошибка. Попробуйте перезагрузить страницу и выполнить действие снова.');
         }catch (\Exception $e){
             Log::debug($e->getMessage());
-            return redirect()->route('notes')->withErrors($e->getMessage());
+            return redirect()->route('notes')
+                ->withErrors($e->getMessage());
         }
 
         return redirect()->route('notes');

@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Session;
 
 class CardController extends Controller
 {
-
     public function index()
     {
         return view('card.index');
@@ -35,9 +34,10 @@ class CardController extends Controller
             Session::flash('success', "Новая карточка успешно создана!");
         } catch (\Exception $e) {
             Log::debug($e->getMessage());
-            return redirect()->route('cards')->withErrors('При создании карточки что-то пошло не так. Перезагрузите страницу и попробуйте снова.');
+            return redirect()->route('cards')
+                ->withErrors('При создании карточки что-то пошло не так. Перезагрузите страницу и попробуйте снова.');
         }
 
-        return redirect()->route('owner.show', ['id' => $newOwner->id]);
+        return redirect()->route('owner.show', ['owner' => $newOwner]);
     }
 }

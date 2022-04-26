@@ -33,7 +33,7 @@
                     <p class="card-text"> Адрес: <strong>{{$owner->address}}</strong></p>
                     <p class="card-text"> Телефон: <strong>{{$owner->phone}}</strong></p>
                     <div class="text-center xs-mt-3">
-                        <a href="{{route('owner.show', ['id'=>$owner->id])}}" class="btn btn-primary"><i
+                        <a href="{{route('owner.show', ['owner'=>$owner])}}" class="btn btn-primary"><i
                                 class="bi bi-file-earmark-person"></i> Профиль владельца</a>
                     </div>
                 </div>
@@ -81,10 +81,6 @@
             @endif
 
         </p>
-        @if($visits->count())
-
-        @endif
-
         @include('pet.visit.list')
     </div>
 @endsection

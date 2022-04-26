@@ -10,7 +10,7 @@
         @endforeach
     </td>
     <td>
-        <a class="btn btn-primary" href="{{route('owner.show', ['id'=>$owner->id])}}" target="_blank"><i
+        <a class="btn btn-primary" href="{{route('owner.show', ['owner'=>$owner])}}" target="_blank"><i
                 class="bi bi-info-circle"></i> Подробнее</a>
     </td>
 </tr>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\LoginAccessConfig;
 use App\Http\Requests\Login\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -9,19 +10,14 @@ use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
-    private const ACCESS = [
-        'is_active' => 1,
-    ];
-
     public function login()
     {
         return view('login.index');
     }
 
-    public function auth(LoginRequest $request)
+    public function auth(LoginRequest $request, LoginAccessConfig $accessConfig)
     {
-        $userCredentials = array_merge($request->validated(), self::ACCESS);
-
+        $userCredentials = array_merge($request->validated(), $accessConfig->getConfig());
         return Auth::attempt($userCredentials)
             ? redirect()->intended(route('notes'))
                 ->with('success', "Добро пожаловать, " . Auth::user()->name . ". Вход успешно выполнен!")

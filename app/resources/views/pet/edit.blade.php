@@ -51,7 +51,7 @@
                     </button>
                     <div class="m-3">
                         <a class="btn btn-info xs-m-3" href="{{route('pet.show', ['pet'=>$pet])}}">К питомцу</a>
-                        <a class="btn btn-warning xs-m-3" href="{{route('owner.show', ['id'=>$pet->owner_id])}}">К
+                        <a class="btn btn-warning xs-m-3" href="{{route('owner.show', ['owner'=>$pet->owner])}}">К
                             владельцу</a>
                     </div>
                 </form>

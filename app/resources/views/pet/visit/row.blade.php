@@ -5,7 +5,7 @@
     <td>{{$visit->pre_diagnosis}}</td>
     <td>{{$visit->user->doctorName()}}</td>
     <td>
-        <a class="btn btn-primary" data-bs-toggle="collapse" href="#oldVisit{{$visit->id}}"
+        <a class="btn btn-primary mb-xxl-0 mb-md-3 xs-mb-3" data-bs-toggle="collapse" href="#oldVisit{{$visit->id}}"
            role="button"
            aria-expanded="false" aria-controls="oldVisit{{$visit->id}}"><i class="bi bi-info-circle"></i>
             Подробнее

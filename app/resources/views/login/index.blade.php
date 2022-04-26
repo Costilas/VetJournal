@@ -14,7 +14,6 @@
                         <h2>Добро пожаловать в VetJournal!</h2>
                     </div>
                 </div>
-
             </div>
             <form method="POST" action="{{route('auth')}}">
                 @csrf
@@ -24,7 +23,7 @@
                         <input type="text"
                                name="email"
                                maxlength="70"
-                               class="form-control @error('user.email') is-invalid @enderror"
+                               class="form-control @error('email') is-invalid @enderror"
                                id="login" aria-describedby="email"
                                value="{{session()->getOldInput('email')??old('email')}}">
                     </div>
@@ -34,7 +33,7 @@
                         <label for="inputPassword" class="form-label">Пароль:</label>
                         <input type="password"
                                name="password"
-                               class="form-control @error('user.password') is-invalid @enderror"
+                               class="form-control @error('password') is-invalid @enderror"
                                id="inputPassword">
                     </div>
                 </div>
