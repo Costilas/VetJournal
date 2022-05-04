@@ -11,7 +11,7 @@ class OwnerController extends Controller
 {
     public function show(Owner $owner)
     {
-        $pets = $owner->pets()->with('kind', 'gender')->paginate(5);
+        $pets = $owner->pets()->with('kind', 'gender', 'castration')->paginate(5);
 
         return view('owner.show', compact('owner', 'pets'));
     }

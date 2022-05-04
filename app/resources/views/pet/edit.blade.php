@@ -44,7 +44,18 @@
                                     class="bi bi-gender-{{$gender->icon}} @error('pet.gender_id') is-invalid @enderror"></i>  {{$gender->gender}}
                             @endforeach
                         </div>
-
+                        <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
+                            <label for="pet[gender_id]">Кастрация:</label>
+                            @foreach($castrationConditions as $condition)
+                                <br><input type="radio"
+                                           class="form-check-input @error('pet.gender_id') is-invalid @enderror"
+                                           name="pet[castration_condition_id]"
+                                           @if($condition->id == $pet->castration_condition_id) checked @endif
+                                           value="{{$condition->id}}"
+                                           required>
+                                {!!$condition->icon!!} {{$condition->condition}}
+                            @endforeach
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary xs-m-3"><i class="bi bi-plus-lg"></i> Сохранить
                         изменения

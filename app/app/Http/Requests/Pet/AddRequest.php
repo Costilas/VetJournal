@@ -27,8 +27,8 @@ class AddRequest extends FormRequest
             "pet" => [
                'required',
                'array',
-               'min:5',
-               'max:5'
+               'min:6',
+               'max:6'
             ],
             "pet.pet_name" => [
                'required',
@@ -45,14 +45,20 @@ class AddRequest extends FormRequest
                'digits:1',
                'exists:kinds,id',
             ],
-            "pet.birth" => [
-               'required',
-                'before_or_equal:'. now()->format('Y-m-d'),
+            "pet.castration_condition_id" => [
+                'required',
+                'digits:1',
+                'exists:castration_conditions,id'
             ],
             "pet.owner_id" => [
                 'required',
-                'numeric'
-            ]
+                'numeric',
+                'exists:owners,id'
+            ],
+            "pet.birth" => [
+                'required',
+                'before_or_equal:'. now()->format('Y-m-d'),
+            ],
         ];
     }
 
@@ -80,12 +86,16 @@ class AddRequest extends FormRequest
             'pet.gender_id.digit'=>'Неверные данные в поле "Пол питомца".',
             'pet.gender_id.exists'=>'Несуществующий id в поле "Пол питомца".',
 
+            'pet.castration_condition_id.required'=>'Необходимо заполнить поле "Кастрация питомца".',
+            'pet.castration_condition_id.digit'=>'Неверные данные в поле "Кастрация питомца".',
+            'pet.castration_condition_id.exists'=>'Несуществующий id в поле "Кастрация питомца".',
 
             'pet.birth.required'=>'Необходимо заполнить поле "Дата рождения питомца".',
             'pet.birth.before_or_equal'=>'Неверный формат поля "Дата рождения питомца". Дата не может быть больше чем текущая.',
 
             'pet.owner_id.required' => 'Ошибка запроса. Обновите странице и попробуйте снова.',
-            'pet.owner_id.numeric' => 'Ошибка запроса. Обновите странице и попробуйте снова.'
+            'pet.owner_id.numeric' => 'Ошибка запроса. Обновите странице и попробуйте снова.',
+            'pet.owner_id.exists'=> 'Ошибка запроса. Обновите странице и попробуйте снова.',
         ];
     }
 }

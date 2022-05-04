@@ -32,7 +32,7 @@ Route::group(['middleware' => 'auth'], function () {
         'pet',
         '[0-9]+'
     );
-    Route::get('/{pet}/visit/search', [App\Http\Controllers\PetController::class, 'search'])->name('pet.visit.search');
+    Route::get('/{pet}/visit/search', [App\Http\Controllers\PetController::class, 'searchVisits'])->name('pet.visit.search');
     //Owner
     Route::get('/owner/{owner}/show', [App\Http\Controllers\OwnerController::class, 'show'])->name('owner.show')->where(
         'owner',

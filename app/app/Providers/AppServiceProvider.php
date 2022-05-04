@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\CastrationCondition;
 use App\Models\Gender;
 use App\Models\Kind;
 use App\Models\User;
@@ -36,6 +37,7 @@ class AppServiceProvider extends ServiceProvider
         view()->composer(['card.forms.create', 'owner.pet.forms.add', 'pet.edit'], function ($view) {
             $view->with('genders', Gender::all());
             $view->with('kinds', Kind::all());
+            $view->with('castrationConditions', CastrationCondition::all());
         });
 
         view()->composer(['pet.visit.forms.add', 'visit.edit'], function ($view) {

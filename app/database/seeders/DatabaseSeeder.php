@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             KindSeeder::class,
             GenderSeeder::class,
             StatusSeeder::class,
+            CastrationConditionSeeder::class,
         ]);
     }
 }

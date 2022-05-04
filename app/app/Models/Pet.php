@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Pet extends Model
 {
 
-    protected $fillable = ['pet_name', 'owner_id', 'kind_id', 'gender_id', 'birth'];
+    protected $fillable = ['pet_name', 'owner_id', 'kind_id', 'gender_id', 'birth', 'castration_condition_id'];
 
     use Filterable;
     use HasFactory;
@@ -28,6 +28,11 @@ class Pet extends Model
     public function gender()
     {
         return $this->belongsTo(Gender::class);
+    }
+
+    public function castration()
+    {
+        return $this->belongsTo(CastrationCondition::class, 'castration_condition_id');
     }
 
     public function visits()

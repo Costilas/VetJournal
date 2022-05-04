@@ -8,8 +8,9 @@
         </div>
         <div class="row row-cols-auto mb-3 mt-3 justify-content-center">
             <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
-                <label for="owner[last_name]">Фамилия владельца:</label>
+                <label for="last_name">Фамилия владельца:</label>
                 <input type="text"
+                       id="last_name"
                        class="form-control @error('owner.last_name') is-invalid @enderror"
                        name="owner[last_name]"
                        placeholder="Петров"
@@ -19,8 +20,9 @@
                        value="{{session()->getOldInput('owner.last_name')}}">
             </div>
             <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
-                <label for="owner[name]">Имя владельца:</label>
+                <label for="name">Имя владельца:</label>
                 <input type="text"
+                       id="name"
                        class="form-control @error('owner.name') is-invalid @enderror"
                        name="owner[name]"
                        placeholder="Иван"
@@ -30,8 +32,9 @@
                        value="{{session()->getOldInput('owner.name')}}">
             </div>
             <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
-                <label for="owner[patronymic]">Отчество владельца:</label>
+                <label for="patronymic">Отчество владельца:</label>
                 <input type="text"
+                       id="patronymic"
                        class="form-control @error('owner.patronymic') is-invalid @enderror"
                        name="owner[patronymic]"
                        placeholder="Иванович"
@@ -41,8 +44,9 @@
                        value="{{session()->getOldInput('owner.patronymic')}}">
             </div>
             <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
-                <label for="owner[phone]">Телефон:</label>
+                <label for="phone">Телефон:</label>
                 <input type="text" class="form-control @error('owner.phone') is-invalid @enderror"
+                       id="phone"
                        name="owner[phone]"
                        placeholder="Телефон"
                        aria-label="owner[phone]"
@@ -50,8 +54,9 @@
                        value="{{session()->getOldInput('owner.phone')}}">
             </div>
             <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
-                <label for="owner[address]">Адрес владельца(в произвольной форме):</label>
+                <label for="address">Адрес владельца(в произвольной форме):</label>
                 <input type="text"
+                       id="address"
                        class="form-control @error('owner.address') is-invalid @enderror"
                        name="owner[address]"
                        placeholder="г.Новомосковск..."
@@ -68,8 +73,9 @@
         </div>
         <div class="row row-cols-1 mb-3 mt-3 justify-content-center">
             <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
-                <label for="last_name">Кличка питомца:</label>
+                <label for="pet_name">Кличка питомца:</label>
                 <input type="text"
+                       id="pet_name"
                        class="form-control @error('pet.pet_name') is-invalid @enderror"
                        name="pet[pet_name]"
                        placeholder="Боня"
@@ -81,6 +87,7 @@
             <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
                 <label for="birth">Дата рождения питомца:</label>
                 <input type="date"
+                       id="birth"
                        class="form-control form @error('pet.birth') is-invalid @enderror"
                        name="pet[birth]"
                        aria-label="birth"
@@ -90,7 +97,8 @@
             </div>
             <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
                 <label for="pet[kind_id]">Вид питомца:</label>
-                <select name="pet[kind_id]"
+                <select id=""
+                        name="pet[kind_id]"
                         class="form-select @error('pet.kind_id') is-invalid @enderror"
                         required>
                     @foreach($kinds as $kind)
@@ -111,6 +119,18 @@
                                value="{{$gender->id}}"
                                required>
                     <i class="bi bi-gender-{{$gender->icon}}"></i>  {{$gender->gender}}
+                @endforeach
+            </div>
+            <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
+                <label for="pet[gender_id]">Кастрация:</label>
+                @foreach($castrationConditions as $condition)
+                    <br><input type="radio"
+                               class="form-check-input @error('pet.gender_id') is-invalid @enderror"
+                               name="pet[castration_condition_id]"
+                               {{$condition->id == session()->getOldInput('pet.castration_condition_id')?'checked':''}}
+                               value="{{$condition->id}}"
+                               required>
+                    {!!$condition->icon!!} {{$condition->condition}}
                 @endforeach
             </div>
         </div>

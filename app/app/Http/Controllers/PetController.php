@@ -14,18 +14,17 @@ class PetController extends Controller
 {
     public function show(Pet $pet)
     {
-        $pet->load('gender', 'kind', 'owner');
+        $pet->load('gender', 'kind', 'owner', 'castration');
         $owner = $pet->owner;
         $visits = $pet->visits()
             ->with('user')
             ->latest('visit_date')
             ->paginate(5)
             ->withQueryString();
-
         return view('pet.show', compact('pet', 'visits', 'owner'));
     }
 
-    public function search(SearchRequest $request, Pet $pet, FilterConditionDescriber $filterDescriber)
+    public function searchVisits(SearchRequest $request, Pet $pet, FilterConditionDescriber $filterDescriber)
     {
         $validatedData = $request->validated();
         $filterCondition = $filterDescriber->describeFilterCondition($validatedData);

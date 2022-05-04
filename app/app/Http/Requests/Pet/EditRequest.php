@@ -27,8 +27,8 @@ class EditRequest extends FormRequest
             "pet" => [
                 'required',
                 'array',
-                'min:4',
-                'max:4',
+                'min:5',
+                'max:5',
             ],
             "pet.pet_name" => [
                 'required',
@@ -44,6 +44,11 @@ class EditRequest extends FormRequest
                 'required',
                 'digits:1',
                 'exists:genders,id'
+            ],
+            "pet.castration_condition_id" => [
+                'required',
+                'digits:1',
+                'exists:castration_conditions,id'
             ],
             "pet.birth" => [
                 'required',
@@ -75,6 +80,10 @@ class EditRequest extends FormRequest
             'pet.gender_id.required'=>'Необходимо заполнить поле "Пол питомца".',
             'pet.gender_id.digit'=>'Неверные данные в поле "Пол питомца".',
             'pet.gender_id.exists'=>'Несуществующий id в поле "Пол питомца".',
+
+            'pet.castration_condition_id.required'=>'Необходимо заполнить поле "Кастрация питомца".',
+            'pet.castration_condition_id.digit'=>'Неверные данные в поле "Кастрация питомца".',
+            'pet.castration_condition_id.exists'=>'Несуществующий id в поле "Кастрация питомца".',
 
             'pet.birth.required'=>'Необходимо заполнить поле "Дата рождения питомца".',
             'pet.birth.before_or_equal'=>'Неверный формат поля "Дата рождения питомца". Дата не может быть больше чем текущая.',

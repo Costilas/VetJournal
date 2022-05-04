@@ -17,6 +17,7 @@
                     <p class="card-text">Пол: <strong>{{$pet->gender->gender}}</strong></p>
                     <p class="card-text">Дата рождения: <strong>{{$pet->birthDate('d-m-Y')}}</strong></p>
                     <p class="card-text">Возраст: <em>{{$pet->countYears()}}</em></p>
+                    <p class="card-text">Кастрация: <em>{{$pet->castration->condition}}</em> {!! $pet->castration->icon !!}</p>
                     <p class="card-text"></p>
                     <div class="text-center xs-mt-3">
                         <a href="{{route('pet.edit', ['pet'=>$pet])}}" class="btn btn-primary"><i

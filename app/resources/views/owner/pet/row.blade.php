@@ -2,6 +2,7 @@
     <td><strong>{{$pet->pet_name}}</strong></td>
     <td>{{$pet->kind->kind}}</td>
     <td>{{$pet->gender->gender}}</td>
+    <td>{{$pet->castration->condition}}</td>
     <td>{{$pet->birthDate('d-m-Y')}} ({{$pet->countYears()}})</td>
     <td>
         <a class="btn btn-primary xs-mb-3" href="{{route('pet.show', ['pet'=>$pet])}}"><i class="fa-solid fa-paw"></i> К

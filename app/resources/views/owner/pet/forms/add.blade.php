@@ -5,7 +5,7 @@
             <h4 class="text-center"><i class="fa-solid fa-paw"></i> Добавить нового питомца:</h4>
         </div>
     </div>
-    <div class="row row-cols-auto mt-3 justify-content-center">
+    <div class="row row-cols-auto mt-3 justify-content-center text-center">
         <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 col-xs-10 mb-lg-3 mb-md-4 mb-sm-5  xs-w-9 xs-mb-3">
             <label for="last_name">Кличка питомца:</label>
             <input type="text" class="form-control @error('pet.pet_name') is-invalid @enderror"
@@ -39,6 +39,18 @@
                            @if($gender->id == session()->getOldInput('pet.gender_id')) checked
                            @endif value="{{$gender->id}}">
                 <i class="bi bi-gender-{{$gender->icon}} @error('pet.gender_id') is-invalid @enderror"></i> {{$gender->gender}}
+            @endforeach
+        </div>
+        <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
+            <label for="pet[gender_id]">Кастрация:</label>
+            @foreach($castrationConditions as $condition)
+                <br><input type="radio"
+                           class="form-check-input @error('pet.gender_id') is-invalid @enderror"
+                           name="pet[castration_condition_id]"
+                           {{$condition->id == session()->getOldInput('pet.castration_condition_id')?'checked':''}}
+                           value="{{$condition->id}}"
+                           required>
+                {!!$condition->icon!!} {{$condition->condition}}
             @endforeach
         </div>
     </div>

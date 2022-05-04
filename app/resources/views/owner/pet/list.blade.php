@@ -4,6 +4,7 @@
             <th scope="col">Кличка:</th>
             <th scope="col">Вид:</th>
             <th scope="col">Пол:</th>
+            <th scope="col">Кастрация:</th>
             <th scope="col">Дата рождения(день/месяц/год):</th>
             <th scope="col">Действие:</th>
         </tr>
