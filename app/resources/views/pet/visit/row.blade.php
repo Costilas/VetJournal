@@ -16,11 +16,11 @@
     </td>
 </tr>
 <tr class="collapse bg-light" id="oldVisit{{$visit->id}}">
-    <td style="width: 50%!important; overflow-wrap: break-word!important;" class="m-0 border-1" colspan="4">
+    <td class="m-0 border-1 visit_table_child" colspan="4">
         <p><strong>Информация о приеме</strong></p>
         {{$visit->visit_info}}
     </td>
-    <td style="width: 50%!important; overflow-wrap: break-word!important;" class="m-0 border-1" colspan="2">
+    <td class="m-0 border-1 visit_table_child" colspan="2">
         <p><strong>Проведенное лечение:</strong></p>
         {{$visit->treatment}}
     </td>
