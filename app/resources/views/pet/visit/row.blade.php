@@ -15,13 +15,13 @@
         </a>
     </td>
 </tr>
-<tr class="collapse" id="oldVisit{{$visit->id}}">
-    <td class="m-0 border-1" colspan="3">
+<tr class="collapse bg-light" id="oldVisit{{$visit->id}}">
+    <td style="width: 50%!important; overflow-wrap: break-word!important;" class="m-0 border-1" colspan="4">
         <p><strong>Информация о приеме</strong></p>
-        <p>{{$visit->visit_info}}</p>
+        {{$visit->visit_info}}
     </td>
-    <td class="m-0 border-1" colspan="3">
+    <td style="width: 50%!important; overflow-wrap: break-word!important;" class="m-0 border-1" colspan="2">
         <p><strong>Проведенное лечение:</strong></p>
-        <p>{{$visit->treatment}}</p>
+        {{$visit->treatment}}
     </td>
 </tr>

@@ -1,6 +1,6 @@
 <div class="pet_visits_block p-3 text-center">
     <div class="table-responsive col-lg-12 m-auto">
-        <table class="table table-striped table-hover align-middle text-center">
+        <table style="table-layout: fixed; width:100%" class="table table-striped table-hover align-middle text-center">
             <tr>
                 <th>Дата приема:</th>
                 <th>Вес(кг.):</th>
