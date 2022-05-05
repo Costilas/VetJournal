@@ -16,8 +16,12 @@
     </td>
 </tr>
 <tr class="collapse" id="oldVisit{{$visit->id}}">
-    <td class="m-0" colspan="6">
+    <td class="m-0 border-1" colspan="3">
         <p><strong>Информация о приеме</strong></p>
         <p>{{$visit->visit_info}}</p>
+    </td>
+    <td class="m-0 border-1" colspan="3">
+        <p><strong>Проведенное лечение:</strong></p>
+        <p>{{$visit->treatment}}</p>
     </td>
 </tr>

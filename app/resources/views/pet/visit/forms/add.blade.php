@@ -46,13 +46,20 @@
 
             </div>
 
-            <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
+            <div class="col col-xl-8 col-lg-8 col-md-8 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
                 <label for="visit_info">Информация о приеме:</label>
                 <textarea class="form-control @error('visit.visit_info') is-invalid @enderror"
                           id="visit_info"
                           name="visit[visit_info]"
                           required
                           style="height: 150px;">{{session()->getOldInput('visit.visit_info')}}</textarea>
+            </div>
+            <div class="col col-xl-4 col-lg-4 col-md-4 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
+                <label for="treatment">Проведенное лечение:</label>
+                <textarea class="form-control @error('visit.treatment') is-invalid @enderror"
+                          id="treatment"
+                          name="visit[treatment]"
+                          style=" height: 150px;">{{session()->getOldInput('visit.treatment')}}</textarea>
             </div>
 
             <input type="hidden" name="visit[pet_id]" value="{{$pet->id}}">

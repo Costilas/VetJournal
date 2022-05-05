@@ -27,8 +27,8 @@ class EditRequest extends FormRequest
             "visit" => [
                 'required',
                 'array',
-                'min:5',
-                'max:5'
+                'min:6',
+                'max:6'
             ],
             "visit.weight" => [
                 'required',
@@ -49,6 +49,11 @@ class EditRequest extends FormRequest
                 'required',
                 'string',
                 'max:1000'
+            ],
+            "visit.treatment" => [
+                'required',
+                'string',
+                'max:500'
             ],
             "visit.user_id" => [
                 'required',
@@ -88,6 +93,10 @@ class EditRequest extends FormRequest
             'visit.visit_info.required'=>'Необходимо заполнить поле "Информация приема".',
             'visit.visit_info.string'=>'Неверный формат поля "Информация приема".',
             'visit.visit_info.max'=>'Превышен лимит символов в поле "Информация приема"(1000).',
+
+            'visit.treatment.required'=>'Необходимо заполнить поле "Информация приема".',
+            'visit.treatment.string'=>'Неверный формат поля "Информация приема".',
+            'visit.treatment.max'=>'Превышен лимит символов в поле "Информация приема"(500).',
 
             'visit.user_id.required' => 'Поле "Кем был проведен прием" является обязательным к заполнению.',
             'visit.user_id.numeric' => 'Поле "Кем был проведен прием" должно содержать только числовое значение.',

@@ -27,8 +27,8 @@ class CreateRequest extends FormRequest
             "visit" => [
                 'required',
                 'array',
-                'min:7',
-                'max:7'
+                'min:8',
+                'max:8'
             ],
             "visit.weight" => [
                 'required',
@@ -51,6 +51,11 @@ class CreateRequest extends FormRequest
                 'required',
                 'string',
                 'max:1000'
+            ],
+            "visit.treatment" => [
+                'required',
+                'string',
+                'max:500'
             ],
             "visit.visit_date" => [
                 'required',
@@ -97,6 +102,10 @@ class CreateRequest extends FormRequest
             'visit.visit_info.required'=>'Необходимо заполнить поле "Информация приема".',
             'visit.visit_info.string'=>'Неверный формат поля "Информация приема".',
             'visit.visit_info.max'=>'Превышен лимит символов в поле "Информация приема"(1000).',
+
+            'visit.treatment.required'=>'Необходимо заполнить поле "Информация приема".',
+            'visit.treatment.string'=>'Неверный формат поля "Информация приема".',
+            'visit.treatment.max'=>'Превышен лимит символов в поле "Информация приема"(500).',
 
             'visit.visit_date.required' => 'Информация о дате приема заполняется автоматически, но что-то пошло не так.',
             'visit.visit_date.before_or_equal' => 'Неверный формат даты приема.',

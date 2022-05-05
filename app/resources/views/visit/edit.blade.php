@@ -14,6 +14,7 @@
                             <label for="weight">Вес(кг.):</label>
                             <input class="form-control @error('visit.weight') is-invalid @enderror"
                                    id="weight"
+                                   required
                                    type="text"
                                    name="visit[weight]"
                                    value="{{session()->getOldInput('visit.weight')??$visit->weightFormat()}}">
@@ -22,6 +23,7 @@
                             <label for="temperature">Температура:</label>
                             <input class="form-control @error('visit.temperature') is-invalid @enderror"
                                    id="temperature"
+                                   required
                                    type="text"
                                    name="visit[temperature]"
                                    value="{{session()->getOldInput('visit.temperature')??$visit->temperatureFormat()}}">
@@ -31,6 +33,7 @@
                                 <label for="pre_diagnosis">Предварительный диагноз:</label>
                                 <input class="form-control @error('visit.pre_diagnosis') is-invalid @enderror"
                                        id="pre_diagnosis"
+                                       required
                                        type="text"
                                        name="visit[pre_diagnosis]"
                                        value="{{session()->getOldInput('visit.pre_diagnosis')??$visit->pre_diagnosis}}">
@@ -40,6 +43,7 @@
                             <label for="doctor">Кем проведен прием:</label>
                             <select class="form-select select-css @error('visit.user_id') is-invalid @enderror"
                                     id="doctor"
+                                    required
                                     name="visit[user_id]">
                                 @foreach($doctors as $doctor)
                                     <option value="{{$doctor->id}}"
@@ -47,12 +51,21 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
+                        <div class="col col-xl-8 col-lg-8 col-md-8 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
                             <label for="visit_info">Информация о приеме:</label>
                             <textarea class="form-control @error('visit.visit_info') is-invalid @enderror"
                                       id="visit_info"
                                       name="visit[visit_info]"
+                                      required
                                       style=" height: 250px;">{{session()->getOldInput('visit.visit_info')??$visit->visit_info}}</textarea>
+                        </div>
+                        <div class="col col-xl-4 col-lg-4 col-md-4 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
+                            <label for="treatment">Информация о приеме:</label>
+                            <textarea class="form-control @error('visit.treatment') is-invalid @enderror"
+                                      id="treatment"
+                                      name="visit[treatment]"
+                                      required
+                                      style=" height: 250px;">{{session()->getOldInput('visit.treatment')??$visit->treatment}}</textarea>
                         </div>
                     </div>
 

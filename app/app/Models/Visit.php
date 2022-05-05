@@ -13,7 +13,7 @@ class Visit extends Model
     use HasFactory;
     use Filterable;
 
-    protected $fillable = ['pet_id', 'visit_date', 'weight', 'temperature', 'pre_diagnosis', 'visit_info', 'user_id'];
+    protected $fillable = ['pet_id', 'visit_date', 'weight', 'temperature', 'pre_diagnosis', 'visit_info', 'treatment', 'user_id'];
 
     public function pet()
     {
