@@ -8,8 +8,10 @@ class GetNoteListAction
 {
     public function __invoke()
     {
-       return Note::with('status')
-            ->latest()
-            ->paginate(10);
+       return view('notes.index', [
+           'notes' => Note::with('status')
+               ->latest()
+               ->paginate(10)
+       ]);
     }
 }

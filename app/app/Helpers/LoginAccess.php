@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 use Symfony\Component\Yaml\Yaml;
 
-class LoginAccessConfig
+class LoginAccess
 {
     private array $config;
 
@@ -13,14 +13,14 @@ class LoginAccessConfig
         $this->setConfig();
     }
 
-    private function setConfig()
+    private function setConfig():void
     {
         $this->config = $this->yaml->parse(file_get_contents('config/access.yaml'));
     }
 
-    public function getConfig():array
-    {
-        return $this->config;
-    }
+   public function formUserCredentials(array $validatedData):array
+   {
+       return array_merge($validatedData, $this->config);
+   }
 
 }

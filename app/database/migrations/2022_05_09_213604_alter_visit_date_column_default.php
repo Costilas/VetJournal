@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('visits', function (Blueprint $table) {
-            //
+            $table->timestamp('visit_date')->change();
         });
     }
 };
