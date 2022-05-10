@@ -2,31 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Note\CreateNoteAction;
+use App\Actions\Note\DeleteNoteAction;
+use App\Actions\Note\GetNoteListAction;
 use App\Http\Requests\Note\CreateRequest;
-use App\Models\Note;
-use App\Models\Status;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Session;
 
 class NoteController extends Controller
 {
-    public function index()
+    public function index(GetNoteListAction $getNoteListAction)
     {
-        $notes = Note::with('status')
-            ->latest()
-            ->paginate(10);
-        $statuses = Status::all();
-
-        return view('notes.index', compact('notes', 'statuses'));
+        return view('notes.index', [
+            'notes' => $getNoteListAction()
+        ]);
     }
 
-    public function create(CreateRequest $request)
+    public function create(CreateRequest $request, CreateNoteAction $createNoteAction)
     {
-        $validatedRequestData = $request->validated();
+        $validatedData = $request->validated();
         try {
-            Note::create($validatedRequestData)
-                ?Session::flash('success', "Заметка успешно добавлена!")
-                :throw new \Exception();
+            $createNoteAction($validatedData);
         } catch (\Exception $e){
             Log::debug($e->getMessage());
             return redirect()->route('notes')
@@ -36,17 +31,14 @@ class NoteController extends Controller
         return redirect()->route('notes');
     }
 
-    public function delete($id)
+    public function delete($id, DeleteNoteAction $deleteNoteAction)
     {
         try{
-            $note = Note::find($id);
-            $note?->delete()
-                ? Session::flash('success', "Заметка удалена!")
-                : throw new \Exception('При удалении заметки произошла ошибка. Попробуйте перезагрузить страницу и выполнить действие снова.');
+            $deleteNoteAction($id);
         }catch (\Exception $e){
             Log::debug($e->getMessage());
             return redirect()->route('notes')
-                ->withErrors($e->getMessage());
+                ->withErrors('Произошла ошибка удаления заметки. Перезагрузите страницу и попробуйте снова.');
         }
 
         return redirect()->route('notes');

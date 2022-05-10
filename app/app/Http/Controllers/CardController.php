@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\FilterConditionDescriber;
+use App\Actions\Card\CreateCardAction;
+use App\Actions\Card\SearchCardAction;
+use App\Actions\Common\DescribeFilterAction;
+use App\Helpers\ValidatedArrayTypeChecker;
 use App\Http\Requests\Card\CreateRequest;
 use App\Http\Requests\Card\SearchRequest;
-use App\Models\Owner;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Session;
 
 class CardController extends Controller
 {
@@ -16,22 +17,21 @@ class CardController extends Controller
         return view('card.index');
     }
 
-    public function search(SearchRequest $request, FilterConditionDescriber $filterDescriber)
+    public function search(SearchRequest $request, SearchCardAction $searchCardAction, DescribeFilterAction $describeFilterAction)
     {
         $validatedData = $request->validated();
-        $owners = Owner::filter($validatedData)->with('pets.kind')->paginate(10)->withQueryString();
-        $filterCondition = $filterDescriber->describeFilterCondition($validatedData);
 
-        return view('card.index', compact('owners', 'filterCondition'));
+        return view('card.index', [
+            'owners' => $searchCardAction($validatedData),
+            'filterCondition' => $describeFilterAction($validatedData)
+        ]);
     }
 
-    public function store(CreateRequest $request)
+    public function store(CreateRequest $request, CreateCardAction $createCardAction)
     {
         $validatedData = $request->validated();
         try {
-            $newOwner = Owner::create($validatedData['owner']);
-            $newOwner->pets()->create($validatedData['pet']);
-            Session::flash('success', "Новая карточка успешно создана!");
+            $newOwner = $createCardAction($validatedData);
         } catch (\Exception $e) {
             Log::debug($e->getMessage());
             return redirect()->route('cards')

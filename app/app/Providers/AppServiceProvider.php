@@ -5,12 +5,11 @@ namespace App\Providers;
 use App\Models\CastrationCondition;
 use App\Models\Gender;
 use App\Models\Kind;
+use App\Models\Status;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -38,6 +37,10 @@ class AppServiceProvider extends ServiceProvider
             $view->with('genders', Gender::all());
             $view->with('kinds', Kind::all());
             $view->with('castrationConditions', CastrationCondition::all());
+        });
+
+        view()->composer(['notes.index'], function ($view) {
+            $view->with('statuses', Status::all());
         });
 
         view()->composer(['pet.visit.forms.add', 'visit.edit'], function ($view) {
