@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\CastrationCondition;
 use App\Models\Gender;
 use App\Models\Kind;
+use App\Models\Pet;
 use App\Models\Status;
 use App\Models\User;
 use Carbon\Carbon;
@@ -32,6 +33,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Paginator::useBootstrap();
+
+        //
+        view()->composer(['layouts.header'], function ($view) {
+            $view->with('possibleErrors', Pet::whereDoesntHave('visits')->count());
+        });
 
         view()->composer(['card.forms.create', 'owner.pet.forms.add', 'pet.edit'], function ($view) {
             $view->with('genders', Gender::all());

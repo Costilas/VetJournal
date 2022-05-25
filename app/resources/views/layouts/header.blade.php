@@ -23,7 +23,17 @@
                     <a class="btn btn-menu header-mb-3" href="{{route('visits')}}">
                         <li class="nav-item">Приемы</li>
                     </a>
-                    @if(!empty(Auth::user()->is_admin))
+                    <a class="btn btn-menu header-mb-3" href="{{route('control')}}">
+                        <li class="nav-item">
+                            Контроль
+                            @if($possibleErrors)
+                                <span class="badge rounded-pill bg-danger">{{$possibleErrors}}</span>
+                            @else
+                                <span class="badge rounded-pill bg-success">0</span>
+                            @endif
+                        </li>
+                    </a>
+                    @if(Auth::user()->is_admin)
                         <a class="btn btn-menu header-mb-3" href="{{route('admin.users')}}">
                             <li class="nav-item">Сотрудники</li>
                         </a>

@@ -8,17 +8,17 @@ Route::post('/login', [App\Http\Controllers\LoginController::class, 'auth'])->na
 
 //Authorized
 Route::group(['middleware' => 'auth'], function () {
-    //Notes
+//Notes
     Route::get('/', [App\Http\Controllers\NoteController::class, 'index'])->name('notes');
     Route::post('/note/create', [App\Http\Controllers\NoteController::class, 'create'])->name('note.create');
     Route::get('/note/{id}/delete', [App\Http\Controllers\NoteController::class, 'delete'])->name('note.delete')->where(
         'id',
         '[0-9]+');
-    //Card
+//Card
     Route::get('/cards', [App\Http\Controllers\CardController::class, 'index'])->name('cards');
     Route::get('/card/search', [App\Http\Controllers\CardController::class, 'search'])->name('card.search');
     Route::post('/card/store', [App\Http\Controllers\CardController::class, 'store'])->name('card.store');
-    //Pet
+//Pet
     Route::get('/pet/{pet}/show', [App\Http\Controllers\PetController::class, 'show'])->name('pet.show')->where(
         'pet',
         '[0-9]+'
@@ -33,7 +33,7 @@ Route::group(['middleware' => 'auth'], function () {
         '[0-9]+'
     );
     Route::get('pet/{pet}/visit/search', [App\Http\Controllers\PetController::class, 'searchVisits'])->name('pet.visit.search');
-    //Owner
+//Owner
     Route::get('/owner/{owner}/show', [App\Http\Controllers\OwnerController::class, 'show'])->name('owner.show')->where(
         'owner',
         '[0-9]+'
@@ -41,7 +41,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/owner/{owner}/update', [App\Http\Controllers\OwnerController::class, 'update'])->name(
         'owner.update'
     )->where('owner', '[0-9]+');
-    //Visit
+//Visit
     Route::get('/visits', [App\Http\Controllers\VisitController::class, 'index'])->name('visits');
     Route::get('/visits/search', [App\Http\Controllers\VisitController::class, 'search'])->name('visits.search');
     Route::post('/visit/create', [App\Http\Controllers\VisitController::class, 'create'])->name('visit.create');
@@ -52,7 +52,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/visit/{id}/update', [App\Http\Controllers\VisitController::class, 'update'])->name(
         'visit.update'
     )->where('id', '[0-9]+');
-    //Logout
+//Control Area
+    Route::get('/control', [App\Http\Controllers\ControlController::class, 'index'])->name('control');
+//Logout
     Route::get('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
 });
 
