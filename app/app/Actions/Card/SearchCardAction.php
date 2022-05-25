@@ -2,16 +2,15 @@
 
 namespace App\Actions\Card;
 
-use App\Actions\Action;
 use App\Models\Owner;
 
-class SearchCardAction extends Action
+class SearchCardAction
 {
     public function __invoke(array $validatedData)
     {
         return Owner::filter($validatedData)
             ->with('pets.kind')
-            ->paginate(1)
+            ->paginate(5)
             ->withQueryString();
     }
 }

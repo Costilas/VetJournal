@@ -16,9 +16,7 @@ class LoginController extends Controller
 
     public function auth(LoginRequest $request, LoginAction $loginAction)
     {
-        $validatedData = $request->validated();
-
-        return $loginAction($validatedData);
+        return $loginAction($request->validated());
     }
 
     public function logout(Request $request, LogoutAction $logoutAction)

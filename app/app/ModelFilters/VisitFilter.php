@@ -19,7 +19,7 @@ class VisitFilter extends ModelFilter
     {
         try{
             //If date validation is broken somehow and is not a date format
-            if(!strtotime($when['from'])&&!strtotime($when['to'])){throw new \Exception('Ошибка валидации. Даты имеют неверный формат');}
+            if(!strtotime($when['from'])&&!strtotime($when['to'])){throw new \Exception();}
 
             //If start date greater than end date then we need to revert it
             $start = strtotime($when['from'])>strtotime($when['to'])?$when['to']:$when['from'];
@@ -28,7 +28,7 @@ class VisitFilter extends ModelFilter
             $to = Carbon::createFromFormat(self::DATEFORMAT, $end)->endOfDay()->toDateTimeString();
         }catch(\Exception $e){
             Log::debug($e->getMessage());
-           return redirect()->back()->withErrors($e->getMessage());
+           return redirect()->back()->withErrors('Ошибка валидации. Даты имеют неверный формат');
         }
 
         return $this->whereBetween('visit_date', [$from, $to]);

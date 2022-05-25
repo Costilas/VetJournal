@@ -27,8 +27,6 @@ class CardController extends Controller
 
     public function store(CreateRequest $request, CreateCardAction $createCardAction)
     {
-        $validatedData = $request->validated();
-
-        return $createCardAction($validatedData);
+        return redirect()->route('owner.show', ['owner'=>$createCardAction($request->validated())]);
     }
 }

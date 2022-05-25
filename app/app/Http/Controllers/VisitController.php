@@ -76,7 +76,7 @@ class VisitController extends Controller
             $visit->fill($validatedRequest['visit']);
             $visit->save()?
                 Session::flash('success', "Прием успешно изменен!"):
-                throw new \Exception('Ошибка при изменении према. Перезагрузите страницу и попробуйте снова.');
+                throw new \Exception('Ошибка при изменении приема. Перезагрузите страницу и попробуйте снова.');
         }catch (\Exception $e){
             Log::debug($e->getMessage());
             return redirect()

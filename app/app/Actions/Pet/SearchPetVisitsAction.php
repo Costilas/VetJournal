@@ -2,15 +2,18 @@
 
 namespace App\Actions\Pet;
 
-use App\Actions\Action;
 use App\Actions\Common\DescribeFilterAction;
 use App\Models\Pet;
 
-class SearchPetVisitsAction extends Action
+class SearchPetVisitsAction
 {
-    public function __invoke(Pet $pet, DescribeFilterAction $filterAction, array $validatedData)
+    public function __construct(private DescribeFilterAction $filterDescriber)
+    {}
+
+    public function __invoke(Pet $pet, array $validatedData)
     {
         $pet->load('gender', 'kind', 'owner');
+        $describerInvoke = $this->filterDescriber;
 
         return view('pet.show', [
             'pet' => $pet,
@@ -18,10 +21,10 @@ class SearchPetVisitsAction extends Action
             'visits' => $pet->visits()
                 ->filter($validatedData)
                 ->with('user')
-                ->latest()
+                ->latest('visit_date')
                 ->paginate(5)
                 ->withQueryString(),
-            'filterCondition' => $filterAction($validatedData)
+            'filterCondition'=> $describerInvoke($validatedData),
         ]);
     }
 }

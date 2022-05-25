@@ -1,4 +1,4 @@
-<form action="{{route('pet.add', ['owner'=>$owner])}}" method="POST">
+<form action="{{route('pet.add')}}" method="POST">
     @csrf
     <div class="row row-cols-1">
         <div class="col-12">

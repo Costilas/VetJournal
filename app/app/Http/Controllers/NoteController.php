@@ -11,18 +11,22 @@ class NoteController extends Controller
 {
     public function index(GetNoteListAction $getNoteListAction)
     {
-        return $getNoteListAction();
+        return view('notes.index', [
+            'notes' => $getNoteListAction()
+        ]);
     }
 
     public function create(CreateRequest $request, CreateNoteAction $createNoteAction)
     {
-        $validatedData = $request->validated();
+        $createNoteAction($request->validated());
 
-        return $createNoteAction($validatedData);
+        return redirect()->route('notes');
     }
 
     public function delete($id, DeleteNoteAction $deleteNoteAction)
     {
-        return $deleteNoteAction($id);
+        $deleteNoteAction($id);
+
+        return redirect()->route('notes');
     }
 }

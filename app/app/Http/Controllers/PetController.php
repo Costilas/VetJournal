@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Common\DescribeFilterAction;
 use App\Actions\Pet\AddPetToOwnerAction;
 use App\Actions\Pet\SearchPetVisitsAction;
 use App\Actions\Pet\ShowPetAction;
@@ -19,31 +18,27 @@ class PetController extends Controller
         return $showPetAction($pet);
     }
 
-    public function searchVisits(SearchRequest $request, Pet $pet, SearchPetVisitsAction $searchPetVisitsAction, DescribeFilterAction $filterAction)
+    public function searchVisits(SearchRequest $request, Pet $pet, SearchPetVisitsAction $searchPetVisitsAction)
     {
-        $validatedData = $request->validated();
-
-       return $searchPetVisitsAction($pet, $filterAction, $validatedData);
+       return $searchPetVisitsAction($pet, $request->validated());
     }
 
     public function add(AddRequest $request, AddPetToOwnerAction $addPetToOwnerAction)
     {
-        $validatedData = $request->validated();
-
-        return $addPetToOwnerAction($validatedData);
+        return redirect()->route('owner.show', [
+            'owner' => $addPetToOwnerAction($request->validated())->owner_id
+        ]);
     }
 
     public function edit(Pet $pet)
     {
-        $pet->load('kind', 'gender', 'owner');
-
-        return view('pet.edit', compact('pet'));
+        return view('pet.edit', ['pet'=>$pet->load('kind', 'gender', 'owner')]);
     }
 
     public function update(EditRequest $request, Pet $pet, UpdatePetAction $updatePetAction)
     {
-        $validatedData = $request->validated();
-
-        return $updatePetAction($pet, $validatedData);
+        return redirect()->route('pet.edit', [
+            'pet' => $updatePetAction($pet, $request->validated())
+        ]);
     }
 }

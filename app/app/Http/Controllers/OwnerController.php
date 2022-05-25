@@ -16,8 +16,6 @@ class OwnerController extends Controller
 
     public function update(EditRequest $request, Owner $owner, UpdateOwnerAction $updateOwnerAction)
     {
-        $validateData = $request->validated();
-
-        return $updateOwnerAction($owner, $validateData);
+        return redirect()->route('owner.show', ['owner'=>$updateOwnerAction($owner, $request->validated())]);
     }
 }
