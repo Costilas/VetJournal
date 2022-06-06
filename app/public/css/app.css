@@ -19,6 +19,7 @@ ol, ul {
 
 .pagination {
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .visit_info {
@@ -215,16 +216,6 @@ header {
     background-color: #2d3748;
 }
 
-.visit_table_width {
-    table-layout: fixed;
-    width:100%;
-}
-
-.visit_table_child {
-    width: 50%;
-    overflow-wrap: break-word;
-}
-
 /*General styles*/
 
 /*Header styles*/
@@ -232,8 +223,6 @@ header {
 /*Notes*/
 
 /* Login page */
-
-/* Pet.Visits */
 
 @charset "UTF-8";
 /*!
