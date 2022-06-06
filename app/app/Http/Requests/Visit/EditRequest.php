@@ -58,6 +58,7 @@ class EditRequest extends FormRequest
             "visit.user_id" => [
                 'required',
                 'numeric',
+                'exists:users,id'
             ],
         ];
     }
@@ -100,6 +101,7 @@ class EditRequest extends FormRequest
 
             'visit.user_id.required' => 'Поле "Кем был проведен прием" является обязательным к заполнению.',
             'visit.user_id.numeric' => 'Поле "Кем был проведен прием" должно содержать только числовое значение.',
+            'visit.user_id.exists' => 'Поле "Кем был проведен прием" содержит недопустимое числовое значение.',
         ];
     }
 }

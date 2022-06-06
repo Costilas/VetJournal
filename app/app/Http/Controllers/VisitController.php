@@ -73,15 +73,14 @@ class VisitController extends Controller
             $validatedRequest['visit']['weight'] = Visit::weightNormalize($validatedRequest['visit']['weight']);
             $validatedRequest['visit']['temperature'] = Visit::temperatureNormalize($validatedRequest['visit']['temperature']);
             $visit = Visit::find($id);
-            $visit->fill($validatedRequest['visit']);
-            $visit->save()?
+            $visit->update($validatedRequest['visit'])?
                 Session::flash('success', "Прием успешно изменен!"):
-                throw new \Exception('Ошибка при изменении приема. Перезагрузите страницу и попробуйте снова.');
+                throw new \Exception();
         }catch (\Exception $e){
             Log::debug($e->getMessage());
             return redirect()
                 ->route('visit.edit', ['id'=>$id])
-                ->withErrors($e->getMessage());
+                ->withErrors('Произошла ошибка обновления приема, обновите страницу и попробуйте снова.');
         }
 
         return redirect(route('visit.edit', ['id'=>$id]));
