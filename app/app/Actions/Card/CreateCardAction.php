@@ -5,6 +5,7 @@ namespace App\Actions\Card;
 use App\Models\Owner;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class CreateCardAction
 {
@@ -15,7 +16,7 @@ class CreateCardAction
         try {
             $newOwner = Owner::create($validatedData['owner']);
             $newOwner->pets()->create($validatedData['pet']);
-
+            Session::flash('success', "Новая карточка успешно создана!");
             DB::commit();
         }catch (\Exception $e) {
             Log::debug($e->getMessage());
