@@ -12,7 +12,7 @@
                  id="navbarTogglerDemo01">
                 <ul class="navbar-nav">
                     <div class="text-center text-light d-flex align-items-center justify-content-center header-mb-3">
-                        Вы вошли как: {{Auth::user()->email}}
+                        Вы вошли как: {{auth()->user()->email}}
                     </div>
                     <a class=" btn btn-menu header-mb-3" href="{{route('notes')}}">
                         <li class="nav-item">Заметки</li>
@@ -33,14 +33,16 @@
                             @endif
                         </li>
                     </a>
-                    @if(Auth::user()->is_admin)
+                    @can('use admin panel')
                         <a class="btn btn-menu header-mb-3" href="{{route('admin.users')}}">
                             <li class="nav-item">Сотрудники</li>
                         </a>
-                    @endif
-                    @if(Auth::check())
+                    @endcan
+                    @if(auth()->check())
                         <a class="btn btn-menu" href="{{route('logout')}}">
-                            <li class="nav-item"><i class="bi bi-box-arrow-left"></i></li>
+                            <li class="nav-item">
+                                <i class="bi bi-box-arrow-left"></i>
+                            </li>
                         </a>
                     @endif
                 </ul>

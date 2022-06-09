@@ -38,7 +38,8 @@ class UserController extends Controller
         } else {
             $query = User::filter(['search'=>'all']);
         }
-        $users = $query->paginate(5)->withQueryString();
+        $users = $query->with('roles')->paginate(5)->withQueryString();
+
         return view('admin.users.index', compact('users'));
     }
 
@@ -54,9 +55,15 @@ class UserController extends Controller
         $validatedRequest = $request->validated();
         try {
             $validatedRequest['user']['password'] = Hash::make($validatedRequest['user']['password']);
+
             $validatedRequest['user']['is_admin'] = $validatedRequest['user']['is_admin']??0;
+
             $validatedRequest['user']['is_active'] = 1;
             $user = User::create($validatedRequest['user']);
+
+            /*$user->assignRole('doctor');
+            if(isset($validatedRequest['user']['is_admin'])) {$user->assignRole('admin');}*/
+
             Session::flash('success', "Сотрудник $user->last_name $user->name $user->patronymic успешно добавлен/добавлена.");
         } catch (\Exception $e) {
             Log::debug($e->getMessage());

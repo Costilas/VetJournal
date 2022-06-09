@@ -11,11 +11,13 @@
                         <div class="col-12 text-center">
                             <h2>Сотрудники</h2>
                         </div>
-                        <div class="col-auto">
-                            <a class="btn btn-success" href="{{route('admin.user.register')}}">
-                                <i class="bi bi-person-plus-fill"></i> Новый сотрудник
-                            </a>
-                        </div>
+                        @can('add users')
+                            <div class="col-auto">
+                                <a class="btn btn-success" href="{{route('admin.user.register')}}">
+                                    <i class="bi bi-person-plus-fill"></i> Новый сотрудник
+                                </a>
+                            </div>
+                        @endcan
                     </div>
                 </div>
             </div>

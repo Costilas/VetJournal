@@ -5,11 +5,18 @@
             <th scope="col">ФИО:</th>
             <th scope="col">Email:</th>
             <th scope="col">Статус:</th>
+            <th scope="col">Роль:</th>
             <th scope="col">Действие:</th>
         </tr>
         @if(!empty($users->items()))
             @foreach($users as $user)
-                {{view('admin.users.row', compact('user'))}}
+                @if($user->role === 'dev')
+                    @can('see devs')
+                        {{view('admin.users.row', compact('user'))}}
+                    @endcan
+                @else
+                    {{view('admin.users.row', compact('user'))}}
+                @endif
             @endforeach
         @else
             <tr>
