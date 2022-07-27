@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\UserController;
 use App\Models\CastrationCondition;
 use App\Models\Gender;
 use App\Models\Kind;
@@ -9,6 +10,7 @@ use App\Models\Pet;
 use App\Models\Status;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
@@ -22,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+       //
     }
 
     /**
@@ -34,7 +36,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
 
-        //
+
         view()->composer(['layouts.header'], function ($view) {
             $view->with('possibleErrors', Pet::whereDoesntHave('visits')->count());
         });
@@ -55,7 +57,7 @@ class AppServiceProvider extends ServiceProvider
             })->get());
         });
 
-        view()->composer(['admin.users.row'], function ($view) {
+        view()->composer(['admin.users.row', 'admin.users.add', 'admin.users.index'], function ($view) {
             $view->with('currentUser', Auth::user());
         });
 

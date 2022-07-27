@@ -20,8 +20,7 @@ class AdminMiddleware
         if(Auth::check()){
             $user = Auth::user();
             $user->load('roles');
-            dd($user);
-            if($user->role === 'dev'||$user->role === 'admin'){
+            if($user->hasRole('dev')||$user->hasRole('admin')){
                 return $next($request);
             }
         }

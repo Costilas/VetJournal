@@ -17,47 +17,19 @@ class CreateProjectRoles extends Seeder
      */
     public function run()
     {
-        //Dev
-        Permission::create(['name'=>'see devs']);
 
-        //Admin&Dev Side
-        Permission::create(['name'=>'use admin panel']);
-        Permission::create(['name'=>'add users']);
-        Permission::create(['name'=>'edit users']);
-        Permission::create(['name'=>'change user status']);
-        Permission::create(['name'=>'make promotions']);
-
-        //Simple user side
-        Permission::create(['name'=>'create notes']);
-        Permission::create(['name'=>'delete notes']);
-        //Cards
-        Permission::create(['name'=>'create cards']);
-        Permission::create(['name'=>'edit owner']);
-        //Pets
-        Permission::create(['name'=>'add pet']);
-        Permission::create(['name'=>'edit pet']);
-        //Visits
-        Permission::create(['name'=>'create visit']);
-        Permission::create(['name'=>'edit visit']);
-
-        //Creating role "dev" and assigning permissions to the "dev" role
-        Role::create([
-            'name' => 'dev',
-            'translate' => 'Разработчик',
-        ])->syncPermissions(Permission::all());
-
-
-        //Creating role "admin" and assigning permissions to the "admin" role
-        Role::create([
-            'name' => 'admin',
-            'translate' => 'Администратор',
-        ])->syncPermissions(Permission::whereNotIn('id', [1])->get());
-
-        //Creating role "doctor" and assigning permissions to the "doctor" role
-        Role::create([
-            'name' => 'doctor',
-            'translate' => 'Врач',
-        ])->syncPermissions([
+        $devPemissions = [
+            'see devs',
+            'edit devs'
+        ];
+        $adminPermissions = [
+            'use admin panel',
+            'add users',
+            'edit users',
+            'change user status',
+            'make promotions'
+        ];
+        $doctorPermissions = [
             'create notes',
             'delete notes',
             'create cards',
@@ -66,7 +38,33 @@ class CreateProjectRoles extends Seeder
             'edit pet',
             'create visit',
             'edit visit',
-        ]);
+        ];
+
+        $allPermissions = array_merge($devPemissions, $adminPermissions, $doctorPermissions);
+
+        foreach ($allPermissions as $permission)
+        {
+            Permission::create(['name' => $permission]);
+        }
+
+        //Creating role "dev" and assigning permissions to the "dev" role
+        Role::create([
+            'name' => 'dev',
+            'translate' => 'Разработчик',
+        ])->syncPermissions($allPermissions);
+
+
+        //Creating role "admin" and assigning permissions to the "admin" role
+        Role::create([
+            'name' => 'admin',
+            'translate' => 'Администратор',
+        ])->syncPermissions($adminPermissions);
+
+        //Creating role "doctor" and assigning permissions to the "doctor" role
+        Role::create([
+            'name' => 'doctor',
+            'translate' => 'Врач',
+        ])->syncPermissions($doctorPermissions);
 
         //Assigning roles to users
             //Dev
@@ -76,7 +74,7 @@ class CreateProjectRoles extends Seeder
         $admin = User::find(2);
         $admin->assignRole('admin');
             //Doctor
-        $doctors = User::whereNotIn('id', [1,2])->get();
+        $doctors = User::whereNotIn('id', [1])->get();
         foreach ($doctors as $doctor)
         {
             $doctor->assignRole('doctor');
