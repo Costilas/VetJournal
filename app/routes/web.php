@@ -58,39 +58,37 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/logout', [App\Http\Controllers\LoginController::class, 'logout'])->name('logout');
 });
 
-//Authorized and Admin access
+//Authorized and Admin\Dev access
 //Management
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])
         ->name('admin.users');
-    Route::get('/user/register', [App\Http\Controllers\UserController::class, 'create'])
-        ->name('admin.user.register');
-    Route::post('/user/register', [App\Http\Controllers\UserController::class, 'store'])->name('admin.user.store');
-    Route::get('/user/{id}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('admin.user.edit')->where(
-        'id',
-        '[0-9]+'
-    );
-    Route::post('/user/{id}/update', [App\Http\Controllers\UserController::class, 'update'])->name(
-        'admin.user.update'
-    )->where('id', '[0-9]+');
-    Route::get('/user/{id}/deactivate', [App\Http\Controllers\UserController::class, 'deactivate'])->name(
-        'admin.user.deactivate'
-    )->where('id', '[0-9]+');
-    Route::get('/user/{id}/activate', [App\Http\Controllers\UserController::class, 'activate'])->name(
-        'admin.user.activate'
-    )->where('id', '[0-9]+');
-    Route::post('/user/{id}/password/change', [App\Http\Controllers\UserController::class, 'passwordChange'])->name(
-        'admin.user.password'
-    )->where('id', '[0-9]+');
-    Route::post('/user/{id}/login/change', [App\Http\Controllers\UserController::class, 'loginChange'])->name(
-        'admin.user.login'
-    )->where('id', '[0-9]+');
-    Route::get('/user/{id}/promote', [App\Http\Controllers\UserController::class, 'promoteAdmin'])->name(
-        'admin.user.promote'
-    )->where('id', '[0-9]+');
-    Route::get('/user/{id}/demote', [App\Http\Controllers\UserController::class, 'demoteAdmin'])->name(
-        'admin.user.demote'
-    )->where('id', '[0-9]+');
+    Route::get('/users/filter', [App\Http\Controllers\UserController::class, 'search'])
+        ->name('admin.users.filtrate');
+    //Create users
+    Route::group(['middleware'=>'can:add users'], function () {
+        Route::get('/user/register', [App\Http\Controllers\UserController::class, 'create'])->name('admin.user.register');
+        Route::post('/user/register', [App\Http\Controllers\UserController::class, 'store'])->name('admin.user.store');
+    });
+    //Edit users
+    Route::group(['middleware'=>'can:edit users'], function () {
+        Route::get('/user/{targetUser}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('admin.user.edit')->where('user', '[0-9]+');
+        Route::post('/user/{targetUser}/update', [App\Http\Controllers\UserController::class, 'update'])->name('admin.user.update')->where('user', '[0-9]+');
+        Route::post('/user/{targetUser}/password/change', [App\Http\Controllers\UserController::class, 'passwordChange'])->name('admin.user.password')->where('user', '[0-9]+');
+        Route::post('/user/{targetUser}/login/change', [App\Http\Controllers\UserController::class, 'loginChange'])->name('admin.user.login')->where('user', '[0-9]+');
+    });
+    //Activate/Deactivate users
+    Route::group(['middleware'=>'can:change user status'], function () {
+        Route::get('/user/{targetUser}/deactivate', [App\Http\Controllers\UserController::class, 'deactivate'])->name('admin.user.deactivate')->where('user', '[0-9]+');
+        Route::get('/user/{targetUser}/activate', [App\Http\Controllers\UserController::class, 'activate'])->name('admin.user.activate')->where('user', '[0-9]+');
+    });
+    //Promotions
+    Route::group(['middleware'=>'can:make promotions'], function () {
+        Route::get('/user/{targetUser}/promote', [App\Http\Controllers\UserController::class, 'promote'])->name('admin.user.promote')->where('user', '[0-9]+');
+        Route::get('/user/{targetUser}/demote', [App\Http\Controllers\UserController::class, 'demote'])->name('admin.user.demote')->where('user', '[0-9]+');
+    });
+
+
 });
 
 

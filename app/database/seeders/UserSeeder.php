@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -19,12 +20,12 @@ class UserSeeder extends Seeder
             'name' => 'Сергей',
             'patronymic' => 'Сергеевич',
             'last_name' => 'Кузьмин',
-            'email' => 'reactorr@mail.ru',
+            'email' => 'test@mail.com',
             'is_active' => 1,
             'is_admin' => 1,
             'is_dev' => 1,
             'email_verified_at' => now(),
-            'password' => '$2y$10$fLJU9s7BP1wth1EANlkntuqPLVUjtJ46wSN78KT1UIWEdRXRoGKAm', // password
+            'password' => Hash::make('12345'), // password
             'remember_token' => '',
         ]);
     }

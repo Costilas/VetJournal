@@ -25,13 +25,13 @@
         <div class="col-auto m-auto">
             <div class="card mb-3 p-2">
                 <div class="text-center">
-                    <a href="{{route('admin.users', ['search'=>'all'])}}" class="btn btn-outline-info m-1">
+                    <a href="{{route('admin.users')}}" class="btn btn-outline-info m-1">
                         <i class="bi bi-list-nested"></i> Все пользователи
                     </a>
-                    <a href="{{route('admin.users', ['search'=>'active'])}}" class="btn btn-outline-success m-1">
+                    <a href="{{route('admin.users.filtrate', ['search'=>'active'])}}" class="btn btn-outline-success m-1">
                         <i class="bi bi-capslock-fill"></i> Только активные
                     </a>
-                    <a href="{{route('admin.users', ['search'=>'inactive'])}}" class="btn btn-outline-danger m-1">
+                    <a href="{{route('admin.users.filtrate', ['search'=>'inactive'])}}" class="btn btn-outline-danger m-1">
                         <i class="bi bi-lock-fill"></i> Только неактивные
                     </a>
                 </div>

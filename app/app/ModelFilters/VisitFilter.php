@@ -24,6 +24,7 @@ class VisitFilter extends ModelFilter
             //If start date greater than end date then we need to revert it
             $start = strtotime($when['from'])>strtotime($when['to'])?$when['to']:$when['from'];
             $end = strtotime($when['from'])>strtotime($when['to'])?$when['from']:$when['to'];
+
             $from = Carbon::createFromFormat(self::DATEFORMAT, $start)->startOfDay()->toDateTimeString();
             $to = Carbon::createFromFormat(self::DATEFORMAT, $end)->endOfDay()->toDateTimeString();
         }catch(\Exception $e){

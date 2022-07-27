@@ -5,19 +5,24 @@
             <th scope="col">ФИО:</th>
             <th scope="col">Email:</th>
             <th scope="col">Статус:</th>
+            <th scope="col">Роль:</th>
             <th scope="col">Действие:</th>
         </tr>
-        @if(!empty($users->items()))
-            @foreach($users as $user)
-                {{view('admin.users.row', compact('user'))}}
-            @endforeach
-        @else
+        @forelse($users as $targetUser)
+            @if($targetUser->hasRole('dev'))
+                @can('see devs')
+                    {{view('admin.users.row', compact('targetUser'))}}
+                @endcan
+            @else
+                {{view('admin.users.row', compact('targetUser'))}}
+            @endif
+        @empty
             <tr>
                 <td colspan="6">
                     <p class="text-center p-0">Сотрудников пока не зарегистрировано.</p>
                 </td>
             </tr>
-        @endif
+        @endforelse
         {{$users->links()}}
     </table>
 </div>

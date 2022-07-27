@@ -19,7 +19,6 @@ ol, ul {
 
 .pagination {
     justify-content: center;
-    flex-wrap: wrap;
 }
 
 .visit_info {

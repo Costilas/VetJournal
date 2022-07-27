@@ -169,6 +169,8 @@ return [
          */
         \morphos\MorphosBladeProvider::class,
         EloquentFilter\ServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
+
         /*
          * Custom service providers
          * */

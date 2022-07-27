@@ -3,6 +3,7 @@
 namespace App\ModelFilters;
 
 use EloquentFilter\ModelFilter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
 class UserFilter extends ModelFilter
@@ -15,9 +16,8 @@ class UserFilter extends ModelFilter
     */
     public $relations = [];
 
-    public function search($who)
+    public function search(string $who = null):UserFilter
     {
-        Auth::user()->is_dev?$this->select('*'):$this->where('is_dev', '!=', '1');
         switch ($who) {
             case 'active':
                 $this->where('is_active',  '1');

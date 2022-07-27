@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\FilterConditionDescriber;
+use App\Actions\Common\DescribeFilterAction;
+use App\Actions\Visit\CreateVisitAction;
+use App\Actions\Visit\SearchVisitsAction;
+use App\Actions\Visit\UpdateVisitAction;
 use App\Http\Requests\Visit\CreateRequest;
 use App\Http\Requests\Visit\EditRequest;
 use App\Http\Requests\Visit\SearchRequest;
@@ -13,76 +16,55 @@ use Illuminate\Support\Facades\Session;
 
 class VisitController extends Controller
 {
-    public function index(FilterConditionDescriber $conditionDescriber)
+    public function index(DescribeFilterAction $describeFilterAction, SearchVisitsAction $searchVisitsAction)
     {
+        $todayDateString = Carbon::create('today')->toDateString();
         $searchDateRange = ['search'=> [
-                'from'=>Carbon::create('today')->toDateString(),
-                'to'=>Carbon::create('today')->toDateString()
+                'from'=>$todayDateString,
+                'to'=>$todayDateString
             ]
         ];
-        $filterCondition = $conditionDescriber->describeFilterCondition($searchDateRange);
-        $visits =  Visit::filter($searchDateRange)->with('pet', 'user')
-            ->orderBy('id', 'DESC')
-            ->paginate(10)
-            ->withQueryString();
 
-        return view('visit.index', compact('visits', 'filterCondition', 'searchDateRange'));
+        return view('visit.index', [
+            'visits' => $searchVisitsAction($searchDateRange),
+            'filterCondition' => $describeFilterAction($searchDateRange),
+            'searchDateRange' => $searchDateRange
+        ]);
     }
 
-    public function search(SearchRequest $request, FilterConditionDescriber $conditionDescriber)
+    public function search(SearchRequest $request, DescribeFilterAction $describeFilterAction, SearchVisitsAction $searchVisitsAction)
     {
         $searchDateRange = $request->validated();
-        $filterCondition = $conditionDescriber->describeFilterCondition($searchDateRange);
-        $visits =  Visit::filter($searchDateRange)->with('pet', 'user')
-            ->orderBy('id', 'DESC')
-            ->paginate(10)
-            ->withQueryString();
 
-        return view('visit.index', compact('visits', 'filterCondition', 'searchDateRange'));
+        return view('visit.index', [
+            'visits' => $searchVisitsAction($searchDateRange),
+            'filterCondition' => $describeFilterAction($searchDateRange),
+            'searchDateRange' => $searchDateRange
+        ]);
     }
 
-    public function create(CreateRequest $request)
+    public function create(CreateRequest $request, CreateVisitAction $createVisitAction)
     {
         $validatedRequest = $request->validated();
-        try{
-            $validatedRequest['visit']['weight'] = Visit::weightNormalize($validatedRequest['visit']['weight']);
-            $validatedRequest['visit']['temperature'] = Visit::temperatureNormalize($validatedRequest['visit']['temperature']);
-            Visit::create($validatedRequest['visit']);
-            Session::flash('success', "Прием успешно добавлен!");
-        }catch (\Exception $e){
-            Log::debug($e->getMessage());
-            return redirect()
-                ->route('pet.show', ['pet' => $validatedRequest['visit']['pet_id']])
-                ->withErrors('Ошибка при создании према. Перезагрузите страницу и попробуйте снова.');
-        }
-
-        return redirect()->route('pet.show', ['pet' => $validatedRequest['visit']['pet_id']]);
+        $visit = $createVisitAction($validatedRequest);
+        return redirect()->route('pet.show', [
+            'pet' => $visit->pet_id
+        ]);
     }
 
     public function edit($id)
     {
-        $visit = Visit::with('pet')->find($id);
-
-        return view('visit.edit', compact('visit'));
+        return view('visit.edit', [
+            'visit' => Visit::with('pet')->find($id)
+        ]);
     }
 
-    public function update(EditRequest $request, $id)
+    public function update(EditRequest $request, $id, UpdateVisitAction $updateVisitAction)
     {
-        $validatedRequest = $request->validated();
-        try {
-            $validatedRequest['visit']['weight'] = Visit::weightNormalize($validatedRequest['visit']['weight']);
-            $validatedRequest['visit']['temperature'] = Visit::temperatureNormalize($validatedRequest['visit']['temperature']);
-            $visit = Visit::find($id);
-            $visit->update($validatedRequest['visit'])?
-                Session::flash('success', "Прием успешно изменен!"):
-                throw new \Exception();
-        }catch (\Exception $e){
-            Log::debug($e->getMessage());
-            return redirect()
-                ->route('visit.edit', ['id'=>$id])
-                ->withErrors('Произошла ошибка обновления приема, обновите страницу и попробуйте снова.');
-        }
+        $updatedVisit = $updateVisitAction($request->validated(), $id);
 
-        return redirect(route('visit.edit', ['id'=>$id]));
+        return redirect()->route('visit.edit', [
+            'id'=>$updatedVisit->id
+        ]);
     }
 }
