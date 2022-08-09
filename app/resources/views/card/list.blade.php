@@ -5,6 +5,8 @@
                 <th scope="col">ФИО:</th>
                 <th scope="col">Адрес:</th>
                 <th scope="col">Телефон:</th>
+                <th scope="col">Доп. телефон:</th>
+                <th scope="col">Email:</th>
                 <th scope="col">Питомцы:</th>
                 <th scope="col">Действие:</th>
             </tr>
@@ -14,7 +16,7 @@
                 @endforeach
             @else
                 <tr class="text-center text-break">
-                    <td colspan="5">
+                    <td colspan="7">
                         <p> Результатов по введенным данным нет. <br> Проверьте правильность заполнения полей.</p>
                     </td>
                 </tr>

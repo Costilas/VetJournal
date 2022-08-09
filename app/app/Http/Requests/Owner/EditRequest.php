@@ -39,15 +39,26 @@ class EditRequest extends FormRequest
                 'alpha',
                 'max:20',
             ],
-            "phone" => [
-                'required',
-                'digits:11',
-                'starts_with:8'
-            ],
             "address" => [
                 'required',
                 'string',
                 'max:60',
+            ],
+            "phone" => [
+                'required_without:additional_phone',
+                'nullable',
+                'digits:11',
+                'starts_with:8'
+            ],
+            "additional_phone" => [
+                'required_without:phone',
+                'digits_between:5,20',
+                'nullable',
+            ],
+            "email" => [
+                'email',
+                'nullable',
+                'max:50'
             ],
         ];
     }
@@ -72,10 +83,17 @@ class EditRequest extends FormRequest
             'last_name.alpha' => 'Поле "Фамилия владельца" не должно содержать числа и специальные символы.',
             'last_name.max' => 'Привышен лимит символов в поле "Фамилия владельца"(20).',
 
-            'phone.required' => 'Необходио заполнить поле "Телефон владельца".',
+            'phone.required_without' => 'Необходмо заполнить поле "Телефон владельца" если вы не указали дополнительный телефон.',
             'phone.digits' => 'Поле "Телефон владельца" должно содержать 11 чисел(Без пробелов и специальных символов).',
             'phone.max' => 'Привышен лимит символов в поле "Телефон владельца"(11).',
             'phone.starts_with' => 'Телефон должен начинаться с "8".',
+
+            'additional_phone.required_without' => 'Необходио заполнить поле "Дополнительный телефон владельца" если Вы не указали основной.',
+            'additional_phone.digits_between' => 'В поле "Дополнительный телефон" должны содержаться только числа (От 5 до 20 символов).',
+            'additional_phone.max' => 'В поле "Дополнительный телефон" превышен лимит символов (макс.20).',
+
+            'email.email' => 'Поле "Адрес электронной почты" имеет неверный формат (Пример: hello@example.com).',
+            'email.max' => 'В "Адрес электронной почты" превышен лимит символов (макс. 50).',
 
             'address.required' => 'Необходио заполнить поле "Адрес владельца".',
             'address.string' => 'Поле "Адрес владельца" имеет неверный формат.',

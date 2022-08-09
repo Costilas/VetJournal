@@ -50,8 +50,31 @@
                        name="owner[phone]"
                        placeholder="Телефон"
                        aria-label="owner[phone]"
-                       required
                        value="{{session()->getOldInput('owner.phone')}}">
+            </div>
+            <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
+                <label for="name">Дополнительный телефон:</label>
+                <input type="text"
+                       id="additionalPhone"
+                       class="form-control @error('owner.additional_phone') is-invalid @enderror"
+                       name="owner[additional_phone]"
+                       placeholder="Дополнительный телефон"
+                       aria-label="Дополнительный телефон"
+                       maxlength="20"
+                       minlength="5"
+                       value="{{session()->getOldInput('owner.additional_phone')}}">
+            </div>
+            <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
+                <label for="email">Адрес электронной почты:</label>
+                <input type="email"
+                       id="email"
+                       class="form-control @error('owner.email') is-invalid @enderror"
+                       name="owner[email]"
+                       placeholder="example@somemail.com"
+                       aria-label="owner[email]"
+                       maxlength="50"
+                       minlength="5"
+                       value="{{session()->getOldInput('owner.email')}}">
             </div>
             <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
                 <label for="address">Адрес владельца(в произвольной форме):</label>

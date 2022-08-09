@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class Owner extends Model
 {
 
-    protected $fillable = ['name', 'patronymic', 'last_name', 'address', 'phone'];
+    protected $fillable = ['name', 'patronymic', 'last_name', 'address', 'phone', 'additional_phone', 'email'];
 
     use Filterable;
     use HasFactory;

@@ -28,31 +28,42 @@ class SearchRequest extends FormRequest
                 'alpha',
                 'max:30',
                 'nullable',
-                'required_without_all:patronymic,lastName,phone,pets'
+                'required_without_all:patronymic,lastName,phone,pets,additionalPhone,email'
             ],
             'patronymic' => [
                 'alpha',
                 'max:25',
                 'nullable',
-                'required_without_all:name,lastName,phone,pets'
+                'required_without_all:name,lastName,phone,pets,additionalPhone,email'
             ],
             'lastName' => [
                 'alpha',
                 'max:30',
                 'nullable',
-                'required_without_all:name,patronymic,phone,pets'
+                'required_without_all:name,patronymic,phone,pets,additionalPhone,email'
             ],
             'phone' => [
                 'starts_with:8',
                 'digits_between:1,11',
                 'nullable',
-                'required_without_all:name,patronymic,lastName,pets'
+                'required_without_all:name,patronymic,lastName,pets,additionalPhone,email'
+            ],
+            'additionalPhone' => [
+                'digits_between:1,20',
+                'nullable',
+                'required_without_all:name,patronymic,lastName,phone,email'
+            ],
+            'email' => [
+                'string',
+                'max:50',
+                'nullable',
+                'required_without_all:name,patronymic,lastName,phone,additionalPhone'
             ],
             'pets' => [
                 'alpha',
                 'max:30',
                 'nullable',
-                'required_without_all:name,patronymic,lastName,phone'
+                'required_without_all:name,patronymic,lastName,phone,additionalPhone,email'
             ]
         ];
     }
@@ -75,6 +86,13 @@ class SearchRequest extends FormRequest
             'phone.required_without_all' => 'Хотя бы одно поле, должно быть заполнено.',
             'phone.digits_between' => 'Поле "Телефон владельца" должно содержать только числа (Без пробелов и специальных символов), длина от 1 до 11.',
             'phone.starts_with' => 'Телефон должен начинаться с "8".',
+
+            'additionalPhone.required_without_all' => 'Хотя бы одно поле, должно быть заполнено.',
+            'additionalPhone.digits_between' => 'Поле "Доп. телефон владельца" должно содержать только числа (Без пробелов и специальных символов), длина от 5 до 20.',
+
+            'email.required_without_all'=>'Хотя бы одно поле, должно быть заполнено.',
+            'email.string'=>'Поле "Электронная почта владельца" имеет неверный формат.',
+            'email.max'=>'Привышен лимит символов в поле "Электронная почта владельца"(50).',
 
             'pets.required_without_all'=>'Хотя бы одно поле, должно быть заполнено.',
             'pets.alpha'=>'Поле "Кличка питомца" не должно содержать числа и специальные символы.',

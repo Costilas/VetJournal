@@ -16,7 +16,7 @@ class UserFilter extends ModelFilter
     */
     public $relations = [];
 
-    public function search(string $who = null):UserFilter
+    public function search(string $who = null): UserFilter
     {
         switch ($who) {
             case 'active':
