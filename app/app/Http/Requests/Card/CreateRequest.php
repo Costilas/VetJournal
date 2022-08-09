@@ -44,16 +44,27 @@ class CreateRequest extends FormRequest
                 'alpha',
                 'max:30',
             ],
-            "owner.phone" => [
-                'required',
-                'digits:11',
-                'unique:owners,phone',
-                'starts_with:8'
-            ],
             "owner.address" => [
                 'required',
                 'string',
                 'max:255',
+            ],
+            "owner.phone" => [
+                'required_without:owner.additional_phone',
+                'digits:11',
+                'nullable',
+                'unique:owners,phone',
+                'starts_with:8'
+            ],
+            "owner.additional_phone" => [
+                'required_without:owner.phone',
+                'digits_between:5,20',
+                'nullable',
+            ],
+            "owner.email" => [
+                'email',
+                'nullable',
+                'max:50'
             ],
             "pet" => [
                 'required',
@@ -114,12 +125,18 @@ class CreateRequest extends FormRequest
             'owner.last_name.alpha' => 'Поле "Фамилия владельца" не должно содержать числа и специальные символы.',
             'owner.last_name.max' => 'Привышен лимит символов в поле "Фамилия владельца"(30).',
 
-            'owner.phone.required' => 'Необходио заполнить поле "Телефон владельца".',
+            'owner.phone.required_without' => 'Поле "Телефон владельца" должно быть заполнено если Вы не указали дополнительный номер телефона.',
             'owner.phone.digits' => 'Поле "Телефон владельца" должно содержать 11 чисел(Без пробелов и специальных символов).',
             'owner.phone.max' => 'Привышен лимит символов в поле "Телефон владельца"(11).',
             'owner.phone.unique' => "  Данные введенные в поле 'Телефон владельца' уже найдены в списке зарегистрированных пользователей.
                                        Проверьте правильность заполнения поля или проверьте телефон в поиске по существующим.",
             'owner.phone.starts_with' => 'Телефон должен начинаться с "8".',
+
+            'owner.additional_phone.required_without' => 'Поле "Дополнительный телефон" должно быть заполнено если Вы не указали основной номер телефона.',
+            'owner.additional_phone.digits_between' => 'В поле "Дополнительный телефон" должно содержать только числа (Без пробелов и специальных символов) (от 5 до 20 символов).',
+
+            'owner.email.email' => 'Поле "Адрес электронной почты" имеет неверный формат (Пример: hello@example.com).',
+            'owner.email.max' => 'В "Адрес электронной почты" превышен лимит символов (макс. 50).',
 
             'owner.address.required' => 'Необходио заполнить поле "Адрес владельца".',
             'owner.address.string' => 'Поле "Адрес владельца" имеет неверный формат',

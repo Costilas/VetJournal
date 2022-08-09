@@ -38,10 +38,27 @@
             <input type="text" class="form-control @error('phone') is-invalid @enderror"
                    id="phone"
                    name="phone" placeholder="Телефон" aria-label="phone"
-                   required
                    maxlength="11"
                    minlength="11"
                    value="{{session()->getOldInput('phone')??$owner->phone}}">
+        </div>
+        <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
+            <label for="additional_phone">Дополнительный телефон:</label>
+            <input type="text" class="form-control @error('additional_phone') is-invalid @enderror"
+                   id="additional_phone"
+                   name="additional_phone" placeholder="Дополнительный телефон" aria-label="additional_phone"
+                   maxlength="20"
+                   minlength="5"
+                   value="{{session()->getOldInput('additional_phone')??$owner->additional_phone}}">
+        </div>
+        <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
+            <label for="email">Электронная почта:</label>
+            <input type="text" class="form-control @error('email') is-invalid @enderror"
+                   id="email"
+                   name="email" placeholder="example@somemail.com" aria-label="email"
+                   maxlength="50"
+                   minlength="5"
+                   value="{{session()->getOldInput('email')??$owner->email}}">
         </div>
         <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
             <label for="address">Адрес владельца(в произвольной форме):</label>
