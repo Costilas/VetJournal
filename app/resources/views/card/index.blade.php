@@ -40,7 +40,16 @@
                                name="phone" placeholder="Телефон" aria-label="Phone"
                                value="{{request()->input('phone') }}">
                     </div>
-
+                    <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
+                        <input type="text" class="form-control @error('additionalPhone') is-invalid @enderror"
+                               name="additionalPhone" placeholder="Дополнительный телефон" aria-label="additionalPhone"
+                               value="{{request()->input('additionalPhone') }}">
+                    </div>
+                    <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
+                        <input type="text" class="form-control @error('email') is-invalid @enderror"
+                               name="email" placeholder="Электронная почта" aria-label="email"
+                               value="{{request()->input('email') }}">
+                    </div>
                     <div class="col col-xl-12 col-lg-12 col-md-12 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
                         <input type="text" class="form-control @error('pets') is-invalid @enderror"
                                name="pets" placeholder="Кличка питомца" aria-label="pets"

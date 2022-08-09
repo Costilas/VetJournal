@@ -30,9 +30,11 @@
             <div class="card h-100">
                 <div class="card-body d-flex flex-column justify-content-between">
                     <h5 class="text-center"> Владелец:
-                        <strong>{{$owner->last_name}} {{$owner->name}} {{$owner->patronymic}}</strong></h5>
-                    <p class="card-text"> Адрес: <strong>{{$owner->address}}</strong></p>
-                    <p class="card-text"> Телефон: <strong>{{$owner->phone}}</strong></p>
+                        <b>{{$owner->last_name}} {{$owner->name}} {{$owner->patronymic}}</b></h5>
+                    <p class="card-text"> Адрес: <b>{{$owner->address}}</b></p>
+                    <p class="card-text"> Телефон: <b>{{$owner->phone ?? '---'}}</b></p>
+                    <p class="card-text"> Доп. телефон: <b>{{$owner->additional_phone ?? '---'}}</b></p>
+                    <p class="card-text"> Email: <b>{{$owner->email ?? '---'}}</b></p>
                     <div class="text-center xs-mt-3">
                         <a href="{{route('owner.show', ['owner'=>$owner])}}" class="btn btn-primary"><i
                                 class="bi bi-file-earmark-person"></i> Профиль владельца</a>
