@@ -51,13 +51,13 @@ class SearchRequest extends FormRequest
             'additionalPhone' => [
                 'digits_between:1,20',
                 'nullable',
-                'required_without_all:name,patronymic,lastName,phone,email'
+                'required_without_all:name,patronymic,lastName,phone,pets,email'
             ],
             'email' => [
                 'string',
                 'max:50',
                 'nullable',
-                'required_without_all:name,patronymic,lastName,phone,additionalPhone'
+                'required_without_all:name,patronymic,lastName,phone,pets,additionalPhone'
             ],
             'pets' => [
                 'alpha',
