@@ -11,8 +11,8 @@
             <p>Дата регистрации: <b>{{$owner->registerDate()}}</b></p>
             <p>Адрес: <b>{{$owner->address}}</b></p>
             <p>Email: <b>{{$owner->email ?? '---'}}</b></p>
-            </div>
-        </div>
+            @include('layouts.components.whatsAppShareButton')
+        </div>git
     </div>
     <div class="row row-cols-1">
         <div class="col-auto m-auto text-center">
