@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     <script src="https://kit.fontawesome.com/8b6867068a.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <script src="{{asset('js/jquery-3.6.1.min.js')}}"></script>
 </head>
 @yield('layout')
 </html>
