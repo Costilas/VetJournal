@@ -1,5 +1,6 @@
 ol, ul {
     padding-left: 0!important;
+    list-style-position: inside!important;
 }
 
 *.row {
@@ -18,10 +19,6 @@ ol, ul {
 
 .pagination {
     justify-content: center;
-}
-
-.visit_info {
-    width: 100%;
 }
 
 /*Dropdown */

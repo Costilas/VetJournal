@@ -1,6 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);
 ol, ul {
     padding-left: 0!important;
+    list-style-position: inside!important;
 }
 
 *.row {
@@ -19,10 +20,6 @@ ol, ul {
 
 .pagination {
     justify-content: center;
-}
-
-.visit_info {
-    width: 100%;
 }
 
 /*Dropdown */
@@ -215,6 +212,18 @@ header {
     background-color: #2d3748;
 }
 
+.visit_info {
+    width: 100%;
+}
+
+.visit_table_child div{
+    text-align: left;
+}
+
+.visit_table_child {
+    vertical-align: top;
+}
+
 /*General styles*/
 
 /*Header styles*/
@@ -222,6 +231,8 @@ header {
 /*Notes*/
 
 /* Login page */
+
+/* Visit list */
 
 @charset "UTF-8";
 /*!

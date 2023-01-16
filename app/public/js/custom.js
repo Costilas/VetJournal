@@ -1,25 +1,32 @@
-jQuery.noConflict();
+/*
+ * ATTENTION: An "eval-source-map" devtool has been used.
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file with attached SourceMaps in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
 
-jQuery(function ($){
-   disableButtonAfterSubmit($)
-   searchAlerts($);
-});
+/***/ "./resources/js/custom.js":
+/*!********************************!*\
+  !*** ./resources/js/custom.js ***!
+  \********************************/
+/***/ (() => {
 
-function searchAlerts($) {
-    if($('.alert')){
-        let areaToExpand = $('input.is-invalid').parents('.collapse');
-        let id = areaToExpand.attr('id');
-        areaToExpand.toggleClass('show')
+eval("jQuery.noConflict();\njQuery(function ($) {\n  //Disable button after clicking it to avoid multiple requests\n  disableButtonAfterSubmit($); //Inititate smoothscrolling to invalid input with expanding collapsed form it form in it\n\n  searchAlerts($); //WYSIWYG Adjustments\n\n  tinymceInit();\n});\n\nfunction searchAlerts($) {\n  if ($('.alert')) {\n    var areaToExpand = $('input.is-invalid').parents('.collapse');\n    var id = areaToExpand.attr('id');\n    areaToExpand.toggleClass('show');\n    var scrollObject = document.querySelector('#' + id);\n\n    if (scrollObject) {\n      scrollObject.scrollIntoView({\n        behavior: \"smooth\"\n      });\n    }\n  }\n}\n\nfunction disableButtonAfterSubmit($) {\n  $('form').submit(function () {\n    $('[type=\"submit\"]').attr(\"disabled\", true);\n  });\n}\n\nfunction tinymceInit() {\n  tinymce.init({\n    selector: '#treatment, #visit_info',\n    language: 'ru',\n    plugins: 'autolink ' + 'link ' + 'lists ' + 'visualblocks ' + 'casechange ' + 'formatpainter ' + 'linkchecker ' + 'permanentpen ' + 'powerpaste ' + 'table ' + //            'codesample ' +\n    //            'autocorrect ' +\n    //            'charmap ' +\n    //            'a11ychecker ' +\n    //            'tinymcespellchecker ' +\n    //            'export ' +\n    //            'wordcount ' +\n    //           'checklist ' +\n    //           'mediaembed ' +\n    //           'pageembed ' +\n    //           'typography ' +\n    //           'advtable ' +\n    //            'advcode ' +\n    //            'editimage ' +\n    //            'tableofcontents ' +\n    //           'footnotes ' +\n    //           'mergetags ' +\n    //            'emoticons ' +\n    //            'image ' +\n    //            'media ' +\n    //            'searchreplace ' +\n    //            'anchor ' +\n    'inlinecss',\n    toolbar: 'undo redo ' + '| align lineheight ' + '| checklist numlist bullist indent outdent ' + '| bold italic underline strikethrough ' + '| link table ' + '| blocks fontfamily fontsize ' + '| removeformat',\n    //            + '| spellcheckdialog a11ycheck typography '\n    //            + '| addcomment showcomments '\n    //            + '| emoticons charmap '\n    font_size_formats: '8px 10px 12px 14px 16px 18px 24px',\n    menubar: //            'file ' +\n    'format'\n  });\n}//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvanMvY3VzdG9tLmpzP2IwYmQiXSwibmFtZXMiOlsialF1ZXJ5Iiwibm9Db25mbGljdCIsIiQiLCJkaXNhYmxlQnV0dG9uQWZ0ZXJTdWJtaXQiLCJzZWFyY2hBbGVydHMiLCJ0aW55bWNlSW5pdCIsImFyZWFUb0V4cGFuZCIsInBhcmVudHMiLCJpZCIsImF0dHIiLCJ0b2dnbGVDbGFzcyIsInNjcm9sbE9iamVjdCIsImRvY3VtZW50IiwicXVlcnlTZWxlY3RvciIsInNjcm9sbEludG9WaWV3IiwiYmVoYXZpb3IiLCJzdWJtaXQiLCJ0aW55bWNlIiwiaW5pdCIsInNlbGVjdG9yIiwibGFuZ3VhZ2UiLCJwbHVnaW5zIiwidG9vbGJhciIsImZvbnRfc2l6ZV9mb3JtYXRzIiwibWVudWJhciJdLCJtYXBwaW5ncyI6IkFBQUFBLE1BQU0sQ0FBQ0MsVUFBUDtBQUVBRCxNQUFNLENBQUMsVUFBVUUsQ0FBVixFQUFZO0FBQ2Y7QUFDREMsRUFBQUEsd0JBQXdCLENBQUNELENBQUQsQ0FBeEIsQ0FGZ0IsQ0FHZjs7QUFDREUsRUFBQUEsWUFBWSxDQUFDRixDQUFELENBQVosQ0FKZ0IsQ0FLZjs7QUFDREcsRUFBQUEsV0FBVztBQUNiLENBUEssQ0FBTjs7QUFTQSxTQUFTRCxZQUFULENBQXNCRixDQUF0QixFQUF5QjtBQUNyQixNQUFHQSxDQUFDLENBQUMsUUFBRCxDQUFKLEVBQWU7QUFDWCxRQUFJSSxZQUFZLEdBQUdKLENBQUMsQ0FBQyxrQkFBRCxDQUFELENBQXNCSyxPQUF0QixDQUE4QixXQUE5QixDQUFuQjtBQUNBLFFBQUlDLEVBQUUsR0FBR0YsWUFBWSxDQUFDRyxJQUFiLENBQWtCLElBQWxCLENBQVQ7QUFDQUgsSUFBQUEsWUFBWSxDQUFDSSxXQUFiLENBQXlCLE1BQXpCO0FBRUEsUUFBSUMsWUFBWSxHQUFHQyxRQUFRLENBQUNDLGFBQVQsQ0FBdUIsTUFBTUwsRUFBN0IsQ0FBbkI7O0FBQ0EsUUFBR0csWUFBSCxFQUFpQjtBQUNiQSxNQUFBQSxZQUFZLENBQUNHLGNBQWIsQ0FBNEI7QUFBQ0MsUUFBQUEsUUFBUSxFQUFFO0FBQVgsT0FBNUI7QUFDSDtBQUNKO0FBQ0o7O0FBRUQsU0FBU1osd0JBQVQsQ0FBa0NELENBQWxDLEVBQXFDO0FBQ2pDQSxFQUFBQSxDQUFDLENBQUMsTUFBRCxDQUFELENBQVVjLE1BQVYsQ0FBaUIsWUFBVztBQUN4QmQsSUFBQUEsQ0FBQyxDQUFDLGlCQUFELENBQUQsQ0FBcUJPLElBQXJCLENBQTBCLFVBQTFCLEVBQXNDLElBQXRDO0FBQ0gsR0FGRDtBQUdIOztBQUVELFNBQVNKLFdBQVQsR0FBdUI7QUFDbkJZLEVBQUFBLE9BQU8sQ0FBQ0MsSUFBUixDQUFhO0FBQ1RDLElBQUFBLFFBQVEsRUFBRSx5QkFERDtBQUVUQyxJQUFBQSxRQUFRLEVBQUUsSUFGRDtBQUdUQyxJQUFBQSxPQUFPLEVBQ0gsY0FDQSxPQURBLEdBRUEsUUFGQSxHQUdBLGVBSEEsR0FJQSxhQUpBLEdBS0EsZ0JBTEEsR0FNQSxjQU5BLEdBT0EsZUFQQSxHQVFBLGFBUkEsR0FTQSxRQVRBLEdBVVo7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDWSxlQXBDSztBQXFDVEMsSUFBQUEsT0FBTyxFQUNILGVBQ0EscUJBREEsR0FFQSw2Q0FGQSxHQUdBLHdDQUhBLEdBSUEsZUFKQSxHQUtBLCtCQUxBLEdBTUEsZ0JBNUNLO0FBNkNqQjtBQUNBO0FBQ0E7QUFDUUMsSUFBQUEsaUJBQWlCLEVBQUUsbUNBaERWO0FBaURUQyxJQUFBQSxPQUFPLEVBQ2Y7QUFDWTtBQW5ESyxHQUFiO0FBcURIIiwic291cmNlc0NvbnRlbnQiOlsialF1ZXJ5Lm5vQ29uZmxpY3QoKTtcblxualF1ZXJ5KGZ1bmN0aW9uICgkKXtcbiAgICAvL0Rpc2FibGUgYnV0dG9uIGFmdGVyIGNsaWNraW5nIGl0IHRvIGF2b2lkIG11bHRpcGxlIHJlcXVlc3RzXG4gICBkaXNhYmxlQnV0dG9uQWZ0ZXJTdWJtaXQoJClcbiAgICAvL0luaXRpdGF0ZSBzbW9vdGhzY3JvbGxpbmcgdG8gaW52YWxpZCBpbnB1dCB3aXRoIGV4cGFuZGluZyBjb2xsYXBzZWQgZm9ybSBpdCBmb3JtIGluIGl0XG4gICBzZWFyY2hBbGVydHMoJCk7XG4gICAgLy9XWVNJV1lHIEFkanVzdG1lbnRzXG4gICB0aW55bWNlSW5pdCgpXG59KTtcblxuZnVuY3Rpb24gc2VhcmNoQWxlcnRzKCQpIHtcbiAgICBpZigkKCcuYWxlcnQnKSl7XG4gICAgICAgIGxldCBhcmVhVG9FeHBhbmQgPSAkKCdpbnB1dC5pcy1pbnZhbGlkJykucGFyZW50cygnLmNvbGxhcHNlJyk7XG4gICAgICAgIGxldCBpZCA9IGFyZWFUb0V4cGFuZC5hdHRyKCdpZCcpO1xuICAgICAgICBhcmVhVG9FeHBhbmQudG9nZ2xlQ2xhc3MoJ3Nob3cnKVxuXG4gICAgICAgIGxldCBzY3JvbGxPYmplY3QgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKCcjJyArIGlkKTtcbiAgICAgICAgaWYoc2Nyb2xsT2JqZWN0KSB7XG4gICAgICAgICAgICBzY3JvbGxPYmplY3Quc2Nyb2xsSW50b1ZpZXcoe2JlaGF2aW9yOiBcInNtb290aFwifSk7XG4gICAgICAgIH1cbiAgICB9XG59XG5cbmZ1bmN0aW9uIGRpc2FibGVCdXR0b25BZnRlclN1Ym1pdCgkKSB7XG4gICAgJCgnZm9ybScpLnN1Ym1pdChmdW5jdGlvbiAoKXtcbiAgICAgICAgJCgnW3R5cGU9XCJzdWJtaXRcIl0nKS5hdHRyKFwiZGlzYWJsZWRcIiwgdHJ1ZSlcbiAgICB9KVxufVxuXG5mdW5jdGlvbiB0aW55bWNlSW5pdCgpIHtcbiAgICB0aW55bWNlLmluaXQoe1xuICAgICAgICBzZWxlY3RvcjogJyN0cmVhdG1lbnQsICN2aXNpdF9pbmZvJyxcbiAgICAgICAgbGFuZ3VhZ2U6ICdydScsXG4gICAgICAgIHBsdWdpbnM6XG4gICAgICAgICAgICAnYXV0b2xpbmsgJyArXG4gICAgICAgICAgICAnbGluayAnICtcbiAgICAgICAgICAgICdsaXN0cyAnICtcbiAgICAgICAgICAgICd2aXN1YWxibG9ja3MgJyArXG4gICAgICAgICAgICAnY2FzZWNoYW5nZSAnICtcbiAgICAgICAgICAgICdmb3JtYXRwYWludGVyICcgK1xuICAgICAgICAgICAgJ2xpbmtjaGVja2VyICcgK1xuICAgICAgICAgICAgJ3Blcm1hbmVudHBlbiAnICtcbiAgICAgICAgICAgICdwb3dlcnBhc3RlICcgK1xuICAgICAgICAgICAgJ3RhYmxlICcgK1xuLy8gICAgICAgICAgICAnY29kZXNhbXBsZSAnICtcbi8vICAgICAgICAgICAgJ2F1dG9jb3JyZWN0ICcgK1xuLy8gICAgICAgICAgICAnY2hhcm1hcCAnICtcbi8vICAgICAgICAgICAgJ2ExMXljaGVja2VyICcgK1xuLy8gICAgICAgICAgICAndGlueW1jZXNwZWxsY2hlY2tlciAnICtcbi8vICAgICAgICAgICAgJ2V4cG9ydCAnICtcbi8vICAgICAgICAgICAgJ3dvcmRjb3VudCAnICtcbi8vICAgICAgICAgICAnY2hlY2tsaXN0ICcgK1xuLy8gICAgICAgICAgICdtZWRpYWVtYmVkICcgK1xuLy8gICAgICAgICAgICdwYWdlZW1iZWQgJyArXG4vLyAgICAgICAgICAgJ3R5cG9ncmFwaHkgJyArXG4vLyAgICAgICAgICAgJ2FkdnRhYmxlICcgK1xuLy8gICAgICAgICAgICAnYWR2Y29kZSAnICtcbi8vICAgICAgICAgICAgJ2VkaXRpbWFnZSAnICtcbi8vICAgICAgICAgICAgJ3RhYmxlb2Zjb250ZW50cyAnICtcbi8vICAgICAgICAgICAnZm9vdG5vdGVzICcgK1xuLy8gICAgICAgICAgICdtZXJnZXRhZ3MgJyArXG4vLyAgICAgICAgICAgICdlbW90aWNvbnMgJyArXG4vLyAgICAgICAgICAgICdpbWFnZSAnICtcbi8vICAgICAgICAgICAgJ21lZGlhICcgK1xuLy8gICAgICAgICAgICAnc2VhcmNocmVwbGFjZSAnICtcbi8vICAgICAgICAgICAgJ2FuY2hvciAnICtcbiAgICAgICAgICAgICdpbmxpbmVjc3MnLFxuICAgICAgICB0b29sYmFyOlxuICAgICAgICAgICAgJ3VuZG8gcmVkbyAnICtcbiAgICAgICAgICAgICd8IGFsaWduIGxpbmVoZWlnaHQgJyArXG4gICAgICAgICAgICAnfCBjaGVja2xpc3QgbnVtbGlzdCBidWxsaXN0IGluZGVudCBvdXRkZW50ICcgK1xuICAgICAgICAgICAgJ3wgYm9sZCBpdGFsaWMgdW5kZXJsaW5lIHN0cmlrZXRocm91Z2ggJyArXG4gICAgICAgICAgICAnfCBsaW5rIHRhYmxlICcgK1xuICAgICAgICAgICAgJ3wgYmxvY2tzIGZvbnRmYW1pbHkgZm9udHNpemUgJyArXG4gICAgICAgICAgICAnfCByZW1vdmVmb3JtYXQnLFxuLy8gICAgICAgICAgICArICd8IHNwZWxsY2hlY2tkaWFsb2cgYTExeWNoZWNrIHR5cG9ncmFwaHkgJ1xuLy8gICAgICAgICAgICArICd8IGFkZGNvbW1lbnQgc2hvd2NvbW1lbnRzICdcbi8vICAgICAgICAgICAgKyAnfCBlbW90aWNvbnMgY2hhcm1hcCAnXG4gICAgICAgIGZvbnRfc2l6ZV9mb3JtYXRzOiAnOHB4IDEwcHggMTJweCAxNHB4IDE2cHggMThweCAyNHB4JyxcbiAgICAgICAgbWVudWJhcjpcbi8vICAgICAgICAgICAgJ2ZpbGUgJyArXG4gICAgICAgICAgICAnZm9ybWF0J1xuICAgIH0pO1xufVxuIl0sImZpbGUiOiIuL3Jlc291cmNlcy9qcy9jdXN0b20uanMuanMiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./resources/js/custom.js\n");
 
-        let scrollObject = document.querySelector('#' + id);
-        if(scrollObject) {
-            scrollObject.scrollIntoView({behavior: "smooth"});
-        }
-    }
-}
+/***/ })
 
-function disableButtonAfterSubmit($) {
-    $('form').submit(function (){
-        $('[type="submit"]').attr("disabled", true)
-    })
-}
+/******/ 	});
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval-source-map devtool is used.
+/******/ 	var __webpack_exports__ = {};
+/******/ 	__webpack_modules__["./resources/js/custom.js"]();
+/******/ 	
+/******/ })()
+;

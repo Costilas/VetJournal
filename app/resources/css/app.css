@@ -9,3 +9,6 @@
 
 /* Login page */
 @import url('login/style.css');
+
+/* Visit list */
+@import url('visits/style.css');

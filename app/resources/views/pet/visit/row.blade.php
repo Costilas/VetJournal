@@ -17,11 +17,15 @@
 </tr>
 <tr class="collapse bg-light" id="oldVisit{{$visit->id}}">
     <td class="m-0 border-1 visit_table_child" colspan="4">
-        <p><strong>Информация о приеме</strong></p>
-        {{$visit->visit_info}}
+        <p><strong>Информация о приеме:</strong></p>
+        <div>
+            {!! $visit->visit_info !!}
+        </div>
     </td>
     <td class="m-0 border-1 visit_table_child" colspan="2">
         <p><strong>Проведенное лечение:</strong></p>
-        {{$visit->treatment}}
+        <div>
+            {!! $visit->treatment !!}
+        </div>
     </td>
 </tr>

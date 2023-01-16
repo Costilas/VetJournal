@@ -1,0 +1,11 @@
+.visit_info {
+    width: 100%;
+}
+
+.visit_table_child div{
+    text-align: left;
+}
+
+.visit_table_child {
+    vertical-align: top;
+}

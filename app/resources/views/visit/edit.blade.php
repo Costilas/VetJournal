@@ -68,7 +68,6 @@
                                       style=" height: 250px;">{{session()->getOldInput('visit.treatment')??$visit->treatment}}</textarea>
                         </div>
                     </div>
-
                     <button type="submit" class="btn btn-primary m-3"><i class="bi bi-plus-lg"></i> Сохранить изменения
                     </button>
                     <a class="btn btn-info" href="{{route('pet.show', ['pet'=>$visit->pet->id])}}">К пациенту</a>
