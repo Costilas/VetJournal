@@ -10,6 +10,7 @@ class SearchCardAction
     {
         return Owner::filter($validatedData)
             ->with('pets.kind')
+            ->latest('updated_at')
             ->paginate(5)
             ->withQueryString();
     }

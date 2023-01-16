@@ -14,13 +14,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-       /*$this->call([
+       $this->call([
             UserSeeder::class,
             KindSeeder::class,
             GenderSeeder::class,
             StatusSeeder::class,
             CastrationConditionSeeder::class,
-        ]);*/
+        ]);
 
        $this->call([
             CreateProjectRoles::class,
