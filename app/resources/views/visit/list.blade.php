@@ -3,6 +3,7 @@
         <table class="table table-striped table-hover">
             <tr class="align-middle text-center">
                 <th scope="col">Дата приема:</th>
+                <th scope="col">Фамилия владельца:</th>
                 <th scope="col">Пациент:</th>
                 <th scope="col">Предварительный диагноз:</th>
                 <th scope="col">Врач:</th>
