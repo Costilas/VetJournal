@@ -8,7 +8,7 @@ class SearchVisitsAction
 {
     public function __invoke(array $searchDateRange)
     {
-        return Visit::filter($searchDateRange)->with('pet', 'user')
+        return Visit::filter($searchDateRange)->with('pet.owner', 'user')
             ->orderBy('id', 'DESC')
             ->paginate(10)
             ->withQueryString();
