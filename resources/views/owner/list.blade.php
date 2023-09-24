@@ -12,7 +12,7 @@
             </tr>
             @if($owners->count())
                 @foreach($owners as $owner)
-                    {{view('card.row', compact('owner'))}}
+                    {{view('owner.row', compact('owner'))}}
                 @endforeach
             @else
                 <tr class="text-center text-break">

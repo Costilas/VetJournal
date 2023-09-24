@@ -17,7 +17,7 @@
                     <a class=" btn btn-menu header-mb-3" href="{{route('notes')}}">
                         <li class="nav-item">Заметки</li>
                     </a>
-                    <a class="btn btn-menu header-mb-3" href="{{route('cards')}}">
+                    <a class="btn btn-menu header-mb-3" href="{{route('owners')}}">
                         <li class="nav-item">Картотека</li>
                     </a>
                     <a class="btn btn-menu header-mb-3" href="{{route('visits')}}">

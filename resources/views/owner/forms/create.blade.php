@@ -1,5 +1,5 @@
 <div class="card card-body">
-    <form action="{{route('card.store')}}" method="POST">
+    <form action="{{route('owner.store')}}" method="POST">
         @csrf
         <div class="row row-cols-1">
             <div class="col-12">
@@ -100,7 +100,7 @@
                 <input type="text"
                        id="pet_name"
                        class="form-control @error('pet.pet_name') is-invalid @enderror"
-                       name="pet[pet_name]"
+                       name="pets[0][pet_name]"
                        placeholder="Боня"
                        aria-label="Pet name"
                        maxlength="30"
@@ -112,16 +112,16 @@
                 <input type="date"
                        id="birth"
                        class="form-control form @error('pet.birth') is-invalid @enderror"
-                       name="pet[birth]"
+                       name="pets[0][birth]"
                        aria-label="birth"
                        max="{{$dateInputMaxValue}}"
                        required
                        value="{{session()->getOldInput('pet.birth')}}">
             </div>
             <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
-                <label for="pet[kind_id]">Вид питомца:</label>
-                <select id=""
-                        name="pet[kind_id]"
+                <label for="kind">Вид питомца:</label>
+                <select id="kind"
+                        name="pets[0][kind_id]"
                         class="form-select @error('pet.kind_id') is-invalid @enderror"
                         required>
                     @foreach($kinds as $kind)
@@ -133,11 +133,12 @@
                 </select>
             </div>
             <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
-                <label for="pet[gender_id]">Пол питомца:</label>
+                <label for="gender">Пол питомца:</label>
                 @foreach($genders as $gender)
                     <br><input type="radio"
+                               id="gender"
                                class="form-check-input @error('pet.gender_id') is-invalid @enderror"
-                               name="pet[gender_id]"
+                               name="pets[0][gender_id]"
                                {{$gender->id == session()->getOldInput('pet.gender_id')?'checked':''}}
                                value="{{$gender->id}}"
                                required>
@@ -145,11 +146,12 @@
                 @endforeach
             </div>
             <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
-                <label for="pet[gender_id]">Кастрация:</label>
+                <label for="castration">Кастрация:</label>
                 @foreach($castrationConditions as $condition)
                     <br><input type="radio"
-                               class="form-check-input @error('pet.gender_id') is-invalid @enderror"
-                               name="pet[castration_condition_id]"
+                               id="castration"
+                               class="form-check-input @error('pet.castration_condition_id') is-invalid @enderror"
+                               name="pets[0][castration_condition_id]"
                                {{$condition->id == session()->getOldInput('pet.castration_condition_id')?'checked':''}}
                                value="{{$condition->id}}"
                                required>

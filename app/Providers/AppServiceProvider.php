@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('possibleErrors', Pet::whereDoesntHave('visits')->count());
         });
 
-        view()->composer(['card.forms.create', 'owner.pet.forms.add', 'pet.edit'], function ($view) {
+        view()->composer(['owner.forms.create', 'owner.pet.forms.add', 'pet.edit'], function ($view) {
             $view->with('genders', Gender::all());
             $view->with('kinds', Kind::all());
             $view->with('castrationConditions', CastrationCondition::all());
@@ -61,7 +61,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with('currentUser', Auth::user());
         });
 
-        view()->composer(['card.forms.create', 'owner.pet.forms.add', 'pet.visit.forms.add', 'pet.visit.forms.search', 'pet.edit', 'visit.index'], function ($view) {
+        view()->composer(['owner.forms.create', 'owner.pet.forms.add', 'pet.visit.forms.add', 'pet.visit.forms.search', 'pet.edit', 'visit.index'], function ($view) {
             $view->with('dateInputMaxValue', Carbon::create('today')->format('Y-m-d'));
         });
     }

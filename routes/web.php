@@ -27,10 +27,10 @@ Route::group(['middleware' => 'auth'], function () {
     //Owner
     Route::controller(App\Http\Controllers\OwnerController::class)->group(function () {
         Route::get('/owner/{owner}/show', 'show')->name('owner.show')->where('owner', '[0-9]+');
-        Route::get('/cards','index')->name('cards');
-        Route::get('/card/search', 'search')->name('card.search');
+        Route::get('/owners','index')->name('owners');
+        Route::get('/owner/search', 'search')->name('owner.search');
         Route::post('/owner/{owner}/update', 'update')->name('owner.update')->where('owner', '[0-9]+');
-        Route::post('/card/store', 'store')->name('card.store');
+        Route::post('/owner/store', 'store')->name('owner.store');
     });
 
     //Visit
