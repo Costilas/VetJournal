@@ -12,7 +12,7 @@
                  id="navbarTogglerDemo01">
                 <ul class="navbar-nav">
                     <div class="text-center text-light d-flex align-items-center justify-content-center header-mb-3">
-                        Вы вошли как: {{auth()->user()->email}}
+                        Вы вошли как: {{$currentUser->email}}
                     </div>
                     <a class=" btn btn-menu header-mb-3" href="{{route('notes')}}">
                         <li class="nav-item">Заметки</li>
@@ -38,7 +38,7 @@
                             <li class="nav-item">Сотрудники</li>
                         </a>
                     @endcan
-                    @if(auth()->check())
+                    @if($authenticated)
                         <a class="btn btn-menu" href="{{route('logout')}}">
                             <li class="nav-item">
                                 <i class="bi bi-box-arrow-left"></i>

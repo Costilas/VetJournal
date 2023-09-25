@@ -5,6 +5,7 @@ namespace App\Services\Owner;
 use App\Http\Requests\Owner\SearchExistingOwnerRequest;
 use App\Http\Requests\Owner\CreateNewOwnerRequest;
 use App\Http\Requests\Owner\EditExistingOwnerRequest;
+use App\Http\Requests\Pet\AttachNewPetsToOwnerRequest;
 use App\Models\Owner;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -12,19 +13,22 @@ use Illuminate\Support\Facades\Log;
 
 class OwnerService
 {
-    public function searchExistingOwnerWithPets(SearchExistingOwnerRequest $searchExistingCardRequest)
+    public function getOwner(int $id): Owner
+    {
+        return Owner::findOrFail($id);
+    }
+
+    public function searchExistingOwnerWithPets(SearchExistingOwnerRequest $searchExistingCardRequest, int $paginationLimit)
     {
         return Owner::filter($searchExistingCardRequest->validated())
             ->with('pets.kind')
             ->latest('updated_at')
-            ->paginate(5)
+            ->paginate($paginationLimit)
             ->withQueryString();
     }
 
     public function createNewOwnerWithPets(CreateNewOwnerRequest $createNewOwnerRequest): ?Owner
     {
-
-
         DB::beginTransaction();
 
         try {
@@ -43,8 +47,36 @@ class OwnerService
         return $newOwner;
     }
 
-    public function editExistingOwner(Owner $owner, EditExistingOwnerRequest $editExistingOwnerRequest): bool
+    public function attachNewPetsToOwner(AttachNewPetsToOwnerRequest $attachNewPetsToOwnerRequest, int $id): bool
     {
+        try {
+            $validatedData = $attachNewPetsToOwnerRequest->validated();
+            $existingOwner = Owner::findOrFail($id);
+            $attachResult = true;
+
+            DB::beginTransaction();
+
+            $existingOwner->pets()->createMany($validatedData['pets']);
+
+            DB::commit();
+        }catch (Exception $e) {
+            Log::debug($e->getMessage());
+            DB::rollBack();
+            $attachResult = false;
+        }
+
+        return $attachResult;
+    }
+
+    public function getOwnerPets(Owner $owner, int $paginationLimit)
+    {
+        return $owner->pets()->with(['kind', 'gender', 'castration'])->paginate($paginationLimit);
+    }
+
+    public function editExistingOwner(EditExistingOwnerRequest $editExistingOwnerRequest, int $id): bool
+    {
+        $owner = Owner::findOrFail($id);
+
         return $owner->update($editExistingOwnerRequest->validated());
     }
 

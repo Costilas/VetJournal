@@ -36,9 +36,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrap();
 
-
         view()->composer(['layouts.header'], function ($view) {
             $view->with('possibleErrors', Pet::whereDoesntHave('visits')->count());
+            $view->with('currentUser', auth()->user());
+            $view->with('authenticated', auth()->check());
         });
 
         view()->composer(['owner.forms.create', 'owner.pet.forms.add', 'pet.edit'], function ($view) {

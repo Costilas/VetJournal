@@ -99,34 +99,34 @@
                 <label for="pet_name">Кличка питомца:</label>
                 <input type="text"
                        id="pet_name"
-                       class="form-control @error('pet.pet_name') is-invalid @enderror"
+                       class="form-control @error('pets.0.pet_name') is-invalid @enderror"
                        name="pets[0][pet_name]"
                        placeholder="Боня"
                        aria-label="Pet name"
                        maxlength="30"
                        required
-                       value="{{session()->getOldInput('pet.pet_name')}}">
+                       value="{{session()->getOldInput('pets.0.pet_name')}}">
             </div>
             <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
                 <label for="birth">Дата рождения питомца:</label>
                 <input type="date"
                        id="birth"
-                       class="form-control form @error('pet.birth') is-invalid @enderror"
+                       class="form-control form @error('pets.0.birth') is-invalid @enderror"
                        name="pets[0][birth]"
                        aria-label="birth"
                        max="{{$dateInputMaxValue}}"
                        required
-                       value="{{session()->getOldInput('pet.birth')}}">
+                       value="{{session()->getOldInput('pets.0.birth')}}">
             </div>
             <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
                 <label for="kind">Вид питомца:</label>
                 <select id="kind"
                         name="pets[0][kind_id]"
-                        class="form-select @error('pet.kind_id') is-invalid @enderror"
+                        class="form-select @error('pets.0.kind_id') is-invalid @enderror"
                         required>
                     @foreach($kinds as $kind)
                         <option class="mb-sm-5"
-                                {{$kind->id == session()->getOldInput('pet.kind_id')?'selected':''}}
+                                {{$kind->id == session()->getOldInput("pets.0.kind_id")?'selected':''}}
                                 value="{{$kind->id}}">{{$kind->kind}}
                         </option>
                     @endforeach
@@ -137,9 +137,9 @@
                 @foreach($genders as $gender)
                     <br><input type="radio"
                                id="gender"
-                               class="form-check-input @error('pet.gender_id') is-invalid @enderror"
+                               class="form-check-input @error("pets.0.gender_id") is-invalid @enderror"
                                name="pets[0][gender_id]"
-                               {{$gender->id == session()->getOldInput('pet.gender_id')?'checked':''}}
+                               {{$gender->id == session()->getOldInput("pets.0.gender_id")?'checked':''}}
                                value="{{$gender->id}}"
                                required>
                     <i class="bi bi-gender-{{$gender->icon}}"></i>  {{$gender->gender}}
@@ -147,12 +147,12 @@
             </div>
             <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
                 <label for="castration">Кастрация:</label>
-                @foreach($castrationConditions as $condition)
+                @foreach($castrationConditions as $key => $condition)
                     <br><input type="radio"
                                id="castration"
-                               class="form-check-input @error('pet.castration_condition_id') is-invalid @enderror"
+                               class="form-check-input @error("pets.0.castration_condition_id") is-invalid @enderror"
                                name="pets[0][castration_condition_id]"
-                               {{$condition->id == session()->getOldInput('pet.castration_condition_id')?'checked':''}}
+                               {{$condition->id == session()->getOldInput("pets.0.castration_condition_id")?'checked':''}}
                                value="{{$condition->id}}"
                                required>
                     {!!$condition->icon!!} {{$condition->condition}}

@@ -1,4 +1,4 @@
-<form action="{{route('owner.update', ['owner'=>$owner])}}" method="POST">
+<form action="{{route('owner.update', ['id'=>$owner->id])}}" method="POST">
     @csrf
     <div class="row row-cols-1">
         <div class="col-12">
