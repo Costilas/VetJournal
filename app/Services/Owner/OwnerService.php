@@ -5,7 +5,7 @@ namespace App\Services\Owner;
 use App\Http\Requests\Owner\SearchExistingOwnerRequest;
 use App\Http\Requests\Owner\CreateNewOwnerRequest;
 use App\Http\Requests\Owner\EditExistingOwnerRequest;
-use App\Http\Requests\Pet\AttachNewPetsToOwnerRequest;
+use App\Http\Requests\Owner\AttachNewPetsToOwnerRequest;
 use App\Models\Owner;
 use Exception;
 use Illuminate\Support\Facades\DB;

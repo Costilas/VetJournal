@@ -38,7 +38,7 @@
                     <p class="card-text"> Доп. телефон: <b>{{$owner->additional_phone ?? '---'}}</b></p>
                     <p class="card-text"> Email: <b>{{$owner->email ?? '---'}}</b></p>
                     <div class="text-center xs-mt-3">
-                        <a href="{{route('owner.show', ['id'=>$owner->id])}}" class="btn btn-primary"><i
+                        <a href="{{route('owners.show', ['id'=>$owner->id])}}" class="btn btn-primary"><i
                                 class="bi bi-file-earmark-person"></i> Профиль владельца</a>
                     </div>
                 </div>

@@ -17,8 +17,7 @@
             <h2 class="text-center">Поиск по существующим:</h2>
         </div>
         <div class="col col-lg-10 m-auto">
-            <form class="text-center m-auto" method="GET" action="{{route('owner.search')}}">
-                @csrf
+            <form class="text-center m-auto" method="GET" action="{{route('owners.search')}}">
                 <div class="row row-cols-auto justify-content-center">
                     <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
                         <input type="text" class="form-control @error('lastName') is-invalid @enderror"
@@ -58,8 +57,8 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary m-3"><i class="bi bi-search"></i> Поиск</button>
-                @if(Route::currentRouteName() === 'card.search')
-                    <a class="btn btn-secondary xs-m-1" href="{{route('cards')}}"><i class="bi bi-x-octagon"></i> Сброс фильтров поиска</a>
+                @if(Route::currentRouteName() === 'owners.search')
+                    <a class="btn btn-secondary xs-m-1" href="{{route('owners')}}"><i class="bi bi-x-octagon"></i> Сброс фильтров поиска</a>
                 @endif
             </form>
         </div>

@@ -6,7 +6,7 @@ use App\Actions\Common\DescribeFilterAction;
 use App\Http\Requests\Owner\CreateNewOwnerRequest;
 use App\Http\Requests\Owner\EditExistingOwnerRequest;
 use App\Http\Requests\Owner\SearchExistingOwnerRequest;
-use App\Http\Requests\Pet\AttachNewPetsToOwnerRequest;
+use App\Http\Requests\Owner\AttachNewPetsToOwnerRequest;
 use App\Services\Owner\OwnerService;
 use Illuminate\Http\RedirectResponse;
 
@@ -22,7 +22,7 @@ class OwnerController extends Controller
         return view('owner.index');
     }
 
-    public function showOwnerPage(int $id)
+    public function show(int $id)
     {
         $owner = $this->ownerService->getOwner($id);
         $ownerPets = $this->ownerService->getOwnerPets($owner, 5);
@@ -45,12 +45,12 @@ class OwnerController extends Controller
         ]);
     }
 
-    public function updateExistingOwner(EditExistingOwnerRequest $request, int $id): RedirectResponse
+    public function update(EditExistingOwnerRequest $request, int $id): RedirectResponse
     {
         $successMessage = 'Профиль владельца успешно отредактирован!';
         $errorMessage = 'Ошибка при редактировании профиля владельца. Перезагрузите страницу и попробуйте снова.';
 
-        $redirect = redirect()->route('owner.show', ['id' => $id]);
+        $redirect = redirect()->route('owners.show', ['id' => $id]);
 
         if ($this->ownerService->editExistingOwner($request, $id)) {
             $redirect->with('success', $successMessage);
@@ -61,10 +61,10 @@ class OwnerController extends Controller
         return $redirect;
     }
 
-    public function createNewOwner(CreateNewOwnerRequest $request): RedirectResponse
+    public function store(CreateNewOwnerRequest $request): RedirectResponse
     {
         $redirectErrorRoute = 'owners';
-        $redirectSuccessRoute = 'owner.show';
+        $redirectSuccessRoute = 'owners.show';
 
         $successMessage = 'Новая карточка успешно создана.';
         $errorMessage = 'Создание новой карточки не удалось.';
@@ -78,13 +78,13 @@ class OwnerController extends Controller
         }
     }
 
-    public function attachNewPet(AttachNewPetsToOwnerRequest $attachNewPetsToOwnerRequest, int $id): RedirectResponse
+    public function attach(AttachNewPetsToOwnerRequest $attachNewPetsToOwnerRequest, int $id): RedirectResponse
     {
         $successMessage = 'Новый питомец успешно добавлен.';
         $errorMessage = 'При добавлении нового питомца произошла ошибка.';
 
         $attachmentResult = $this->ownerService->attachNewPetsToOwner($attachNewPetsToOwnerRequest, $id);
-        $redirect = redirect()->route('owner.show', ['id' => $id]);
+        $redirect = redirect()->route('owners.show', ['id' => $id]);
 
         if (!empty($attachmentResult)) {
             $redirect->with('success', $successMessage);

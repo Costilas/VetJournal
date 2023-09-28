@@ -25,12 +25,14 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Owner
     Route::controller(App\Http\Controllers\OwnerController::class)->group(function () {
-        Route::get('/owner/{id}/show', 'showOwnerPage')->name('owner.show')->where('id', '[0-9]+');
-        Route::get('/owners','index')->name('owners');
-        Route::get('/owner/search', 'search')->name('owner.search');
-        Route::post('/owner/{id}/update', 'updateExistingOwner')->name('owner.update')->where('id', '[0-9]+');
-        Route::post('/owner/store', 'createNewOwner')->name('owner.store');
-        Route::post('/owner/{id}/attachNewPet', 'attachNewPet')->name('owner.attachNewPet')->where('id', '[0-9]+');
+        Route::group(['prefix' => 'owners'], function () {
+            Route::get('/','index')->name('owners');
+            Route::get('/{id}/show', 'show')->name('owners.show')->where('id', '[0-9]+');
+            Route::get('/search', 'search')->name('owners.search');
+            Route::post('/store', 'store')->name('owners.store');
+            Route::post('/{id}/update', 'update')->name('owners.update')->where('id', '[0-9]+');
+            Route::post('/{id}/attach', 'attach')->name('owners.attach.pet')->where('id', '[0-9]+');
+        });
     });
 
     //Visit

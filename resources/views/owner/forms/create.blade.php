@@ -1,5 +1,5 @@
 <div class="card card-body">
-    <form action="{{route('owner.store')}}" method="POST">
+    <form action="{{route('owners.store')}}" method="POST">
         @csrf
         <div class="row row-cols-1">
             <div class="col-12">
