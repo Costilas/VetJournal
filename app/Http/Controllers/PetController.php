@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Pet\AddPetToOwnerAction;
-use App\Actions\Pet\SearchPetVisitsAction;
-use App\Actions\Pet\ShowPetAction;
-use App\Actions\Pet\UpdatePetAction;
-use App\Http\Requests\Pet\AddRequest;
-use App\Http\Requests\Pet\EditRequest;
-use App\Http\Requests\Pet\SearchRequest;
-use App\Models\Pet;
+use App\Actions\Common\DescribeFilterAction;
+use App\Http\Requests\Pet\EditExistingPetRequest;
+use App\Http\Requests\Pet\SearchPetVisitsRequest;
 use App\Services\Pet\PetService;
+use Illuminate\Http\RedirectResponse;
 
 class PetController extends Controller
 {
@@ -30,23 +26,41 @@ class PetController extends Controller
         ]);
     }
 
-    //TODO
-    public function searchVisits(SearchRequest $request, Pet $pet, SearchPetVisitsAction $searchPetVisitsAction)
+    public function searchVisits(SearchPetVisitsRequest $request, DescribeFilterAction $filterDescriber, int $id)
     {
-       return $searchPetVisitsAction($pet, $request->validated());
-    }
+        $pet = $this->petService->getPet($id, ['gender', 'kind', 'owner', 'castration']);
+        $petVisits = $this->petService->getPetVisits($pet, 5, $request);
 
-    //TODO
-    public function edit(Pet $pet)
-    {
-        return view('pet.edit', ['pet'=>$pet->load('kind', 'gender', 'owner')]);
-    }
-
-    //TODO
-    public function update(EditRequest $request, Pet $pet, UpdatePetAction $updatePetAction)
-    {
-        return redirect()->route('pet.edit', [
-            'pet' => $updatePetAction($pet, $request->validated())
+        return view('pet.show', [
+            'pet' => $pet,
+            'owner' => $pet->owner,
+            'visits' => $petVisits,
+            'filterCondition'=> $filterDescriber($request->validated()),
         ]);
+    }
+
+    public function edit(int $id)
+    {
+        $pet = $this->petService->getPet($id, ['kind', 'gender', 'owner']);
+
+        return view('pet.edit', [
+            'pet' => $pet
+        ]);
+    }
+
+    public function update(EditExistingPetRequest $request, int $id): RedirectResponse
+    {
+        $successMessage = 'Данные питомца успешно отредактированы!';
+        $errorMessage = 'Ошибка при редактировании данных питомца. Перезагрузите страницу и попробуйте снова.';
+
+        $redirect = redirect()->route('pets.edit', ['id' => $id]);
+
+        if ($this->petService->updateExistingPet($request, $id)) {
+            $redirect->with('success', $successMessage);
+        } else {
+            $redirect->withErrors($errorMessage);
+        }
+
+        return $redirect;
     }
 }

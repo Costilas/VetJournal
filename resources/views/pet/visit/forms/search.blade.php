@@ -1,5 +1,4 @@
-<form class="text-center" action="{{route('pet.visit.search', ['pet'=>$pet])}}" method="GET">
-    @csrf
+<form class="text-center" action="{{route('pets.visit.search', ['id' => $pet->id])}}" method="GET">
     <div class="row row-cols-1 mb-3 mt-3 justify-content-center">
         <h3>Искать приемы:</h3>
         <div class="col col-xl-4 col-lg-5 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3 text-center">

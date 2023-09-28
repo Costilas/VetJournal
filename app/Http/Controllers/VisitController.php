@@ -11,8 +11,6 @@ use App\Http\Requests\Visit\EditRequest;
 use App\Http\Requests\Visit\SearchRequest;
 use App\Models\Visit;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Session;
 
 class VisitController extends Controller
 {
@@ -47,15 +45,15 @@ class VisitController extends Controller
     {
         $validatedRequest = $request->validated();
         $visit = $createVisitAction($validatedRequest);
-        return redirect()->route('pet.show', [
-            'pet' => $visit->pet_id
+        return redirect()->route('pets.show', [
+            'id' => $visit->pet_id
         ]);
     }
 
     public function edit($id)
     {
         return view('visit.edit', [
-            'visit' => Visit::with('pet')->find($id)
+            'visit' => Visit::find($id)
         ]);
     }
 

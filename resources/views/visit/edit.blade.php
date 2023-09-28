@@ -71,7 +71,7 @@
 
                     <button type="submit" class="btn btn-primary m-3"><i class="bi bi-plus-lg"></i> Сохранить изменения
                     </button>
-                    <a class="btn btn-info" href="{{route('pet.show', ['pet'=>$visit->pet->id])}}">К пациенту</a>
+                    <a class="btn btn-info" href="{{route('pets.show', ['id'=>$visit->pet_id])}}">К пациенту</a>
                 </form>
             </div>
         </div>

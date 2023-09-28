@@ -73,7 +73,7 @@ class OwnerService
         return $owner->pets()->with(['kind', 'gender', 'castration'])->paginate($paginationLimit);
     }
 
-    public function editExistingOwner(EditExistingOwnerRequest $editExistingOwnerRequest, int $id): bool
+    public function updateExistingOwner(EditExistingOwnerRequest $editExistingOwnerRequest, int $id): bool
     {
         $owner = Owner::findOrFail($id);
 

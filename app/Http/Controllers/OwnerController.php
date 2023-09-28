@@ -52,7 +52,7 @@ class OwnerController extends Controller
 
         $redirect = redirect()->route('owners.show', ['id' => $id]);
 
-        if ($this->ownerService->editExistingOwner($request, $id)) {
+        if ($this->ownerService->updateExistingOwner($request, $id)) {
             $redirect->with('success', $successMessage);
         } else {
             $redirect->withErrors($errorMessage);

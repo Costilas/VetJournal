@@ -17,10 +17,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Pet
     Route::controller(App\Http\Controllers\PetController::class)->group(function () {
-        Route::get('/pet/{pet}/show', 'show')->name('pet.show')->where('pet', '[0-9]+');
-        Route::get('/pet/{pet}/edit', 'edit')->name('pet.edit')->where('pet', '[0-9]+');
-        Route::get('pet/{pet}/visit/search', 'searchVisits')->name('pet.visit.search');
-        Route::post('/pet/{pet}/update', 'update')->name('pet.update')->where('pet', '[0-9]+');
+        Route::group(['prefix' => 'pets'], function () {
+            Route::get('/{id}/show', 'show')->name('pets.show')->where('id', '[0-9]+');
+            Route::get('/{id}/edit', 'edit')->name('pets.edit')->where('id', '[0-9]+');
+            Route::get('/{id}/visit/search', 'searchVisits')->name('pets.visit.search')->where('id', '[0-9]+');
+            Route::post('/{id}/update', 'update')->name('pets.update')->where('id', '[0-9]+');
+        });
     });
 
     //Owner
