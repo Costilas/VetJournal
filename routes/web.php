@@ -39,11 +39,13 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Visit
     Route::controller(App\Http\Controllers\VisitController::class)->group(function () {
-        Route::get('/visits', 'index')->name('visits');
-        Route::get('/visits/search', 'search')->name('visits.search');
-        Route::get('/visit/{id}/edit', 'edit')->name('visit.edit')->where('id', '[0-9]+');
-        Route::post('/visit/create', 'create')->name('visit.create');
-        Route::post('/visit/{id}/update', 'update')->name('visit.update')->where('id', '[0-9]+');
+        Route::group(['prefix' => 'visits'], function () {
+            Route::get('/', 'index')->name('visits');
+            Route::get('/search', 'search')->name('visits.search');
+            Route::get('/{id}/edit', 'edit')->name('visits.edit')->where('id', '[0-9]+');
+            Route::post('/create', 'create')->name('visits.create');
+            Route::post('/{id}/update', 'update')->name('visits.update')->where('id', '[0-9]+');
+        });
     });
 
     //Control Area

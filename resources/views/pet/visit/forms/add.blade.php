@@ -2,7 +2,7 @@
     <p>Время/Дата
         приема: {{session()->getOldInput('visit.visit_date')??now()->format('d-m-Y / H:i')}}
     </p>
-    <form action="{{route('visit.create')}}" method="POST">
+    <form action="{{route('visits.create')}}" method="POST">
         @csrf
         <div class="row row-cols-auto justify-content-center">
             <div class="col col-xl-3 col-lg-5 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">

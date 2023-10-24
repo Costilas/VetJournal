@@ -7,7 +7,7 @@
     <td>
         <a class="btn btn-primary" href="{{route('pets.show', ['id'=>$visit->pet_id])}}" target="_blank"><i
                 class="fa-solid fa-paw"></i> К пациенту</a>
-        <a class="btn btn-warning" href="{{route('visit.edit', ['id'=>$visit->id])}}" target="_blank"><i
+        <a class="btn btn-warning" href="{{route('visits.edit', ['id'=>$visit->id])}}" target="_blank"><i
                 class="bi bi-pencil-fill"></i></a>
     </td>
 </tr>

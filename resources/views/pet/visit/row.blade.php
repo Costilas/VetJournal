@@ -10,7 +10,7 @@
            aria-expanded="false" aria-controls="oldVisit{{$visit->id}}"><i class="bi bi-info-circle"></i>
             Подробнее
         </a>
-        <a class="btn btn-warning" href="{{route('visit.edit', ['id'=>$visit->id])}}">
+        <a class="btn btn-warning" href="{{route('visits.edit', ['id'=>$visit->id])}}">
             <i class="bi bi-pencil-fill"></i>
         </a>
     </td>
