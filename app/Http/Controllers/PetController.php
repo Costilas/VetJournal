@@ -14,6 +14,12 @@ class PetController extends Controller
         protected PetService $petService
     ){}
 
+    /**
+     * Display the specified pet's information along with its last 5 visits.
+     *
+     * @param int $id The ID of the pet to display
+     * @return \Illuminate\View\View The view displaying the pet's details
+     */
     public function show(int $id)
     {
         $pet = $this->petService->getPet($id, ['gender', 'kind', 'owner', 'castration']);
@@ -26,6 +32,14 @@ class PetController extends Controller
         ]);
     }
 
+    /**
+     * Search and display the pet's visits based on the provided filters.
+     *
+     * @param SearchPetVisitsRequest $request The request containing search filters for the pet's visits
+     * @param DescribeFilterAction $filterDescriber The action used to describe filter conditions
+     * @param int $id The ID of the pet to display
+     * @return \Illuminate\View\View The view displaying the pet's details along with filtered visits
+     */
     public function searchVisits(SearchPetVisitsRequest $request, DescribeFilterAction $filterDescriber, int $id)
     {
         $pet = $this->petService->getPet($id, ['gender', 'kind', 'owner', 'castration']);
@@ -39,6 +53,12 @@ class PetController extends Controller
         ]);
     }
 
+    /**
+     * Display the form for editing the specified pet.
+     *
+     * @param int $id The ID of the pet to edit
+     * @return \Illuminate\View\View The view containing the edit form for the pet
+     */
     public function edit(int $id)
     {
         $pet = $this->petService->getPet($id, ['kind', 'gender', 'owner']);
@@ -48,6 +68,13 @@ class PetController extends Controller
         ]);
     }
 
+    /**
+     * Update the specified pet in the database.
+     *
+     * @param EditExistingPetRequest $request The validated request containing updated pet data
+     * @param int $id The ID of the pet to update
+     * @return \Illuminate\Http\RedirectResponse Redirects to the edit page with success or error message
+     */
     public function update(EditExistingPetRequest $request, int $id): RedirectResponse
     {
         $successMessage = 'Данные питомца успешно отредактированы!';
