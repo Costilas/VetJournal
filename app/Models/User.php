@@ -4,9 +4,12 @@ namespace App\Models;
 
 
 use EloquentFilter\Filterable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -15,8 +18,7 @@ class User extends Authenticatable
     use HasApiTokens,
         HasFactory,
         Notifiable,
-        Filterable,
-        HasRoles;
+        Filterable;
 
     /**
      * The attributes that are mass assignable.
@@ -62,5 +64,10 @@ class User extends Authenticatable
     public function doctorName()
     {
         return $this->last_name . ' ' . $this->name;
+    }
+
+    public function scopeExceptRoot($query)
+    {
+        return $query->where('is_dev', '!=', 1);
     }
 }

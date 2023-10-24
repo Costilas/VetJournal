@@ -53,9 +53,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         view()->composer(['pet.visit.forms.add', 'visit.edit'], function ($view) {
-            $view->with('doctors', User::where('is_active', 1)->whereHas('roles', function ($query) {
-                $query->whereNotIn('name', ['dev',]);
-            })->get());
+            $view->with('doctors', User::exceptRoot()->where('is_active', 1)->get());
         });
 
         view()->composer(['admin.users.row', 'admin.users.add', 'admin.users.index'], function ($view) {

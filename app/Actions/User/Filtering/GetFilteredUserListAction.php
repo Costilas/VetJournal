@@ -8,6 +8,6 @@ class GetFilteredUserListAction
 {
     public function __invoke(array $validatedData)
     {
-        return User::filter($validatedData)->with('roles')->paginate(5)->withQueryString();
+        return User::exceptRoot()->filter($validatedData)->paginate(5)->withQueryString();
     }
 }

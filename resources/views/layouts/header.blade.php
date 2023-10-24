@@ -33,11 +33,11 @@
                             @endif
                         </li>
                     </a>
-                    @can('use admin panel')
+                    @if($currentUser->is_admin)
                         <a class="btn btn-menu header-mb-3" href="{{route('admin.users')}}">
                             <li class="nav-item">Сотрудники</li>
                         </a>
-                    @endcan
+                    @endif
                     @if($authenticated)
                         <a class="btn btn-menu" href="{{route('logout')}}">
                             <li class="nav-item">

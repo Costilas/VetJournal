@@ -5,9 +5,11 @@
     <td>{{$targetUser->email}}</td>
     <td style="color: {{$targetUser->is_active?'green;':'red;'}}">{{$targetUser->is_active?'Активный':'Заблокирован'}}</td>
     <td>
-        @foreach($targetUser->roles as $role)
-            <span class="fw-bold">{{$role->translate}}</span><br>
-        @endforeach
+        @if($targetUser->is_admin)
+            <span class="fw-bold">Администратор</span><br>
+        @else
+            <span class="fw-bold">Врач</span><br>
+        @endif
     </td>
     <td>
         <a class="btn btn-warning m-1" href="{{route('admin.user.edit', ['targetUser'=>$targetUser])}}">

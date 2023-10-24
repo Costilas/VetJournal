@@ -8,6 +8,6 @@ class GetUnfilteredUserListAction
 {
     public function __invoke()
     {
-        return User::with('roles')->paginate(5)->withQueryString();
+        return User::exceptRoot()->paginate(5)->withQueryString();
     }
 }
