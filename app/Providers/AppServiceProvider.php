@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Http\Controllers\UserController;
 use App\Models\CastrationCondition;
 use App\Models\Gender;
 use App\Models\Kind;
@@ -10,7 +9,6 @@ use App\Models\Pet;
 use App\Models\Status;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;

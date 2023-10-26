@@ -43,8 +43,6 @@ class SearchExistingOwnerRequest extends FormRequest
                 'required_without_all:name,patronymic,phone,pets,additionalPhone,email'
             ],
             'phone' => [
-                'starts_with:8',
-                'digits_between:1,11',
                 'nullable',
                 'required_without_all:name,patronymic,lastName,pets,additionalPhone,email'
             ],
@@ -81,7 +79,7 @@ class SearchExistingOwnerRequest extends FormRequest
 
             'lastName.required_without_all' => 'Хотя бы одно поле, должно быть заполнено.',
             'lastName.alpha' => 'Поле "Фамилия владельца" не должно содержать числа и специальные символы.',
-            'lastName.max' => 'Привышен лимит символов в поле "Фамилия владельца"(30).',
+            'lastName.max' => 'Превышен лимит символов в поле "Фамилия владельца"(30).',
 
             'phone.required_without_all' => 'Хотя бы одно поле, должно быть заполнено.',
             'phone.digits_between' => 'Поле "Телефон владельца" должно содержать только числа (Без пробелов и специальных символов), длина от 1 до 11.',
@@ -92,11 +90,11 @@ class SearchExistingOwnerRequest extends FormRequest
 
             'email.required_without_all'=>'Хотя бы одно поле, должно быть заполнено.',
             'email.string'=>'Поле "Электронная почта владельца" имеет неверный формат.',
-            'email.max'=>'Привышен лимит символов в поле "Электронная почта владельца"(50).',
+            'email.max'=>'Превышен лимит символов в поле "Электронная почта владельца"(50).',
 
             'pets.required_without_all'=>'Хотя бы одно поле, должно быть заполнено.',
             'pets.alpha'=>'Поле "Кличка питомца" не должно содержать числа и специальные символы.',
-            'pets.max'=>'Привышен лимит символов в поле "Кличка питомца"(30).',
+            'pets.max'=>'Превышен лимит символов в поле "Кличка питомца"(30).',
         ];
     }
 }
