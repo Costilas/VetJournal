@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         $rootEmail = config('global.root_user.email');
-        $rootPassword = Hash::make(config('global.root_user.email'));
+        $rootPassword = Hash::make(config('global.root_user.password'));
 
         User::create([
             'name' => 'root',
