@@ -36,7 +36,7 @@ class FilterConditionDescriber
 
     private function setConfig():void
     {
-        $this->config = $this->yaml->parse(file_get_contents('config/filter.yaml'));
+        $this->config = $this->yaml->parse(file_get_contents(public_path() . '/config/filter.yaml'));
     }
 
 

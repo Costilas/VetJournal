@@ -20,7 +20,7 @@ test('Registered user successfully can login', function () {
         'patronymic' => '1',
     ]);
 
-    $response = $this->followingRedirects()->actingAs($user)->post('/login', [
+    $response = $this->followingRedirects()->post('/login', [
         'email' => $user->email,
         'password' => '123'
     ]);

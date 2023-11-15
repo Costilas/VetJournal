@@ -82,17 +82,11 @@ test('Admin area: guest cannot access routes', function (string $method, string 
 ]);
 
 test('Admin area: non-admin user cannot access routes', function (string $method, string $route) {
-    $user = User::create([
-        'email' => 'test@mail.com',
-        'password' => Hash::make('123'),
-        'name' => '1',
-        'last_name' => '1',
-        'patronymic' => '1',
-    ]);
 
-    $response = $this->actingAs($user)->$method($route);
+    $response = asUser()->$method($route);
 
     $response->assertStatus(404);
+
 })->with([
     ['get', 'admin/users'],
     ['get', 'admin/filter'],
