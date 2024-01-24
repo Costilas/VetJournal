@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Session;
 
 class LogoutAction
 {
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): \Illuminate\Http\RedirectResponse
     {
         Auth::logout();
         $request->session()->invalidate();
@@ -17,6 +17,7 @@ class LogoutAction
         if (!Auth::check()) {
             Session::flash('success', "Выход выполнен!");
         }
-        return redirect()->route('login');
+
+        return redirect()->route('login')->with('success', "Выход выполнен!");
     }
 }

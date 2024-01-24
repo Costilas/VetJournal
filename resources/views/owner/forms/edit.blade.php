@@ -1,4 +1,4 @@
-<form action="{{route('owner.update', ['owner'=>$owner])}}" method="POST">
+<form action="{{route('owners.update', ['id'=>$owner->id])}}" method="POST">
     @csrf
     <div class="row row-cols-1">
         <div class="col-12">
@@ -38,8 +38,6 @@
             <input type="text" class="form-control @error('phone') is-invalid @enderror"
                    id="phone"
                    name="phone" placeholder="Телефон" aria-label="phone"
-                   maxlength="11"
-                   minlength="11"
                    value="{{session()->getOldInput('phone')??$owner->phone}}">
         </div>
         <div class="col col-xl-3 col-lg-3 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">

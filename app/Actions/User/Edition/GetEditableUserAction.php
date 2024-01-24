@@ -13,11 +13,11 @@ class GetEditableUserAction
     {
         try{
             $currentUser = Auth::user();
-            if($targetUser->hasRole('dev')&&!$currentUser->hasRole('dev')){throw new \Exception();}
+            if($targetUser->is_dev && ! $currentUser->is_dev){throw new \Exception();}
         }catch (\Exception $e) {
             Log::debug($e->getMessage());
             return redirect()->route('admin.users')->withErrors('Вы не имеете право, на данное действие');
         }
-        return $targetUser->load('roles');
+        return $targetUser;
     }
 }

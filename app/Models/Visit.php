@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Services\VisitService;
+use App\Services\Visit\VisitService;
 use Carbon\Carbon;
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

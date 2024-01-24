@@ -7,7 +7,7 @@
         <div class="card-body">
             <h3 class="padding_block text-center m-3">Редактирование приема пациента <strong>{{$visit->pet->pet_name}}</strong> от <strong>{{$visit->visitDate()}}</strong>.</h3>
             <div class="col-lg-10 m-auto">
-                <form action="{{route('visit.update', ['id'=>$visit->id])}}" method="POST">
+                <form action="{{route('visits.update', ['id'=>$visit->id])}}" method="POST">
                     @csrf
                     <div class="row row-cols-auto justify-content-center">
                         <div class="col col-xl-3 col-lg-5 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
@@ -71,7 +71,7 @@
 
                     <button type="submit" class="btn btn-primary m-3"><i class="bi bi-plus-lg"></i> Сохранить изменения
                     </button>
-                    <a class="btn btn-info" href="{{route('pet.show', ['pet'=>$visit->pet->id])}}">К пациенту</a>
+                    <a class="btn btn-info" href="{{route('pets.show', ['id'=>$visit->pet_id])}}">К пациенту</a>
                 </form>
             </div>
         </div>

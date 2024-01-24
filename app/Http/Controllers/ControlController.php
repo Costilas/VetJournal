@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Control\GetMissedPetsAction;
+use App\Services\Pet\PetService;
 
 class ControlController extends Controller
 {
-    public function index(GetMissedPetsAction $getMissedPetsAction)
+    public function __construct(
+        protected PetService $petService
+    )
+    {}
+
+    public function index()
     {
-       return view('control.index', ['missedPets' => $getMissedPetsAction()]);
+        $petWithoutVisits = $this->petService->getPetsWithoutVisits(10);
+
+       return view('control.index', ['missedPets' => $petWithoutVisits]);
     }
 }

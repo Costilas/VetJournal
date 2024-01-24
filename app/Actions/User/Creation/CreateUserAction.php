@@ -17,10 +17,7 @@ class CreateUserAction
             $validatedData['user']['password'] = Hash::make($validatedData['user']['password']);
             $validatedData['user']['is_active'] = 1;
             $newUser = User::create($validatedData['user']);
-            $newUser->assignRole('doctor');
-            if(isset($validatedData['user']['is_admin'])){
-                $newUser->assignRole('admin');
-            }
+
             Session::flash('success', "Сотрудник $newUser->last_name $newUser->name $newUser->patronymic успешно добавлен/добавлена.");
         } catch (\Exception $e) {
             Log::debug($e->getMessage());

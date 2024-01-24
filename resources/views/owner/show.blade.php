@@ -6,12 +6,19 @@
     <div class="row row-cols-1">
         <div class="col-8 card mb-3 mt-3 p-3 m-auto text-center">
             <h2><b>{{$owner->last_name}} {{$owner->name}} {{$owner->patronymic}}</b></h2>
-                <p>Телефон: <b>{{$owner->phone ?? '---'}}</b></p>
+            @if($owner->phone)
+                <p>Телефон: <a href="tel:{{$owner->phone}}">{{$owner->phone}}</a></p>
+            @else
+                <p>Телефон: <b>---</b></p>
+            @endif
             <p>Доп. телефон: <b>{{$owner->additional_phone ?? '---'}}</b></p>
             <p>Дата регистрации: <b>{{$owner->registerDate()}}</b></p>
             <p>Адрес: <b>{{$owner->address}}</b></p>
             <p>Email: <b>{{$owner->email ?? '---'}}</b></p>
             @include('layouts.components.whatsAppShareButton')
+            @if($owner->phone)
+                @include('layouts.components.callOwnerButton')
+            @endif
         </div>
     </div>
     <div class="row row-cols-1">

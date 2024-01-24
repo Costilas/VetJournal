@@ -14,9 +14,9 @@ class LoginController extends Controller
         return view('login.index');
     }
 
-    public function auth(LoginRequest $request, LoginAction $loginAction)
+    public function auth(LoginRequest $request, LoginAction $loginAction): \Illuminate\Http\RedirectResponse
     {
-        return $loginAction($request->validated());
+        return $loginAction($request);
     }
 
     public function logout(Request $request, LogoutAction $logoutAction)

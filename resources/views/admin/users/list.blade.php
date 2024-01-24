@@ -1,7 +1,7 @@
 <div class="table-responsive">
     <table class="table table-striped table-hover">
         <tr class="align-middle text-center">
-            <th scope="col">id:</th>
+            <th scope="col">Идентификатор:</th>
             <th scope="col">ФИО:</th>
             <th scope="col">Email:</th>
             <th scope="col">Статус:</th>
@@ -9,13 +9,7 @@
             <th scope="col">Действие:</th>
         </tr>
         @forelse($users as $targetUser)
-            @if($targetUser->hasRole('dev'))
-                @can('see devs')
-                    {{view('admin.users.row', compact('targetUser'))}}
-                @endcan
-            @else
-                {{view('admin.users.row', compact('targetUser'))}}
-            @endif
+            {{view('admin.users.row', compact('targetUser'))}}
         @empty
             <tr>
                 <td colspan="6">

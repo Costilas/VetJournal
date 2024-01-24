@@ -21,9 +21,5 @@ class DatabaseSeeder extends Seeder
             StatusSeeder::class,
             CastrationConditionSeeder::class,
         ]);
-
-       $this->call([
-            CreateProjectRoles::class,
-        ]);
     }
 }

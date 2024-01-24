@@ -22,7 +22,7 @@
                     @include('layouts.components.whatsAppShareButton')
 
                     <div class="text-center mt-3">
-                        <a href="{{route('pet.edit', ['pet'=>$pet])}}" class="btn btn-primary"><i
+                        <a href="{{route('pets.edit', ['id' => $pet->id])}}" class="btn btn-primary"><i
                                 class="bi bi-pencil-fill"></i> Редактировать данные пациента</a>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                     <p class="card-text"> Доп. телефон: <b>{{$owner->additional_phone ?? '---'}}</b></p>
                     <p class="card-text"> Email: <b>{{$owner->email ?? '---'}}</b></p>
                     <div class="text-center xs-mt-3">
-                        <a href="{{route('owner.show', ['owner'=>$owner])}}" class="btn btn-primary"><i
+                        <a href="{{route('owners.show', ['id'=>$owner->id])}}" class="btn btn-primary"><i
                                 class="bi bi-file-earmark-person"></i> Профиль владельца</a>
                     </div>
                 </div>
@@ -59,11 +59,11 @@
                        aria-controls="searchVisit m-1">
                         <i class="bi bi-search"></i> Поиск приемов по дате
                     </a>
-                    @if(Route::currentRouteName() === 'pet.visit.search')
-                        <a class="btn btn-secondary xs-m-1" href="{{route('pet.show', ['pet'=>$pet])}}"><i
-                                class="bi bi-x-octagon"></i> Сброс фильтров поиска</a>
+                    @if(Route::currentRouteName() === 'pets.visit.search')
+                        <a class="btn btn-secondary xs-m-1" href="{{route('pets.show', ['id' => $pet->id])}}">
+                            <i class="bi bi-x-octagon"></i> Сброс фильтров поиска
+                        </a>
                     @endif
-
                 </div>
                 <div class="collapse mb-1" id="searchVisit">
                     <div class="card card-body row row-cols-1">
@@ -87,7 +87,6 @@
             @else
                За все время.
             @endif
-
         </p>
         @include('pet.visit.list')
     </div>
