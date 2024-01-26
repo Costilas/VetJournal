@@ -9,7 +9,7 @@
     <meta property="og:title" content="Ветеринария в удовольствие." />
     <meta property="og:description" content="Ссылка на данные" />
     <meta property="og:image" itemprop="image" content="{{asset('img/logo.png')}}">
-    <meta property="og:url" content="{{env('APP_URL')}}">
+    <meta property="og:url" content="{{config('global.app_url')}}">
     <meta property="og:type" content="website" />
 
     <link rel="shortcut icon" href="{{asset('favicon.ico')}}" type="image/ico">
