@@ -40,14 +40,14 @@ class Owner extends Model
                 try {
                     // case when clinic moved to other country but in database stored numbers from previous country
                     // in this case they won't be able to store it but still can search
-                    return phone($value, env('COUNTRY_OF_CLINIC'))->formatNational();
+                    return phone($value, config('global.clinic_country'))->formatNational();
                 } catch (NumberParseException|NumberFormatException $exception) {
                     Log::info($exception->getMessage());
                     return $value;
                 }
             },
             set: function ($value) {
-                $value = phone($value, env('COUNTRY_OF_CLINIC'))->formatNational();
+                $value = phone($value, config('global.clinic_country'))->formatNational();
 
                 return preg_replace('/[^0-9]/', '', $value);
             }
