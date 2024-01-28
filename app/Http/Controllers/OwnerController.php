@@ -98,8 +98,8 @@ class OwnerController extends Controller
         $redirectErrorRoute = 'owners';
         $redirectSuccessRoute = 'owners.show';
 
-        $successMessage = 'Новая карточка успешно создана.';
-        $errorMessage = 'Создание новой карточки не удалось.';
+        $successMessage = __('cards.notifications.create.success');
+        $errorMessage = __('cards.notifications.create.fail');
 
         $newOwnerWithPets = $this->ownerService->createNewOwnerWithPets($request);
 
