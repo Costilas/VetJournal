@@ -77,8 +77,15 @@ class VisitService
     public function updateExistingVisit(EditExistingVisitRequest $editExistingVisitRequest, int $id): bool
     {
         $visit = Visit::findOrFail($id);
+        $validated = $editExistingVisitRequest->validated();
 
-        return $visit->update($editExistingVisitRequest->validated());
+        if(key_exists('visit', $validated)) {
+            $result = $visit->update($validated['visit']);
+        } else {
+            $result = false;
+        }
+
+        return $result;
     }
 
     /**

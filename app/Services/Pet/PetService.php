@@ -53,8 +53,15 @@ class PetService
     public function updateExistingPet(EditExistingPetRequest $editExistingPetRequest, int $id): bool
     {
         $pet = Pet::findOrFail($id);
+        $validated = $editExistingPetRequest->validated();
 
-        return $pet->update($editExistingPetRequest->validated());
+        if(key_exists('pet', $validated)) {
+            $result = $pet->update($validated['pet']);
+        } else {
+            $result = false;
+        }
+
+        return $result;
     }
 
     /**
