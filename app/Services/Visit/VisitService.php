@@ -80,6 +80,8 @@ class VisitService
         $validated = $editExistingVisitRequest->validated();
 
         if(key_exists('visit', $validated)) {
+            $validated['visit']['weight'] = Visit::weightNormalize($validated['visit']['weight']);
+            $validated['visit']['temperature'] = Visit::temperatureNormalize($validated['visit']['temperature']);
             $result = $visit->update($validated['visit']);
         } else {
             $result = false;

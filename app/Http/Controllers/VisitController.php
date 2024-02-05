@@ -92,7 +92,7 @@ class VisitController extends Controller
     public function edit($id)
     {
         return view('visit.edit', [
-            'visit' => Visit::find($id)
+            'visit' => $this->visitService->getVisit($id)
         ]);
     }
 
