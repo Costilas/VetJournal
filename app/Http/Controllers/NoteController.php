@@ -36,9 +36,9 @@ class NoteController extends Controller
         $route = redirect()->route('notes');
 
         if($this->noteService->createNewNote($request)) {
-            $redirect = $route->with('success', 'Заметка создана!');
+            $redirect = $route->with('success', __('notes.notifications.create.success'));
         }else {
-            $redirect = $route->withErrors('Произошла ошибка создания заметки. Перезагрузите страницу и попробуйте снова.');
+            $redirect = $route->withErrors(__('notes.notifications.create.fail'));
         }
 
         return $redirect;
@@ -55,9 +55,9 @@ class NoteController extends Controller
         $route = redirect()->route('notes');
 
         if($this->noteService->deleteExistingNote($id)) {
-            $redirect = $route->with('success', 'Заметка удалена!');
+            $redirect = $route->with('success', __('notes.notifications.delete.success'));
         }else {
-            $redirect = $route->withErrors('Произошла ошибка удаления заметки. Перезагрузите страницу и попробуйте снова.');
+            $redirect = $route->withErrors(__('notes.notifications.delete.fail'));
         }
 
         return $redirect;

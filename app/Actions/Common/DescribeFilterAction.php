@@ -2,15 +2,30 @@
 
 namespace App\Actions\Common;
 
-use App\Helpers\FilterConditionDescriber;
-
 class DescribeFilterAction
 {
-    public function __construct(private FilterConditionDescriber $filterDescriber)
-    {}
+    private const FILTER_INPUTS = [
+        'lastName',
+        'name',
+        'patronymic',
+        'phone',
+        'pets',
+        'from',
+        'to',
+        'additionalPhone',
+        'email',
+    ];
 
-    public function __invoke(array $validatedData):array
+    public function __invoke(array $validatedInputs):array
     {
-        return $this->filterDescriber->describeFilterCondition($validatedData);
+        $describedFilters = [];
+
+        foreach($validatedInputs as $inputName => $inputCondition){
+            if(in_array($inputName, static::FILTER_INPUTS)){
+                $describedFilters[__('filter_inputs.inputs.' . $inputName)] = $inputCondition;
+            }
+        }
+
+        return $describedFilters;
     }
 }

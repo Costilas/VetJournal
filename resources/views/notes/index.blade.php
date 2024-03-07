@@ -1,6 +1,6 @@
 @extends('layouts.body.app.layout')
 
-@section('title') VetJournal::Заметки @endsection
+@section('title') VetJournal::{{__('notes.tab_title')}} @endsection
 
 @section('content')
     <div class="row row-cols-1 mt-5 note_wrapper">
@@ -15,13 +15,13 @@
                 </select>
                 <input class="form-control"
                        type="text" name="theme"
-                       placeholder="Тема заметки"
+                       placeholder="{{__('notes.view.placeholder.theme')}}"
                        value="{{session()->getOldInput('theme')}}"
                        required
                        maxlength="25">
                 <textarea class="form-control"
                           name="body"
-                          placeholder="Текст заметки"
+                          placeholder="{{__('notes.view.placeholder.text')}}"
                           required
                           maxlength="255">{{session()->getOldInput('body')}}</textarea>
                 <button class="btn" type="submit"><i class="bi bi-plus-lg note_icon"></i></button>
@@ -32,7 +32,7 @@
                 <div class="col col-xl-3 col-lg-4 col-md-6 col-sm-9 mb-4 mb-5 xs-w-9">
                     <div class="note note_item {{$note->status->class_name}}_status flex_column_parameters">
                         <p class="date">{{$note->creationDate()}}</p>
-                        <p class="status">Приоритет: {{$note->status->name}}</p>
+                        <p class="status">{{__('notes.view.note.priority')}} {{$note->status->name}}</p>
                         <h5 class="theme ">{{$note->theme}}</h5>
                         <p class="body overflow-hidden text-break">{{$note->body}}</p>
                         <a class="btn" href="{{route('note.delete', ['id'=>$note->id])}}"><i

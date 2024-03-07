@@ -13,13 +13,19 @@ class LoginAction
         $validatedData['is_active'] = 1;
 
         if(Auth::attempt($validatedData)) {
+            $userName = (Auth::user())->name;
+            $successMessage = __('auth.notifications.login.success.first_part')
+                . ", $userName. "
+                . __('auth.notifications.login.success.last_part');
+
+
             $loginRequest->session()->regenerate();
             $return = redirect()->intended(route('notes'))
-                ->with('success', "Добро пожаловать, " . (Auth::user())->name . ". Вход успешно выполнен!");
+                ->with('success', $successMessage);
         } else {
             $return = redirect()->route('login')
                 ->onlyInput('email')
-                ->withErrors('Данные неверны или ваш профиль заблокирован');
+                ->withErrors(__('auth.notifications.login.failed'));
         }
 
         return $return;

@@ -17,6 +17,6 @@
     </td>
     <td>
         <a class="btn btn-primary" href="{{route('owners.show', ['id' => $owner->id])}}" target="_blank"><i
-                class="bi bi-info-circle"></i> Подробнее</a>
+                class="bi bi-info-circle"></i> {{__('cards.view.search.table.actions.owner')}}</a>
     </td>
 </tr>
