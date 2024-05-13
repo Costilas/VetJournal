@@ -13,3 +13,7 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+
+# Ingnore specific MacOS files
+.DS_Store
+._*
