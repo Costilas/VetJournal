@@ -14,10 +14,12 @@ class LogoutAction
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
+        $logoutMessage = __('auth.notifications.logout.success');
+
         if (!Auth::check()) {
-            Session::flash('success', "Выход выполнен!");
+            Session::flash('success', $logoutMessage);
         }
 
-        return redirect()->route('login')->with('success', "Выход выполнен!");
+        return redirect()->route('login')->with('success', $logoutMessage);
     }
 }

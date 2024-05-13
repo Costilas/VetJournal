@@ -2,13 +2,13 @@
     <div class="table-responsive">
         <table class="table table-striped table-hover">
             <tr class="align-middle text-center">
-                <th scope="col">ФИО:</th>
-                <th scope="col">Адрес:</th>
-                <th scope="col">Телефон:</th>
-                <th scope="col">Доп. телефон:</th>
-                <th scope="col">Email:</th>
-                <th scope="col">Питомцы:</th>
-                <th scope="col">Действие:</th>
+                <th scope="col">{{__('cards.view.search.table.columns.owner_name')}}</th>
+                <th scope="col">{{__('cards.view.search.table.columns.owner_address')}}</th>
+                <th scope="col">{{__('cards.view.search.table.columns.owner_phone')}}</th>
+                <th scope="col">{{__('cards.view.search.table.columns.owner_additional_phone')}}</th>
+                <th scope="col">{{__('cards.view.search.table.columns.owner_email')}}</th>
+                <th scope="col">{{__('cards.view.search.table.columns.owner_pets')}}</th>
+                <th scope="col">{{__('cards.view.search.table.columns.actions')}}</th>
             </tr>
             @if($owners->count())
                 @foreach($owners as $owner)
@@ -17,7 +17,7 @@
             @else
                 <tr class="text-center text-break">
                     <td colspan="7">
-                        <p> Результатов по введенным данным нет. <br> Проверьте правильность заполнения полей.</p>
+                        <p>{{__('cards.view.search.table.no_results')}}</p>
                     </td>
                 </tr>
             @endif

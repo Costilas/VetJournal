@@ -1,13 +1,13 @@
 <!doctype html>
-<html lang="ru">
+<html lang="{{trans()->getLocale()}}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta property="og:site_name" content="VetJournal">
-    <meta property="og:title" content="Ветеринария в удовольствие." />
-    <meta property="og:description" content="Ссылка на данные" />
+    <meta property="og:title" content="{{__('global.og.title')}}" />
+    <meta property="og:description" content="{{__('global.og.description')}}" />
     <meta property="og:image" itemprop="image" content="{{asset('img/logo.png')}}">
     <meta property="og:url" content="{{config('global.app_url')}}">
     <meta property="og:type" content="website" />

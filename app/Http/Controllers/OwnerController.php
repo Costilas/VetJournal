@@ -54,13 +54,9 @@ class OwnerController extends Controller
      */
     public function search(SearchExistingOwnerRequest $request, DescribeFilterAction $describeFilterAction)
     {
-        $validatedData = $request->validated();
-        $owners = $this->ownerService->searchExistingOwnerWithPets($request, 5);
-        $filterCondition = $describeFilterAction($validatedData);
-
         return view('owner.index', [
-            'owners' => $owners,
-            'filterCondition' => $filterCondition
+            'owners' => $this->ownerService->searchExistingOwnerWithPets($request, 5),
+            'filterCondition' => $describeFilterAction($request->validated())
         ]);
     }
 
@@ -98,8 +94,8 @@ class OwnerController extends Controller
         $redirectErrorRoute = 'owners';
         $redirectSuccessRoute = 'owners.show';
 
-        $successMessage = 'Новая карточка успешно создана.';
-        $errorMessage = 'Создание новой карточки не удалось.';
+        $successMessage = __('cards.notifications.create.success');
+        $errorMessage = __('cards.notifications.create.fail');
 
         $newOwnerWithPets = $this->ownerService->createNewOwnerWithPets($request);
 

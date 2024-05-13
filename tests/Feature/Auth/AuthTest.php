@@ -8,7 +8,7 @@ test('Guest redirected to login page', function () {
     $response = $this->followingRedirects()->get('/');
 
     $response->assertStatus(200);
-    $response->assertSee('Добро пожаловать в VetJournal!');
+    $response->assertSee(__('auth.view.welcome'));
 });
 
 test('Registered user successfully can login', function () {
@@ -25,8 +25,9 @@ test('Registered user successfully can login', function () {
         'password' => '123'
     ]);
 
+    $goalSuccessMessage = __('header.view.logged_as') . ' ' . $user->email;
     $response->assertStatus(200);
-    $response->assertSee('Вы вошли как: test@mail.com');
+    $response->assertSee($goalSuccessMessage);
     $this->assertAuthenticatedAs($user, 'web');
 });
 
@@ -47,7 +48,7 @@ test('Inactive user cannot auth', function () {
 
     $response->assertStatus(200);
     $this->assertGuest('web');
-    $response->assertSee('Данные неверны или ваш профиль заблокирован');
+    $response->assertSee(__('auth.notifications.login.failed'));
 });
 
 test('Unregistered user redirected to login page', function () {
@@ -59,7 +60,7 @@ test('Unregistered user redirected to login page', function () {
 
     $response->assertStatus(200);
     $this->assertGuest('web');
-    $response->assertSee('Данные неверны или ваш профиль заблокирован');
+    $response->assertSee(__('auth.notifications.login.failed'));
 });
 
 test('Authenticated user can successfully logout', function () {
@@ -76,13 +77,15 @@ test('Authenticated user can successfully logout', function () {
         'password' => '123'
     ]);
 
+    $goalSuccessMessage = __('header.view.logged_as') . ' ' . $user->email;
+
     $response->assertStatus(200);
-    $response->assertSee('Вы вошли как: test@mail.com');
+    $response->assertSee($goalSuccessMessage);
     $this->assertAuthenticatedAs($user, 'web');
 
     $response = $this->followingRedirects()->actingAs($user)->get('/logout');
 
     $response->assertStatus(200);
-    $response->assertSee('Добро пожаловать в VetJournal!');
+    $response->assertSee(__('auth.view.welcome'));
 });
 
