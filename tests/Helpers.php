@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
@@ -63,4 +64,9 @@ function getNewUser(): User
         'last_name' => '1',
         'patronymic' => '1',
     ]);
+}
+
+function getBaseDate(): Carbon
+{
+    return Carbon::today(config('CLINIC_TIMEZONE'));
 }

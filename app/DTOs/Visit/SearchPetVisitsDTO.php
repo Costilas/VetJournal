@@ -2,16 +2,23 @@
 
 namespace App\DTOs\Visit;
 
+use App\Models\Pet;
 use Carbon\Carbon;
+use http\Exception\InvalidArgumentException;
 
-final class SearchVisitsDTO
+final class SearchPetVisitsDTO
 {
     private const DATEFORMAT = 'Y-m-d';
 
     public function __construct(
-        readonly Carbon $from,
-        readonly Carbon $to
-    ) {}
+        public readonly Carbon $from,
+        public readonly Carbon $to,
+        public readonly Pet $pet,
+    ) {
+        if (empty($pet->id)) {
+            throw new InvalidArgumentException('Питомец с таким ID не найдет');
+        }
+    }
 
     public function ordered(): array
     {

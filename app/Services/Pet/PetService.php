@@ -3,7 +3,6 @@
 namespace App\Services\Pet;
 
 use App\Http\Requests\Pet\EditExistingPetRequest;
-use App\Http\Requests\Pet\SearchPetVisitsRequest;
 use App\Models\Pet;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
@@ -19,28 +18,6 @@ class PetService
     public function getPet(int $id, array $relations): Pet
     {
         return Pet::findOrFail($id)->load($relations);
-    }
-
-    /**
-     * Retrieve visits of a specific pet with optional filtering.
-     *
-     * @param Pet $pet The Pet model
-     * @param int $paginationLimit Number of visits per page
-     * @param SearchPetVisitsRequest|null $request The request containing filters, if any
-     * @return LengthAwarePaginator The paginated visits of the pet
-     */
-    public function getPetVisits(Pet $pet, int $paginationLimit, ?SearchPetVisitsRequest $request = null): LengthAwarePaginator
-    {
-        $return = $pet->visits();
-
-        if(!empty($request)) {
-            $return->filter($request->validated());
-        }
-
-        return $return->with('user')
-            ->latest('visit_date')
-            ->paginate($paginationLimit)
-            ->withQueryString();
     }
 
     /**
