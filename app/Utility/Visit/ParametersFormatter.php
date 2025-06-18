@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Support\Visit;
+namespace App\Utility\Visit;
 
 /**
  * Utility class for formatting and preparing parameter values such as weight and temperature.
@@ -61,7 +61,7 @@ final class ParametersFormatter
      */
     public static function prepareTemperatureForStore(string $temperature): int
     {
-        return self::prepareNumericData($temperature) * self::$temperatureScale;
+        return intval(self::prepareNumericData($temperature) * self::$temperatureScale);
     }
 
     /**
@@ -74,7 +74,7 @@ final class ParametersFormatter
      */
     public static function prepareWeightForStore(string $weight): int
     {
-        return self::prepareNumericData($weight) * self::$weightScale;
+        return intval(self::prepareNumericData($weight) * self::$weightScale);
     }
 
     /**

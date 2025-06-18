@@ -2,7 +2,7 @@
 
 namespace App\Actions\Common;
 
-use App\Helpers\FilterConditionDescriber;
+use App\Utility\Helpers\FilterConditionDescriber;
 
 class DescribeFilterAction
 {

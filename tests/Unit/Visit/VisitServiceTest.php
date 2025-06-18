@@ -1,8 +1,8 @@
 <?php
 
 use App\DTOs\Visit\CreateVisitDTO;
-use App\DTOs\Visit\SearchPetVisitsDTO;
-use App\DTOs\Visit\SearchVisitsDTO;
+use App\DTOs\Visit\GetVisitsByDateDTO;
+use App\DTOs\Visit\GetPetVisitsByDateDTO;
 use App\DTOs\Visit\UpdateVisitDTO;
 use App\Models\Pet;
 use App\Models\User;
@@ -52,12 +52,13 @@ test('Search by date validation', function () {
             ]);
         }
 
-        $searchVisitDTO = new SearchVisitsDTO(
+        $searchVisitDTO = new GetVisitsByDateDTO(
             $startDate,
-            $endDate
+            $endDate,
+            10
         );
 
-        $foundVisits = $this->visitService->searchExistingVisits($searchVisitDTO, 10);
+        $foundVisits = $this->visitService->getVisitsByDate($searchVisitDTO);
 
         foreach ($foundVisits as $foundVisit) {
            $this->assertTrue((new Carbon($foundVisit->visit_date))->isBetween($startDate, $endDate), 0);
@@ -69,12 +70,13 @@ test('Search by date validation', function () {
     $totalFrom = array_key_first($visitDates);
     $totalTo = array_key_last($visitDates);
 
-    $searchVisitDTO = new SearchVisitsDTO(
+    $searchVisitDTO = new GetVisitsByDateDTO(
         Carbon::createFromFormat('Y-m-d', $totalFrom),
-        Carbon::createFromFormat('Y-m-d', $totalTo)
+        Carbon::createFromFormat('Y-m-d', $totalTo),
+        $totalVisits + 10
     );
 
-    $foundVisitsTotal = $this->visitService->searchExistingVisits($searchVisitDTO, $totalVisits + 10);
+    $foundVisitsTotal = $this->visitService->getVisitsByDate($searchVisitDTO);
 
     $this->assertEquals($foundVisitsTotal->total(), $totalVisits);
     $this->assertDatabaseCount(VISIT_TABLE_NAME, $foundVisitsTotal->total());
@@ -113,7 +115,7 @@ test('Create new visit', function () {
         treatment: 'Test treatment'
     );
 
-    $visit = $this->visitService->createNewVisit($createVisitDTO);
+    $visit = $this->visitService->createVisit($createVisitDTO);
 
     $this->assertModelExists($visit);
     $this->assertDatabaseCount(VISIT_TABLE_NAME, 1);
@@ -146,7 +148,7 @@ test('Update existing visit', function () {
         treatment: $attributeValues['treatment']['before'],
     );
 
-    $visit = $this->visitService->createNewVisit($createVisitDTO);
+    $visit = $this->visitService->createVisit($createVisitDTO);
 
     $this->assertModelExists($visit);
     $this->assertDatabaseCount(VISIT_TABLE_NAME, 1);
@@ -161,7 +163,7 @@ test('Update existing visit', function () {
         treatment: $attributeValues['treatment']['after'],
     );
 
-    $this->assertTrue($this->visitService->updateExistingVisit($updateVisitDTO));
+    $this->assertTrue($this->visitService->updateVisit($updateVisitDTO));
     $this->assertDatabaseCount(VISIT_TABLE_NAME, 1);
 
     $editedVisit = $this->visitService->getVisitByID($visit->id);
@@ -189,24 +191,26 @@ test('Search pet visits', function () {
     $this->assertDatabaseCount(VISIT_TABLE_NAME, $visitsCount);
 
     foreach ($visitDates as $visitDate) {
-        $searchAllPetVisitDTO = new SearchPetVisitsDTO(
+        $searchAllPetVisitDTO = new GetPetVisitsByDateDTO(
             Carbon::createFromFormat('Y-m-d H:i:s', $visitDate),
             Carbon::createFromFormat('Y-m-d H:i:s', $visitDate),
             $pet,
+            $visitsCount
         );
 
-        $petVisits = $this->visitService->searchExistingPetVisits($searchAllPetVisitDTO, $visitsCount);
+        $petVisits = $this->visitService->getPetVisitsByDate($searchAllPetVisitDTO);
 
         $this->assertCount(1, $petVisits);
     }
 
-    $searchAllPetVisitDTO = new SearchPetVisitsDTO(
+    $searchAllPetVisitDTO = new GetPetVisitsByDateDTO(
         Carbon::createFromFormat('Y-m-d H:i:s', $visitDates[0]),
         Carbon::createFromFormat('Y-m-d H:i:s', $visitDates[array_key_last($visitDates)]),
         $pet,
+        $visitsCount
     );
 
-    $petVisits = $this->visitService->searchExistingPetVisits($searchAllPetVisitDTO, $visitsCount);
+    $petVisits = $this->visitService->getPetVisitsByDate($searchAllPetVisitDTO);
 
     $this->assertCount($visitsCount, $petVisits);
 });
@@ -230,7 +234,7 @@ test('Validates mutator/accessor for creating visit data', function () {
         treatment: 'Test pre treatment',
     );
 
-    $visit = $this->visitService->createNewVisit($createVisitDTO);
+    $visit = $this->visitService->createVisit($createVisitDTO);
     $rawVisit = DB::table(VISIT_TABLE_NAME)
         ->selectRaw('weight, temperature')
         ->where('id', $visit->id)
@@ -262,7 +266,7 @@ test('Validates mutator/accessor for editing visit data', function () {
         treatment: 'Test pre treatment',
     );
 
-    $this->visitService->updateExistingVisit($updateVisitDTO);
+    $this->visitService->updateVisit($updateVisitDTO);
     $rawVisit = DB::table(VISIT_TABLE_NAME)
         ->selectRaw('weight, temperature')
         ->where('id', $visit->id)

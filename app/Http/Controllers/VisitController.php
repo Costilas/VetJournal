@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Common\DescribeFilterAction;
-use App\DTOs\Visit\SearchVisitsDTO;
+use App\DTOs\Visit\GetVisitsByDateDTO;
 use App\Http\Requests\Visit\CreateNewVisitRequest;
 use App\Http\Requests\Visit\EditExistingVisitRequest;
 use App\Http\Requests\Visit\SearchVisitsRequest;
@@ -19,7 +19,9 @@ class VisitController extends Controller
 {
     public function __construct(
         private readonly VisitService $visitService
-    ) {}
+    )
+    {
+    }
 
     /**
      * Display the index view with the list of visits for today.
@@ -28,12 +30,13 @@ class VisitController extends Controller
      */
     public function index(
         DescribeFilterAction $describeFilterAction
-    ): Factory|\Illuminate\Contracts\View\View|RedirectResponse|Application {
+    ): Factory|\Illuminate\Contracts\View\View|RedirectResponse|Application
+    {
         try {
             $from = new Carbon('today', config('CLINIC_TIMEZONE'));
             $to = new Carbon('today', config('CLINIC_TIMEZONE'));
 
-            $searchVisitDTO = new SearchVisitsDTO($from, $to);
+            $searchVisitDTO = new GetVisitsByDateDTO($from, $to, 10);
 
             $searchDateRange = [
                 'search' => [
@@ -43,12 +46,12 @@ class VisitController extends Controller
             ];
 
             $return = view('visit.index', [
-                'visits' => $this->visitService->searchExistingVisits($searchVisitDTO, 10),
+                'visits' => $this->visitService->getVisitsByDate($searchVisitDTO),
                 'filterCondition' => $describeFilterAction($searchDateRange),
                 'searchDateRange' => $searchDateRange
             ]);
 
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             Log::debug($e->getMessage());
             $return = redirect()->route('visits.index')->withErrors('Ошибка валидации. Даты имеют неверный формат');
         }
@@ -67,18 +70,19 @@ class VisitController extends Controller
     {
         try {
             $searchDateRange = $request->validated();
-            $searchVisitDTO = new SearchVisitsDTO(
+            $searchVisitDTO = new GetVisitsByDateDTO(
                 Carbon::createFromFormat('Y-m-d', $searchDateRange['search']['from']),
-                Carbon::createFromFormat('Y-m-d', $searchDateRange['search']['to'])
+                Carbon::createFromFormat('Y-m-d', $searchDateRange['search']['to']),
+                10
             );
 
             $return = view('visit.index', [
-                'visits' => $this->visitService->searchExistingVisits($searchVisitDTO, 10),
+                'visits' => $this->visitService->getVisitsByDate($searchVisitDTO),
                 'filterCondition' => $describeFilterAction($searchDateRange),
                 'searchDateRange' => $searchDateRange
             ]);
 
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             Log::debug($e->getMessage());
             $return = redirect()->route('visits.index')->withErrors('Ошибка валидации. Даты имеют неверный формат');
         }
@@ -101,7 +105,7 @@ class VisitController extends Controller
         $successMessage = 'Новый прием успешно создан.';
         $errorMessage = 'Ошибка при создании приема. Перезагрузите страницу и попробуйте снова.';
 
-        $newVisit = $this->visitService->createNewVisit($request->toDTO());
+        $newVisit = $this->visitService->createVisit($request->toDTO());
 
         if (!empty($newVisit)) {
             return redirect()
@@ -142,7 +146,7 @@ class VisitController extends Controller
 
         $redirect = redirect()->route('visits.edit', ['id' => $id]);
 
-        if ($this->visitService->updateExistingVisit($request->toDTO())) {
+        if ($this->visitService->updateVisit($request->toDTO())) {
             $redirect->with('success', $successMessage);
         } else {
             $redirect->withErrors($errorMessage)->withInput();

@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-       //
+        //
     }
 
     /**
@@ -58,7 +58,8 @@ class AppServiceProvider extends ServiceProvider
             $view->with('currentUser', Auth::user());
         });
 
-        view()->composer([
+        view()->composer(
+            [
                 'owner.forms.create',
                 'owner.pet.forms.add',
                 'pet.visit.forms.add',
@@ -67,7 +68,10 @@ class AppServiceProvider extends ServiceProvider
                 'visit.index'
             ],
             function ($view) {
-                $view->with('dateInputMaxValue', Carbon::create('today')->format('Y-m-d'));
+                $view->with(
+                    'dateInputMaxValue',
+                    Carbon::create('today', config('CLINIC_TIMEZONE'))->format('Y-m-d')
+                );
             }
         );
     }

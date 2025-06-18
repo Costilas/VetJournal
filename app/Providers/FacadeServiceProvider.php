@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Services\PasswordService;
-use App\Services\VisitService;
 use Illuminate\Support\ServiceProvider;
 
 class FacadeServiceProvider extends ServiceProvider
@@ -15,8 +13,7 @@ class FacadeServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('password.service', fn () => new PasswordService());
-        $this->app->bind('visit.service', fn () => new VisitService());
+        //
     }
 
     /**
