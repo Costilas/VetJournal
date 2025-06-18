@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Utility\Helpers;
 
 use Symfony\Component\Yaml\Yaml;
 

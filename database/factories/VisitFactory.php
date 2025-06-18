@@ -30,6 +30,8 @@ class VisitFactory extends Factory
             'temperature' => $this->faker->numberBetween(370, 395),
             'pre_diagnosis' => $this->faker->sentence,
             'visit_info' => $this->faker->paragraph,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'treatment' => $this->faker->text(100),
         ];
     }

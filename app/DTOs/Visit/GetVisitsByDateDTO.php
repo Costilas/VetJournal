@@ -4,14 +4,20 @@ namespace App\DTOs\Visit;
 
 use Carbon\Carbon;
 
-final class SearchVisitsDTO
+final class GetVisitsByDateDTO
 {
     private const DATEFORMAT = 'Y-m-d';
 
     public function __construct(
         readonly Carbon $from,
-        readonly Carbon $to
-    ) {}
+        readonly Carbon $to,
+        readonly int    $paginationLimit
+    )
+    {
+        if ($paginationLimit <= 0) {
+            throw new \InvalidArgumentException('Pagination limit must be greater than 0');
+        }
+    }
 
     public function ordered(): array
     {

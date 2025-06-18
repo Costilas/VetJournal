@@ -1,5 +1,7 @@
 <?php
 
+declare (strict_types = 1);
+
 namespace App\Http\Requests\Visit;
 
 use App\DTOs\Visit\UpdateVisitDTO;
@@ -110,8 +112,8 @@ class EditExistingVisitRequest extends FormRequest
         $data = $this->validated()['visit'];
 
         return new UpdateVisitDTO(
-            id: $this->route('id'),
-            user_id: $data['user_id'],
+            id: (int) $this->route('id'),
+            user_id: (int) $data['user_id'],
             weight: $data['weight'],
             temperature: $data['temperature'],
             pre_diagnosis: $data['pre_diagnosis'],
