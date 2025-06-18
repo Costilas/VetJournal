@@ -5,9 +5,11 @@
 @section('content')
     <div class="card m-3">
         <div class="card-body">
-            <h3 class="padding_block text-center m-3">Редактирование приема пациента <strong>{{$visit->pet->pet_name}}</strong> от <strong>{{$visit->visitDate()}}</strong>.</h3>
+            <h3 class="padding_block text-center m-3">
+                Редактирование приема пациента <strong>{{$visit->pet->pet_name}}</strong> от <strong>{{$visit->visitDate()}}</strong>.
+            </h3>
             <div class="col-lg-10 m-auto">
-                <form action="{{route('visits.update', ['id'=>$visit->id])}}" method="POST">
+                <form action="{{route('visits.update', ['id' => $visit->id])}}" method="POST">
                     @csrf
                     <div class="row row-cols-auto justify-content-center">
                         <div class="col col-xl-3 col-lg-5 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
@@ -17,7 +19,7 @@
                                    required
                                    type="text"
                                    name="visit[weight]"
-                                   value="{{session()->getOldInput('visit.weight')??$visit->weightFormat()}}">
+                                   value="{{old('visit.weight', $visit->weight)}}">
                         </div>
                         <div class="col col-xl-3 col-lg-5 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
                             <label for="temperature">Температура:</label>
@@ -26,7 +28,7 @@
                                    required
                                    type="text"
                                    name="visit[temperature]"
-                                   value="{{session()->getOldInput('visit.temperature')??$visit->temperatureFormat()}}">
+                                   value="{{old('visit.temperature', $visit->temperature)}}">
                         </div>
                         <div class="col col-xl-3 col-lg-5 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
                             <div class="col">
@@ -36,7 +38,7 @@
                                        required
                                        type="text"
                                        name="visit[pre_diagnosis]"
-                                       value="{{session()->getOldInput('visit.pre_diagnosis')??$visit->pre_diagnosis}}">
+                                       value="{{old('visit.pre_diagnosis', $visit->pre_diagnosis)}}">
                             </div>
                         </div>
                         <div class="col col-xl-3 col-lg-5 col-md-6 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
@@ -47,7 +49,8 @@
                                     name="visit[user_id]">
                                 @foreach($doctors as $doctor)
                                     <option value="{{$doctor->id}}"
-                                            @if($doctor->id==$visit->user_id) selected @endif>{{$doctor->doctorName()}}</option>
+                                        @if($doctor->id==$visit->user_id) selected @endif>{{$doctor->doctorName()}}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -57,7 +60,7 @@
                                       id="visit_info"
                                       name="visit[visit_info]"
                                       required
-                                      style=" height: 250px;">{{session()->getOldInput('visit.visit_info')??$visit->visit_info}}</textarea>
+                                      style=" height: 250px;">{{old('visit.visit_info', $visit->visit_info)}}</textarea>
                         </div>
                         <div class="col col-xl-4 col-lg-4 col-md-4 col-sm-10 mb-lg-3 mb-md-4 mb-sm-5 xs-w-9 xs-mb-3">
                             <label for="treatment">Проведенное лечение:</label>
@@ -65,13 +68,13 @@
                                       id="treatment"
                                       name="visit[treatment]"
                                       required
-                                      style=" height: 250px;">{{session()->getOldInput('visit.treatment')??$visit->treatment}}</textarea>
+                                      style=" height: 250px;">{{old('visit.treatment', $visit->treatment)}}</textarea>
                         </div>
                     </div>
 
                     <button type="submit" class="btn btn-primary m-3"><i class="bi bi-plus-lg"></i> Сохранить изменения
                     </button>
-                    <a class="btn btn-info" href="{{route('pets.show', ['id'=>$visit->pet_id])}}">К пациенту</a>
+                    <a class="btn btn-info" href="{{route('pets.show', ['id' => $visit->pet_id])}}">К пациенту</a>
                 </form>
             </div>
         </div>

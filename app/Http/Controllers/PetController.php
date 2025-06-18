@@ -3,15 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Common\DescribeFilterAction;
+use App\DTOs\Visit\SearchPetVisitsDTO;
 use App\Http\Requests\Pet\EditExistingPetRequest;
 use App\Http\Requests\Pet\SearchPetVisitsRequest;
 use App\Services\Pet\PetService;
+use App\Services\Visit\VisitService;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 
 class PetController extends Controller
 {
     public function __construct(
-        protected PetService $petService
+        protected PetService $petService,
+        protected VisitService $visitService
     ){}
 
     /**
@@ -42,8 +46,16 @@ class PetController extends Controller
      */
     public function searchVisits(SearchPetVisitsRequest $request, DescribeFilterAction $filterDescriber, int $id)
     {
+        $searchDateRange = $request->validated();
         $pet = $this->petService->getPet($id, ['gender', 'kind', 'owner', 'castration']);
-        $petVisits = $this->petService->getPetVisits($pet, 5, $request);
+        $dto = new SearchPetVisitsDTO(
+            Carbon::createFromFormat('Y-m-d', $searchDateRange['search']['from']),
+            Carbon::createFromFormat('Y-m-d', $searchDateRange['search']['to']),
+            $pet
+        );
+
+        $petVisits = $this->visitService->searchExistingPetVisits($dto, 5);
+
 
         return view('pet.show', [
             'pet' => $pet,

@@ -6,6 +6,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class SearchVisitsRequest extends FormRequest
 {
+    protected $redirectRoute = 'visits.index';
+
     /**
      * Determine if the user is authorized to make this request.
      *

@@ -2,11 +2,15 @@
 
 namespace App\Services\Visit;
 
-use App\DTOs\Visit\SearchVisitsDTO;
-use App\Http\Requests\Visit\CreateNewVisitRequest;
-use App\Http\Requests\Visit\EditExistingVisitRequest;
+use App\DTOs\Visit\SearchPetVisitsDTO;
 use App\Models\Visit;
+use Exception;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Log;
+use App\DTOs\Visit\CreateVisitDTO;
+use App\DTOs\Visit\SearchVisitsDTO;
+use App\DTOs\Visit\UpdateVisitDTO;
 
 class VisitService
 {
@@ -15,11 +19,29 @@ class VisitService
      *
      * @param int $id The ID of the Visit to retrieve
      * @return Visit The Visit model corresponding to the given ID
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException If the Visit model is not found
+     * @throws ModelNotFoundException If the Visit model is not found
      */
-    public function getVisit(int $id): Visit
+    public function getVisitByID(int $id): Visit
     {
         return Visit::findOrFail($id);
+    }
+
+    /**
+     * Retrieve visits of a specific pet with optional filtering.
+     *
+     * @param SearchPetVisitsDTO $searchVisitsDTO
+     * @param int $paginationLimit Number of visits per page
+     * @return LengthAwarePaginator The paginated visits of the pet
+     */
+    public function searchExistingPetVisits(
+        SearchPetVisitsDTO $searchVisitsDTO,
+        int $paginationLimit
+    ): LengthAwarePaginator {
+        return Visit::filter(['pet' => $searchVisitsDTO->pet->id,'search'=> $searchVisitsDTO->ordered()])
+            ->with('user')
+            ->orderBy('id', 'DESC')
+            ->paginate($paginationLimit)
+            ->withQueryString();
     }
 
     /**
@@ -27,18 +49,13 @@ class VisitService
      *
      * @param SearchVisitsDTO $searchVisitsDTO The Data Transfer Object containing the search parameters
      * @param int $paginationLimit The number of results to display per page
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator A paginator for the visits that match the search criteria
+     * @return LengthAwarePaginator A paginator for the visits that match the search criteria
      */
-    public function searchExistingVisits(SearchVisitsDTO $searchVisitsDTO, int $paginationLimit)
+    public function searchExistingVisits(SearchVisitsDTO $searchVisitsDTO, int $paginationLimit): LengthAwarePaginator
     {
-        $filterData = [
-            'search'=> [
-                'from'=>$searchVisitsDTO->getFrom(),
-                'to'=>$searchVisitsDTO->getTo()
-            ]
-        ];
-
-        return Visit::filter($filterData)
+        return Visit::filter([
+            'search'=> $searchVisitsDTO->ordered()
+        ])
             ->with('pet.owner', 'user')
             ->orderBy('id', 'DESC')
             ->paginate($paginationLimit)
@@ -48,17 +65,14 @@ class VisitService
     /**
      * Create a new Visit based on the validated request data.
      *
-     * @param CreateNewVisitRequest $createNewVisitRequest The validated request containing the new Visit data
+     * @param CreateVisitDTO $dto
      * @return Visit|null The newly created Visit model or null if creation failed
      */
-    public function createNewVisit(CreateNewVisitRequest $createNewVisitRequest): ?Visit
+    public function createNewVisit(CreateVisitDTO $dto): ?Visit
     {
         try {
-            $validatedRequest = $createNewVisitRequest->validated();
-            $validatedRequest['visit']['weight'] = Visit::weightNormalize($validatedRequest['visit']['weight']);
-            $validatedRequest['visit']['temperature'] = Visit::temperatureNormalize($validatedRequest['visit']['temperature']);
-            $visit = Visit::create($validatedRequest['visit']);
-        } catch (\Exception $e){
+            $visit = Visit::create($dto->toArray());
+        } catch (Exception $e){
             Log::debug($e->getMessage());
             $visit = null;
         }
@@ -69,59 +83,19 @@ class VisitService
     /**
      * Update an existing Visit based on the validated request data.
      *
-     * @param EditExistingVisitRequest $editExistingVisitRequest The validated request containing the updated Visit data
-     * @param int $id The ID of the Visit to update
+     * @param UpdateVisitDTO $dto
      * @return bool True if the update was successful, false otherwise
-     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException If the Visit model is not found
      */
-    public function updateExistingVisit(EditExistingVisitRequest $editExistingVisitRequest, int $id): bool
+    public function updateExistingVisit(UpdateVisitDTO $dto): bool
     {
-        $visit = Visit::findOrFail($id);
-        $validated = $editExistingVisitRequest->validated();
+        try {
+            $visit = Visit::findOrFail($dto->id);
 
-        if(key_exists('visit', $validated)) {
-            $validated['visit']['weight'] = Visit::weightNormalize($validated['visit']['weight']);
-            $validated['visit']['temperature'] = Visit::temperatureNormalize($validated['visit']['temperature']);
-            $result = $visit->update($validated['visit']);
-        } else {
-            $result = false;
+            return $visit->update($dto->toArray());
+        } catch (Exception $e) {
+            Log::warning("Визит с переданным ID не был найден.");
+
+            return false;
         }
-
-        return $result;
-    }
-
-    /**
-     * Prepare numeric data from a string for use in calculations.
-     *
-     * @param string $string The string to prepare
-     * @return float The prepared numeric data
-     */
-    public static function prepareNumericData(string $string):float
-    {
-        $prepared = self::stringCleaner($string);
-
-        return self::stringToFloat($prepared);
-    }
-
-    /**
-     * Remove extra spaces and unwanted characters from a string.
-     *
-     * @param string $string The string to clean
-     * @return string The cleaned string
-     */
-    private static function stringCleaner(string $string):string
-    {
-        return trim(str_replace([',', '.'], '.', $string), ' .');
-    }
-
-    /**
-     * Convert a cleaned string to a float.
-     *
-     * @param string $string The string to convert
-     * @return float The converted float value
-     */
-    private static function stringToFloat(string $string):float
-    {
-        return floatval($string);
     }
 }

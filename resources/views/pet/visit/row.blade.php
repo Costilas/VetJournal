@@ -1,7 +1,7 @@
 <tr>
     <td>{{$visit->visitDate()}}</td>
-    <td>{{$visit->weightFormat()}} кг.</td>
-    <td>{{$visit->temperatureFormat()}} &#176;</td>
+    <td>{{$visit->weight}} кг.</td>
+    <td>{{$visit->temperature}} &#176;</td>
     <td>{{$visit->pre_diagnosis}}</td>
     <td>{{$visit->user->doctorName()}}</td>
     <td>
@@ -10,7 +10,7 @@
            aria-expanded="false" aria-controls="oldVisit{{$visit->id}}"><i class="bi bi-info-circle"></i>
             Подробнее
         </a>
-        <a class="btn btn-warning" href="{{route('visits.edit', ['id'=>$visit->id])}}">
+        <a class="btn btn-warning" href="{{route('visits.edit', ['id' => $visit->id])}}">
             <i class="bi bi-pencil-fill"></i>
         </a>
     </td>

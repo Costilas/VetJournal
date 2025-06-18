@@ -58,8 +58,17 @@ class AppServiceProvider extends ServiceProvider
             $view->with('currentUser', Auth::user());
         });
 
-        view()->composer(['owner.forms.create', 'owner.pet.forms.add', 'pet.visit.forms.add', 'pet.visit.forms.search', 'pet.edit', 'visit.index'], function ($view) {
-            $view->with('dateInputMaxValue', Carbon::create('today')->format('Y-m-d'));
-        });
+        view()->composer([
+                'owner.forms.create',
+                'owner.pet.forms.add',
+                'pet.visit.forms.add',
+                'pet.visit.forms.search',
+                'pet.edit',
+                'visit.index'
+            ],
+            function ($view) {
+                $view->with('dateInputMaxValue', Carbon::create('today')->format('Y-m-d'));
+            }
+        );
     }
 }

@@ -11,7 +11,7 @@
         </div>
         <div class="row row-cols-auto justify-content-center align-items-center">
             <div class="col col-xl-3 col-lg-3 col-md-3 col-sm-10 m-lg-3 m-md-4 m-sm-3 xs-w-9 xs-mb-3 xs-mt-3 text-center align-middle">
-                <a href="{{route('visits')}}" class="btn btn-primary">Сегодня</a>
+                <a href="{{route('visits.index')}}" class="btn btn-primary">Сегодня</a>
             </div>
             <form class="col col-xl-3 col-lg-3 col-md-3 col-sm-10 m-lg-3 m-md-4 m-sm-3 xs-w-9 xs-mb-3 text-center align-middle"
                 action="{{route('visits.search')}}" method="GET">

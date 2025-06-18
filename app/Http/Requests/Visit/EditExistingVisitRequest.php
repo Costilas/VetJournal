@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Visit;
 
+use App\DTOs\Visit\UpdateVisitDTO;
+use App\Rules\Visit\VisitDecimalRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class EditExistingVisitRequest extends FormRequest
@@ -32,13 +34,11 @@ class EditExistingVisitRequest extends FormRequest
             ],
             "visit.weight" => [
                 'required',
-                'not_regex:/^0{1,2}[\.\,]0+$/i',
-                'regex:/^(\d{1,2}[\.\,]\d{1,3})$|^(\d{1,2})$/i',
+                new VisitDecimalRule('Вес', 2, 3),
             ],
             "visit.temperature" => [
                 'required',
-                'not_regex:/^0\d{1}[\.\,]0+$|^\d{1,2}[\,\.]0+$/i',
-                'regex:/^(\d{1,2}[\.\,]\d{1})$|^(\d{1,2})$/i',
+                new VisitDecimalRule('Температура', 2, 1),
             ],
             "visit.pre_diagnosis" => [
                 'required',
@@ -103,5 +103,20 @@ class EditExistingVisitRequest extends FormRequest
             'visit.user_id.numeric' => 'Поле "Кем был проведен прием" должно содержать только числовое значение.',
             'visit.user_id.exists' => 'Поле "Кем был проведен прием" содержит недопустимое числовое значение.',
         ];
+    }
+
+    public function toDTO(): UpdateVisitDTO
+    {
+        $data = $this->validated()['visit'];
+
+        return new UpdateVisitDTO(
+            id: $this->route('id'),
+            user_id: $data['user_id'],
+            weight: $data['weight'],
+            temperature: $data['temperature'],
+            pre_diagnosis: $data['pre_diagnosis'],
+            visit_info: $data['visit_info'],
+            treatment: $data['treatment'],
+        );
     }
 }

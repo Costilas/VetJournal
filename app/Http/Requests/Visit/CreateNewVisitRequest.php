@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Visit;
 
+use App\DTOs\Visit\CreateVisitDTO;
+use App\Rules\Visit\VisitDecimalRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateNewVisitRequest extends FormRequest
@@ -33,14 +35,12 @@ class CreateNewVisitRequest extends FormRequest
             "visit.weight" => [
                 'required',
                 'string',
-                'not_regex:/^0+[\.\,]0+$|^0+$/i',
-                'regex:/^(\d{1,3}[\.\,]\d{1,3})$|^(\d{1,3})$/i',
+                new VisitDecimalRule('Вес', 2, 3),
             ],
             "visit.temperature" => [
                 'required',
                 'string',
-                'not_regex:/^0\d{1}[\.\,]0+$|^\d{1,2}[\,\.]0+$/i',
-                'regex:/^(\d{1,2}[\.\,]\d{1})$|^(\d{1,2})\.?$/i',
+                new VisitDecimalRule('Температура', 2, 1),
             ],
             "visit.pre_diagnosis" => [
                 'required',
@@ -63,11 +63,13 @@ class CreateNewVisitRequest extends FormRequest
             ],
             "visit.pet_id" => [
                 'required',
-                'numeric'
+                'numeric',
+                'exists:pets,id',
             ],
             "visit.user_id" => [
                 'required',
                 'numeric',
+                'exists:users,id',
             ],
         ];
     }
@@ -116,5 +118,21 @@ class CreateNewVisitRequest extends FormRequest
             'visit.user_id.required' => 'Поле "Кем был проведен прием" является обязательным к заполнению.',
             'visit.user_id.numeric' => 'Поле "Кем был проведен прием" должно содержать только числовое значение.',
         ];
+    }
+
+    public function toDTO(): CreateVisitDTO
+    {
+        $data = $this->validated()['visit'];
+
+        return new CreateVisitDTO(
+            pet_id: $data['pet_id'],
+            user_id: $data['user_id'],
+            visit_date: $data['visit_date'],
+            weight: $data['weight'],
+            temperature: $data['temperature'],
+            pre_diagnosis: $data['pre_diagnosis'],
+            visit_info: $data['visit_info'],
+            treatment: $data['treatment'],
+        );
     }
 }

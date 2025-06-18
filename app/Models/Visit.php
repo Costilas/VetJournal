@@ -2,18 +2,29 @@
 
 namespace App\Models;
 
-use App\Services\Visit\VisitService;
+
 use Carbon\Carbon;
 use EloquentFilter\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Support\Visit\ParametersFormatter;
 
 class Visit extends Model
 {
-    use HasFactory;
-    use Filterable;
+    use HasFactory,
+        Filterable;
 
-    protected $fillable = ['pet_id', 'visit_date', 'weight', 'temperature', 'pre_diagnosis', 'visit_info', 'treatment', 'user_id'];
+    protected $fillable = [
+        'pet_id',
+        'visit_date',
+        'weight',
+        'temperature',
+        'pre_diagnosis',
+        'visit_info',
+        'treatment',
+        'user_id'
+    ];
 
     public function pet()
     {
@@ -25,28 +36,24 @@ class Visit extends Model
         return $this->belongsTo(User::class);
     }
 
-    public static function temperatureNormalize(string $temperature):int
-    {
-        return VisitService::prepareNumericData($temperature)*10;
-    }
-
-    public static function weightNormalize(string $weight):int
-    {
-        return VisitService::prepareNumericData($weight)*1000;
-    }
-
     public function visitDate()
     {
         return Carbon::create($this->visit_date)->format('d.m.Y / H:i');
     }
 
-    public function temperatureFormat():float
+    public function temperature(): Attribute
     {
-        return $this->temperature/10;
+        return Attribute::make(
+            get: fn ($value) => ParametersFormatter::formatTemperatureForView($value),
+            set: fn ($value) => ParametersFormatter::prepareTemperatureForStore($value)
+        );
     }
 
-    public function weightFormat():float
+    public function weight(): Attribute
     {
-        return $this->weight/1000;
+        return Attribute::make(
+            get: fn ($value) => ParametersFormatter::formatWeightForView($value),
+            set: fn ($value) => ParametersFormatter::prepareWeightForStore($value)
+        );
     }
 }

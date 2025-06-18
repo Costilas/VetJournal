@@ -20,7 +20,7 @@
                     <a class="btn btn-menu header-mb-3" href="{{route('owners')}}">
                         <li class="nav-item">Картотека</li>
                     </a>
-                    <a class="btn btn-menu header-mb-3" href="{{route('visits')}}">
+                    <a class="btn btn-menu header-mb-3" href="{{route('visits.index')}}">
                         <li class="nav-item">Приемы</li>
                     </a>
                     <a class="btn btn-menu header-mb-3" href="{{route('control')}}">
